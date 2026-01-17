@@ -3,7 +3,7 @@
 </p>
 
 # Supported Bridges
-<table align="center">
+<table align="center" border="0">
   <tr>
     <td>
       <img width="200" height="200" src="assets/devices/BSB001.svg" />
