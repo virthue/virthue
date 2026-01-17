@@ -17,13 +17,13 @@
   </tr>
   <tr align="center">
     <td>
-      <code>BSB001</code>
+      BSB001
     </td>
     <td>
-      <code>BSB002</code>
+      BSB002
     </td>
     <td>
-      <code>BSB003</code>
+      BSB003
     </td>
   </tr>
 </table>
