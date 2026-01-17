@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import OperatingSystem from 'node:os';
 
 export default new class Interfaces {
@@ -5,13 +11,13 @@ export default new class Interfaces {
         const interfaces = OperatingSystem.networkInterfaces();
 
         for(const name of Object.keys(interfaces)) {
-            for(const iface of interfaces[name]) {
-                if(iface.internal) {
+            for(const device of interfaces[name]) {
+                if(device.internal) {
                     continue;
                 }
 
-                if(iface.family === family) {
-                    return iface.address;
+                if(device.family === family) {
+                    return device.address;
                 }
             }
         }

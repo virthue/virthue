@@ -9,8 +9,9 @@ import {
 import Process from 'node:process';
 import QRCode from 'qrcode';
 import Utils from '../Utils.js';
-import Events from './Events.js';
+import Events from '../types/Events.js';
 import Settings from './Settings.js';
+import Support from "../types/Support.js";
 
 export default new class TrayManager {
     Bridge                  = null;
@@ -74,8 +75,15 @@ export default new class TrayManager {
             this.toggle();
         });
 
+        this.Bridge.getConfiguration().on('FEATURE_CHANGE', (feature, value) => {
+            this.send('QR_HIDE', !value);
+        });
+
         IPC.on('bridge', (event, packet) => {
             switch(packet.action) {
+                case 'INIT':
+                    this.send(Events.BRIDGE_MODEL, this.Bridge.getConfiguration().getModel());
+                break;
                 case Events.QR_REQUEST:
                     QRCode.toString(`HUE:I:${this.Bridge.getConfiguration().getId()} W:${new Date().getFullYear()}`, {
                         type: 'svg'
@@ -136,6 +144,7 @@ export default new class TrayManager {
         this.Window.setPosition(position.x, position.y, false);
         this.Window.show();
         this.Window.focus();
+        this.send('SHOW');
     }
 
     createWindow() {
@@ -165,8 +174,6 @@ export default new class TrayManager {
                 }
             });
 
-            this.send(Events.BRIDGE_MODEL, this.Bridge.getConfiguration().getModel());
-
             this.Bridge.on('MODEL_CHANGE', () => {
                 this.send(Events.BRIDGE_MODEL, this.Bridge.getConfiguration().getModel());
             });
@@ -186,15 +193,9 @@ export default new class TrayManager {
             return;
         }
 
-        if(typeof(data) === 'string') {
-            data = {
-                data: data
-            };
-        }
-
         this.Window.webContents.send('bridge', {
             action: name,
-            ...data
+            data:   data
         });
     }
 }()

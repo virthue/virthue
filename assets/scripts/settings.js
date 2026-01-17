@@ -1,5 +1,5 @@
-import Events from '../../src/ui/Events.js';
-import Support from "../../src/bridge/Support.js";
+import Events from '../../src/types/Events.js';
+import Support from "../../src/types/Support.js";
 
 export default class Settings {
     constructor() {
@@ -148,15 +148,9 @@ export default class Settings {
     }
 
     send(name, data) {
-        if(typeof(data) === 'string') {
-            data = {
-                data: data
-            };
-        }
-
         window.IPC.send('settings',  {
             action: name,
-            data
+            data:   data
         });
     }
 

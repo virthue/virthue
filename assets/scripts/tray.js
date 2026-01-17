@@ -1,4 +1,4 @@
-import Events from '../../src/ui/Events.js';
+import Events from '../../src/types/Events.js';
 
 export default class Tray {
     Device = null;
@@ -8,6 +8,13 @@ export default class Tray {
 
         window.IPC.on('bridge', (packet) => {
             switch(packet.action) {
+                case 'SHOW':
+                    this.send('INIT');
+                break;
+                case 'QR_HIDE':
+                    console.log(packet);
+                    document.querySelector('button[data-action="qr"]').style.display = packet.data ? 'block' : 'none';
+                break;
                 case Events.QR_RESPONSE:
                     this.showQRCode(packet.data);
                 break;
@@ -69,14 +76,9 @@ export default class Tray {
     }
 
     send(name, data) {
-        if(typeof(data) === 'string') {
-            data = {
-                data: data
-            };
-        }
         window.IPC.send('bridge',  {
             action: name,
-            ...data
+            data:   data
         });
     }
 }

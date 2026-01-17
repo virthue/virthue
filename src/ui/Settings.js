@@ -7,6 +7,7 @@ import {
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
+import Support from "../types/Support.js";
 
 export default new class Settings {
     Window = null;
@@ -72,6 +73,70 @@ export default new class Settings {
                         default:
                             console.warn('Unknown URL instruction:', packet.data);
                         break;
+                    }
+                break;
+                case 'SETTINGS_SAVE':
+                    let restart = false;
+
+                    switch(packet.data?.target) {
+                        case 'bridge':
+                            if(packet.data?.model) {
+                                this.Bridge.getConfiguration().setModel(packet.data?.model);
+                            }
+
+                            if(packet.data?.name) {
+                                this.Bridge.getConfiguration().setName(packet.data?.name);
+                            }
+
+                            if(packet.data?.id) {
+                                this.Bridge.getConfiguration().setId(packet.data?.id);
+                            }
+
+                            if(packet.data?.mac) {
+                                this.Bridge.getConfiguration().setMACAddress(packet.data?.mac);
+                            }
+
+                            if(packet.data?.port && this.Bridge.getConfiguration().getPort() !== Number(packet.data.port)) {
+                                this.Bridge.getConfiguration().setPort(packet.data.port);
+                                restart = true;
+                            }
+
+                            if(packet.data?.tls && this.Bridge.getConfiguration().getSecuredPort() !== Number(packet.data.tls)) {
+                                this.Bridge.getConfiguration().setSecuredPort(packet.data.tls);
+                                restart = true;
+                            }
+
+                            this.Bridge.getConfiguration().store();
+                        break;
+                        case 'flags':
+                            let old_secured     = this.Bridge.getConfiguration().supports(Support.SECURED);
+                            let old_description = this.Bridge.getConfiguration().supports(Support.DESCRIPTION);
+
+                            for(const support in Support) {
+                                let value           = Support[support];
+                                let active  = (typeof(packet.data[value]) !== 'undefined');
+
+                                if(active) {
+                                    this.Bridge.getConfiguration().addSupportFlag(value);
+                                } else {
+                                    this.Bridge.getConfiguration().removeSupportFlag(value);
+                                }
+
+                                if(value === Support.SECURED && old_secured !== active) {
+                                    restart = true;
+                                }
+
+                                if(value === Support.DESCRIPTION && old_description !== active) {
+                                    restart = true;
+                                }
+                            }
+
+                            this.Bridge.getConfiguration().store();
+                        break;
+                    }
+
+                    if(restart) {
+                        console.log('Restarting Bridge...');
                     }
                 break;
             }

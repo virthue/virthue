@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import User from './User.js';
 
 /*
@@ -10,6 +16,7 @@ export default class Authentication {
     constructor(bridge) {
         this.Bridge = bridge;
 
+        // @ToDo only temporary for testing purposes on development!
         let root = this.#createUser('root');
         root.setToken('root');
     }

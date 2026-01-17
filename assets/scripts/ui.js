@@ -1,4 +1,4 @@
-import Events from "../../src/ui/Events.js";
+import Events from "../../src/types/Events.js";
 
 window.UI = (new class UI {
     Modules = {};
@@ -9,6 +9,8 @@ window.UI = (new class UI {
         } else {
             this.#boot();
         }
+
+        this.send('INIT');
     }
 
     #boot() {

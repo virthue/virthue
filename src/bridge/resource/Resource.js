@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import Crypto from 'node:crypto';
 
 export default class Resource {

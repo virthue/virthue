@@ -1,14 +1,14 @@
 import * as Events from 'node:events';
 import Discovery from './network/discovery/Discovery.js';
 import WebServer from './network/server/WebServer.js';
-import ResourceType from './resource/ResourceType.js';
+import ResourceType from '../types/ResourceType.js';
 import Resources from './resource/Resources.js';
 import LinkButton from './LinkButton.js';
 import Authentication from "./Authentication.js";
 import FileSystem from "node:fs";
 import Utils from "../Utils.js";
 import Configuration from "./Configuration.js";
-import Support from "./Support.js";
+import Support from "../types/Support.js";
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;
@@ -108,7 +108,7 @@ export default class Bridge extends Events.EventEmitter {
         /* @ToDo Move to TimeZone Plugin */
         server.add().get('/api/:token/info/timezones', {
             preHandler: async (request, reply) => await this.Authentication.checkAuth(request, reply)
-        }, async (request, reply) => {
+        }, async () => {
             return FileSystem.readFileSync(Utils.getPath('src', 'plugins', 'TimeZone', 'timezones.json'));
         });
 
@@ -130,7 +130,7 @@ export default class Bridge extends Events.EventEmitter {
             };
         });
 
-        /* Bridge Infos without Auth */
+        /* @ToDo Move to Description Plugin */
         if(this.Configuration.supports(Support.DESCRIPTION)) {
             server.add().get('/Description.xml', async () => {
                 return `<?xml version="1.0" encoding="UTF-8" ?>
@@ -160,7 +160,7 @@ export default class Bridge extends Events.EventEmitter {
         /* Detailed bridge config */
         server.add().get('/api/:token/:config?', {
             preHandler: async (request, reply) => await this.Authentication.checkAuth(request, reply)
-        }, async (request, reply) => {
+        }, async () => {
             // @ToDo Plugins hook into these to add some entries,..
             return {
                 name:                   this.Configuration.getName(),
