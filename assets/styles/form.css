@@ -1,0 +1,168 @@
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-width: 600px;
+    width: 100%;
+}
+
+form ui-entry {
+    display: grid;
+    grid-template-columns: minmax(max-content, 120px) 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+form ui-entry:has(input[type="checkbox"]) {
+    grid-template-columns: 1fr 1fr auto;
+}
+
+form ui-entry h1 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #444444;
+    margin: 6px 0 -5px 0;
+}
+
+form ui-entry ui-entries {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+form ui-entry ui-entries small {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    color: #9CA3AF;
+}
+
+form ui-entry ui-entries ui-text,
+form ui-entry ui-entries input,
+form ui-entry ui-entries select {
+    flex: 0 1 auto;
+    min-width: 0;
+    width: 80px;
+}
+
+form ui-entry ui-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+form ui-entry ui-group button {
+    flex: 0 0 auto;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid #1C1C1D;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    background: #232324;
+    color: #F3F4F6;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form ui-entry ui-group button:hover {
+    background: #2C2C2D;
+    border-color: #6B7280;
+}
+
+form ui-entry ui-group button:active {
+    background: #1C1C1D;
+}
+
+form ui-entry ui-group button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #232324 !important;
+    border-color: #1C1C1D !important;
+}
+
+form ui-entry ui-group button i {
+    font-size: 1rem;
+}
+
+form ui-entry ui-group input,
+form ui-entry ui-group select {
+    flex: 1;
+    min-width: 0;
+}
+
+form ui-entry label {
+    font-weight: 600;
+    color: #E5E7EB;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+form ui-entry select,
+form ui-entry input {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #1C1C1D;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    background: #232324;
+    color: #F3F4F6;
+    transition: border-color 0.2s ease;
+}
+
+form ui-entry ui-text {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    color: #F3F4F6;
+}
+
+form ui-entry select:focus,
+form ui-entry input:focus {
+    outline: none;
+    border-color: #60A5FA;
+}
+
+form ui-entry select:hover,
+form ui-entry input:hover {
+    border-color: #6B7280;
+}
+
+form ui-entry select:disabled,
+form ui-entry input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #1C1C1D !important;
+    background: #232324 !important;
+    color: #F3F4F6 !important;
+}
+
+/* Checkboxes */
+form ui-entry input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+}
+
+form ui-entry input[type="checkbox"]:checked {
+    background: #60A5FA;
+    border-color: #60A5FA;
+}
+
+form ui-entry input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #FFFFFF;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}

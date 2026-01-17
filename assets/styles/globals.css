@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-smoothing: antialiased;
+    font-smooth: always;
+    text-rendering: optimizeLegibility;
+    font-family: 'Google Sans Flex', Arial, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: 'GRAD' 0;
+    scrollbar-color: #4A4A4B #1A1A1B;
+}
+
+:not(input, textarea) {
+    user-select: none;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1A1A1B;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4A4A4B;
+    border-radius: 0;
+    border: 2px solid #1A1A1B;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5A5A5B;
+}
+
+/* Links */
+a {
+    color: #0F70B8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}

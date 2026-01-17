@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>virthue</title>
+        <link rel="stylesheet" href="../styles/fonts.css" />
+        <link rel="stylesheet" href="../styles/globals.css" />
+        <link rel="stylesheet" href="../styles/icons.css" />
+        <link rel="stylesheet" href="../styles/tray.css" />
+    </head>
+    <body>
+        <main data-qr="false">
+            <section>
+                <ui-qr>
+                    <p>Scan with your App</p>
+                    <picture></picture>
+                </ui-qr>
+                <object data="../devices/UNKNOWN.svg" type="image/svg+xml"></object>
+            </section>
+            <footer>
+                <button data-action="qr" class="left">
+                    <i class="bi bi-qr-code"></i>
+                </button>
+                <span></span>
+                <button data-action="settings" class="right">
+                    <i class="bi bi-gear"></i>
+                </button>
+            </footer>
+        </main>
+        <script type="module" src="../scripts/ui.js" data-modules="Tray"></script>
+    </body>
+</html>

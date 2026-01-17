@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>virthue Settings</title>
+        <link rel="stylesheet" href="../styles/fonts.css" />
+        <link rel="stylesheet" href="../styles/globals.css" />
+        <link rel="stylesheet" href="../styles/icons.css" />
+        <link rel="stylesheet" href="../styles/list.css" />
+        <link rel="stylesheet" href="../styles/layout.css" />
+        <link rel="stylesheet" href="../styles/form.css" />
+        <link rel="stylesheet" href="../styles/window.css" />
+        <style>
+            #bridge:checked ~ nav label[for="bridge"],
+            #flags:checked ~ nav label[for="flags"],
+            #resources:checked ~ nav label[for="resources"],
+            #accounts:checked ~ nav label[for="accounts"],
+            #about:checked ~ nav label[for="about"] {
+                background: rgba(255, 255, 255, 0.1);
+                color: #0F70B8;
+            }
+
+            #bridge:checked ~ section[data-name="bridge"],
+            #bridge:checked ~ footer > section[data-name="bridge"],
+
+            #flags:checked ~ section[data-name="flags"],
+            #flags:checked ~ footer > section[data-name="flags"],
+
+            #resources:checked ~ section[data-name="resources"],
+            #resources:checked ~ footer > section[data-name="resources"],
+
+            #accounts:checked ~ section[data-name="accounts"],
+            #accounts:checked ~ footer > section[data-name="accounts"],
+
+            #about:checked ~ section[data-name="about"],
+            #about:checked ~ footer > section[data-name="about"] {
+                display: flex !important;
+            }
+
+            section[data-name="about"] [data-layout="horizontal"] {
+                max-width: 600px;
+                align-self: center;
+                text-align: justify;
+            }
+
+            section[data-name="about"] object {
+                width: 200px;
+                height: auto;
+                padding: 35px;
+                margin: 10px;
+            }
+
+            section[data-name="accounts"] {
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <input type="radio" name="tabs" id="bridge" checked />
+            <input type="radio" name="tabs" id="flags" />
+            <input type="radio" name="tabs" id="resources" />
+            <input type="radio" name="tabs" id="accounts" />
+            <input type="radio" name="tabs" id="about" />
+
+            <nav>
+                <label for="bridge">
+                    <i class="bi bi-dice-1"></i>
+                    <small>Bridge</small>
+                </label>
+                <label for="resources">
+                    <i class="bi bi-leaf-fill"></i>
+                    <small>Resources</small>
+                </label>
+                <label for="flags">
+                    <i class="bi bi-flag"></i>
+                    <small>Flags</small>
+                </label>
+                <label for="accounts">
+                    <i class="bi bi-key"></i>
+                    <small>Accounts</small>
+                </label>
+                <label for="about">
+                    <i class="bi bi-info-circle"></i>
+                    <small>About</small>
+                </label>
+            </nav>
+
+            <section data-name="bridge">
+                <form>
+                    <ui-entry>
+                        <h1>General</h1>
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="model">Model</label>
+                        <select id="model" name="model">
+                            <option value="BSB001">Philips Hue V1 (BSB001)</option>
+                            <option value="BSB002">Philips Hue Bridge (BSB002)</option>
+                            <option value="BSB003">Philips Hue Bridge Pro (BSB003)</option>
+                        </select>
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="name">Name</label>
+                        <input id="name" name="name" type="text" />
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="id">ID</label>
+                        <ui-group>
+                            <input id="id" name="id" type="text" />
+                            <button type="button" data-action="random:id">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </ui-group>
+                    </ui-entry>
+
+                    <ui-entry>
+                        <h1>Network Settings</h1>
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="mac">MAC</label>
+                        <ui-group>
+                            <input id="mac" name="mac" type="text" />
+                            <button type="button" data-action="random:mac">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </ui-group>
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="address">IP-Address</label>
+                        <input id="address" name="address" type="text" />
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="port">Server-Ports</label>
+                        <ui-entries>
+                            <small>HTTP</small> <input id="port" min="1" max="65535" name="port" type="number" />
+                            <small>HTTPS</small> <input id="tls" min="1" max="65535" name="tls" type="number" />
+                        </ui-entries>
+                    </ui-entry>
+                </form>
+            </section>
+
+            <section data-name="flags">
+                <form>
+                    <ui-entry>
+                        <h1>Support-Flags</h1>
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="qr">QR Code</label>
+                        <input id="qr" name="qr" type="checkbox" />
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="description">Old Device-Description</label>
+                        <input id="description" name="description" type="checkbox" />
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="certified">Certified device</label>
+                        <input id="certified" name="certified" type="checkbox" />
+                    </ui-entry>
+                    <ui-entry>
+                        <label for="secured">Secured Connections</label>
+                        <input id="secured" name="secured" type="checkbox" />
+                    </ui-entry>
+                </form>
+            </section>
+
+            <section data-name="resources">
+                Resources
+            </section>
+
+            <section data-name="accounts">
+                <ui-list data-id="accounts">
+                    <ui-header style="grid-template-columns: 1fr 1fr 1fr 1fr  1fr;">
+                        <div>Name</div>
+                        <div>Token</div>
+                        <div>Created</div>
+                        <div>Last Activity</div>
+                        <aside>0 Entries</aside>
+                    </ui-header>
+                    <ui-data></ui-data>
+                </ui-list>
+            </section>
+
+            <section data-name="about">
+                <div data-layout="horizontal">
+                    <div data-fill="false">
+                        <object data="../icons/logo.svg" type="image/svg+xml"></object>
+                    </div>
+                    <div data-fill="true">
+                        <br />
+                        <br />
+                        <small>virthue is an OpenSource project and has no connection whatsoever to <a data-action="URL_PHILIPS">Philips</a>, <a data-action="URL_PHILIPS_LIGTHNING">Philips Lightning</a>, or their <a data-action="URL_PHILIPS_HUE">Philips Hue</a> products, nor to the manufacturer <a data-action="URL_SIGNIFY">Signify GmbH</a>.</small>
+                        <br />
+                        <br />
+                        <form>
+                            <ui-entry>
+                                <label>Version</label>
+                                <ui-text data-name="version">N/A</ui-text>
+                            </ui-entry>
+                            <ui-entry>
+                                <label>Node</label>
+                                <ui-text data-name="node">N/A</ui-text>
+                            </ui-entry>
+                            <ui-entry>
+                                <label>electron</label>
+                                <ui-text data-name="electron">N/A</ui-text>
+                            </ui-entry>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <section data-name="bridge">
+                    <span></span>
+                    <button data-action="save" class="right">
+                        <i class="bi bi-floppy"></i>
+                        <span>Save</span>
+                    </button>
+                </section>
+                <section data-name="resources">
+                    <button data-action="add" class="left">
+                        <i class="bi bi-plus"></i>
+                        <small>New Resource</small>
+                    </button>
+                    <span></span>
+                    <button data-action="save" class="right">
+                        <i class="bi bi-floppy"></i>
+                        <small>Save</small>
+                    </button>
+                </section>
+                <section data-name="flags">
+                    <span></span>
+                    <button data-action="save" class="right">
+                        <i class="bi bi-floppy"></i>
+                        <small>Save</small>
+                    </button>
+                </section>
+                <section data-name="accounts">
+                    <!--<button data-action="add" class="left">
+                        <i class="bi bi-plus"></i>
+                        <small>Create Account</small>
+                    </button>-->
+                    <span></span>
+                </section>
+                <section data-name="about">
+                    <span></span>
+                    <button data-action="GITHUB_ISSUE" class="right">
+                        <i class="bi bi-bug"></i>
+                        <small>Issues</small>
+                    </button>
+                    <button data-action="GITHUB_REPOSITORY" class="right">
+                        <i class="bi bi-github"></i>
+                        <small>GitHub</small>
+                    </button>
+                </section>
+            </footer>
+        </main>
+        <script type="module" src="../scripts/ui.js" data-modules="Settings"></script>
+    </body>
+</html>

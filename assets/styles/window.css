@@ -1,0 +1,139 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    color: #FFFFFF;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+    background: #2A2A2B;
+    border: 1px solid #3F4041;
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+main input[type="radio"] {
+    display: none;
+}
+
+main nav {
+    flex: 0 0 auto;
+    padding: 0 2px;
+    border-bottom: 1px solid #1C1C1D;
+    background: #232324;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+nav label {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.5rem;
+    margin: 4px 2px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    border-radius: 5px;
+}
+
+nav label:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+nav label i {
+    flex: 1;
+}
+
+nav label span {
+    flex: 0
+}
+
+main section {
+    display: none !important;
+    flex: 1 1 auto;
+    padding: 15px;
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: center;
+    place-content: start;
+}
+
+main section form {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+main footer {
+    display: flex;
+    flex: 0 0 auto;
+    border-top: 1px solid #1C1C1D;
+    background: #232324;
+    flex-direction: row;
+}
+
+main footer section {
+    display: none;
+    flex: 1 1 auto;
+    padding: 5px !important;
+    overflow-y: auto;
+    flex-direction: row;
+    align-items: center;
+    place-content: center;
+}
+
+main footer span {
+    flex: 1 1 auto;
+}
+
+main footer button {
+    flex: 0 0 auto;
+    appearance: none;
+    background: none;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    font-size: 14px !important;
+    flex-direction: row;
+    padding: 0.5rem 1rem;
+    margin: 2px;
+    color: #ACACAC;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+}
+
+main footer button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+}
+
+main footer button i {
+    flex: 0;
+    margin: 0 5px 0 0;
+    font-size: 18px !important;
+}
+
+main footer button small {
+    flex: 1;
+    font-size: 14px !important;
+}
+
+main footer .left {
+    align-self: start;
+}
+
+main footer .right {
+    align-self: end;
+}

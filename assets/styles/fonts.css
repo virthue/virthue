@@ -1,0 +1,24 @@
+/* GoogleSans (https://fonts.google.com/specimen/Google+Sans) */
+@font-face {
+    font-display: swap;
+    font-family: 'Google Sans Flex';
+    font-style: normal;
+    font-weight: 100;
+    src: url('../fonts/google-sans-flex-v16-latin-100.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Google Sans Flex';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/google-sans-flex-v16-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Google Sans Flex';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/google-sans-flex-v16-latin-700.woff2') format('woff2');
+}

@@ -1,0 +1,20 @@
+[data-layout] {
+    display: flex;
+}
+
+[data-layout="horizontal"] {
+    flex-direction: row;
+    align-items: start;
+}
+
+[data-layout="vertical"] {
+    flex-direction: row;
+}
+
+[data-fill="false"] {
+    flex: 0;
+}
+
+[data-fill="true"] {
+    flex: 1;
+}

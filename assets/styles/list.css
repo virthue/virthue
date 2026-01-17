@@ -1,0 +1,115 @@
+ui-list {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+}
+
+ui-list ui-header {
+    display: grid;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 0.25rem 0;
+    cursor: default;
+    border-bottom: 1px solid #1C1C1D;
+    background: #232324;
+    flex: 0 0 auto;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+ui-list ui-header > div {
+    padding: 2px 2px 2px 7px;
+}
+
+ui-list ui-header aside {
+    text-align: right;
+    font-weight: normal;
+    padding-right: 7px;
+    font-size: 11px;
+}
+
+ui-list ui-data {
+    flex: 1;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+ui-list ui-data ui-entry {
+    padding: 0.25rem 0;
+    position: relative;
+    border-bottom: 1px solid #6B7280;
+    display: grid;
+    font-size: 0.8rem;
+    cursor: pointer !important;
+}
+
+ui-list ui-data ui-entry[data-show="false"] {
+    display: none;
+}
+
+ui-list ui-data ui-entry * {
+    cursor: pointer !important;
+}
+
+ui-list ui-data ui-entry:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+ui-list ui-data ui-entry i {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+ui-list ui-data ui-entry > div {
+    padding-left: 7px;
+}
+
+ui-list ui-data ui-entry > div small {
+    color: #B6B7AB;
+}
+
+ui-list ui-data ui-entry::before {
+    content: "";
+    display: inline-block;
+    font-family: bootstrap-icons;
+    position: absolute;
+    top: 5px;
+    left: 6px;
+}
+
+ui-list ui-data ui-entry[data-filter] {
+    padding-left: 18px;
+}
+
+ui-list ui-data ui-entry[data-filter="chat"]::before {
+    content: "\f267";
+    color: #419DFF;
+}
+
+ui-list ui-data ui-entry[data-filter="card"]::before {
+    content: "\f5a0";
+    color: #17B94A;
+}
+
+
+ui-list ui-data ui-entry div:first-child::before {
+    content: "";
+    font-family: bootstrap-icons;
+    padding-right: 7px;
+}
+
+ui-list ui-data ui-entry[data-type="INPUT"] div:first-child::before {
+    content: "\F126";
+    color: #005e00;
+}
+
+ui-list ui-data ui-entry[data-type="OUTPUT"] div:first-child::before {
+    content: "\F147";
+    color: #9c0000;
+}

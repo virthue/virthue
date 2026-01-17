@@ -1,0 +1,17 @@
+{
+    "network": {
+        "mac": "00:00:00:00:00:00",
+        "address": "auto",
+        "port": 80,
+        "tls": 443
+    },
+    "bridge": {
+        "name": "My virthue",
+        "id": "0000000000000000",
+        "model": "BSB003",
+        "version": {
+            "number": 2071153010,
+            "api": "1.74.0"
+        }
+    }
+}
