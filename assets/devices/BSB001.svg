@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="BSB001" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 224 224" xml:space="preserve">
+	<!--
+		Manual created with love in gemany.
+		© 2025 by Adrian Preuß, Licensed under MIT
+	-->
+
+	<defs>
+		<linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+	        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+			<stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+	    </linearGradient>
+
+		<linearGradient id="buttonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="1.100000e-02" style="stop-color:#747474" />
+			<stop offset="4.400000e-02" style="stop-color:#7D7D7D" />
+			<stop offset="0.166" style="stop-color:#9F9F9F" />
+			<stop offset="0.276" style="stop-color:#B9B9B9" />
+			<stop offset="0.368" style="stop-color:#C8C8C8" />
+			<stop offset="0.433" style="stop-color:#D0D0D0" />
+			<stop offset="0.581" style="stop-color:#DFDFDF" />
+			<stop offset="0.797" style="stop-color:#F6F6F6" />
+			<stop offset="0.914" style="stop-color:#FFFFFF" />
+	     </linearGradient>
+	</defs>
+
+	<style>
+		@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #device {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+		#button:hover {
+			cursor: pointer;
+			opacity: 0.8;
+			fill: url(#buttonHover);
+		}
+	</style>
+
+	<g id="device">
+		<g id="case">
+			<circle id="border" fill="#444444" cx="112.2" cy="112.2" r="112" />
+			<circle id="body" fill="url(#mainGradient)" cx="112.2" cy="112.2" r="112" />
+			
+			<g id="logo" fill="#DDDDDD">
+				<path id="P" d="M78.8,169.4h5.9c1.3,0,2.2,0.3,2.9,0.9c0.6,0.6,1,1.5,1,2.6c0,1.2-0.3,2.1-1,2.7s-1.8,1-3.2,1h-1.9v4.2h-3.6V169.4z M82.4,174.2h0.9c0.7,0,1.2-0.1,1.4-0.4c0.3-0.2,0.4-0.5,0.4-0.9c0-0.4-0.1-0.7-0.4-0.9c-0.2-0.2-0.7-0.4-1.4-0.4h-1V174.2z" />
+				<path id="H" d="M90.4,169.4h3.5v4h3.9v-4h3.6v11.5h-3.6v-4.6h-3.9v4.6h-3.5V169.4z" />
+				<path id="I" d="M103.9,169.4h3.5v11.5h-3.5V169.4z" />
+				<path id="L" d="M109.9,169.4h3.5v8.6h5.5v2.8h-9.1V169.4z" />
+				<path id="I" d="M120.8,169.4h3.5v11.5h-3.5V169.4z" />
+				<path id="P" d="M126.8,169.4h5.9c1.3,0,2.2,0.3,2.9,0.9c0.6,0.6,1,1.5,1,2.6c0,1.2-0.3,2.1-1,2.7s-1.8,1-3.2,1h-1.9v4.2h-3.6V169.4z M130.4,174.2h0.9c0.7,0,1.2-0.1,1.4-0.4c0.3-0.2,0.4-0.5,0.4-0.9c0-0.4-0.1-0.7-0.4-0.9c-0.2-0.2-0.7-0.4-1.4-0.4h-1V174.2z" />
+				<path id="S" d="M137.8,177l3.4-0.2c0.1,0.5,0.2,1,0.4,1.2c0.4,0.5,0.9,0.7,1.6,0.7c0.5,0,0.9-0.1,1.2-0.4s0.4-0.5,0.4-0.8 c0-0.3-0.1-0.6-0.4-0.8c-0.3-0.2-0.9-0.5-1.8-0.7c-1.6-0.3-2.7-0.8-3.3-1.4c-0.7-0.6-1-1.3-1-2.2c0-0.6,0.2-1.1,0.5-1.7 c0.3-0.5,0.9-0.9,1.5-1.2c0.7-0.3,1.6-0.4,2.8-0.4c1.5,0,2.6,0.3,3.3,0.8c0.8,0.5,1.2,1.4,1.4,2.6l-3.3,0.2 c-0.1-0.5-0.3-0.9-0.6-1.1c-0.3-0.2-0.7-0.4-1.2-0.4c-0.4,0-0.7,0.1-0.9,0.3c-0.2,0.2-0.3,0.4-0.3,0.6c0,0.2,0.1,0.3,0.3,0.5 c0.2,0.2,0.6,0.3,1.2,0.4c1.5,0.3,2.7,0.7,3.3,1c0.7,0.3,1.2,0.8,1.5,1.3s0.5,1.1,0.5,1.7c0,0.7-0.2,1.4-0.6,2s-1,1.1-1.7,1.4 c-0.7,0.3-1.6,0.5-2.8,0.5c-1.9,0-3.3-0.4-4-1.1S137.9,178.2,137.8,177z" />
+			</g>
+		</g>
+
+		<g id="button">
+			<path id="conture" fill="url(#buttonGradient)" opacity="0.6" d="M113.2,133.1c12.1,0,22-9.9,22-22s-9.9-22-22-22s-22,9.9-22,22S101.1,133.1,113.2,133.1z" />
+			<path id="ring" fill="#DDDDDD" d="M113.2,132.7c11.8,0,21.5-9.6,21.5-21.5s-9.7-21.5-21.5-21.5s-21.5,9.6-21.5,21.5 S101.3,132.7,113.2,132.7z" />
+			<path fill="#EEEEEE" d="M113.2,126.2c8.3,0,15-6.7,15-15s-6.7-15-15-15s-15,6.7-15,15S104.9,126.2,113.2,126.2L113.2,126.2z" />
+		</g>
+
+		<g id="status">
+			<g id="icons" transform="translate(27, 10)">
+				<g id="power" transform="translate(0, 0)">
+					<g fill="none" stroke="#AAAAAA" stroke-width="0.75" stroke-linecap="round">
+						<path class="st5" d="M33.1,99.2c2.2,1.6,2.3,4.6,0.4,5.9c-1.6,1.1-3.7,1.1-4.9-0.5c-1.3-1.3-1.2-4.7,0.8-5.4" />
+						<line class="st6" x1="31.1" y1="98" x2="31.1" y2="102" />
+					</g>
+				</g>
+
+				<g id="connection" transform="translate(14, 0)">
+					<g fill="none" stroke="#AAAAAA" stroke-width="0.75" stroke-linecap="square" stroke-linejoin="square">
+						<line x1="33.3" y1="62.5" x2="33.3" y2="63.5" />
+						<line x1="28.5" y1="63.7" x2="37.5" y2="63.7" />
+						<line x1="30.3" y1="63.9" x2="30.3" y2="64.7" />
+						<line x1="36" y1="63.9" x2="36" y2="64.7" />
+						<rect x="34.5" y="65" width="3" height="2" />
+						<rect x="28.5" y="65" width="3" height="2" />
+						<rect x="31.6" y="60" width="3.2" height="2" />
+					</g>
+				</g>
+
+				<g id="status" transform="translate(25, -1)">
+					<g fill="#AAAAAA">
+						<path class="st9" d="M60.7,50.9c1.9,0,3.3,0.5,3.3,1.2s-1.5,1.2-3.3,1.2s-3.3-0.5-3.3-1.2S58.9,50.9,60.7,50.9 M60.7,50.4 c-2.2,0-4,0.7-4,1.8c0,1,1.8,1.8,4,1.8c2.2,0,4-0.7,4-1.8C64.6,51.1,62.9,50.4,60.7,50.4L60.7,50.4z" />
+						<path class="st9" d="M60.5,44.3c2.5,0,4.6,2.1,4.6,4.6c0,2.5-2.1,4.6-4.6,4.6s-4.6-2.2-4.6-4.7C55.9,46.4,58,44.3,60.5,44.3 M60.5,43.4c-3,0-5.5,2.5-5.5,5.5c0,3,2.5,5.5,5.5,5.5s5.5-2.5,5.5-5.5S63.5,43.4,60.5,43.4L60.5,43.4z" />
+						<path class="st9" d="M60.5,44.3c0.8,0,1.3,2.1,1.3,4.6c0,2.5-0.6,4.6-1.3,4.6s-1.3-2.1-1.3-4.6C59.2,46.4,59.7,44.3,60.5,44.3 M60.5,43.4c-1.4,0-2,2.9-2,5.5c0,2.6,0.7,5.5,2,5.5s2-2.9,2-5.5S61.9,43.4,60.5,43.4L60.5,43.4z" />
+						<path class="st9" d="M60.5,44.1c1.9,0,3.3,0.5,3.3,1.2s-1.5,1.2-3.3,1.2c-1.9,0-3.3-0.5-3.3-1.2S58.7,44.1,60.5,44.1 M60.5,43.6c-2.2,0-4,0.7-4,1.8c0,1,1.8,1.8,4,1.8c2.2,0,4-0.7,4-1.8C64.4,44.3,62.8,43.6,60.5,43.6L60.5,43.6z" />
+					</g>
+				</g>
+
+				<g id="antenna" transform="translate(20, 0)">
+					<g fill="#AAAAAA">
+						<circle cx="100.7" cy="102" r="1" />
+					</g>
+					<g fill="none" stroke="#AAAAAA" stroke-width="0.75" stroke-linecap="round" stroke-miterlimit="10">
+						<line x1="100.7" y1="102.3" x2="100.7" y2="109.1" />
+						<g id="sides">
+							<g id="inner">
+								<path d="M97.8,99.3c-1.1,1.5-0.9,3.9,0.2,5" />
+								<path d="M103.3,104.3c1.1-1.5,0.9-3.9-0.2-5" />
+							</g>
+							<g id="outer">
+								<path d="M104.8,106.4c2.5-2.8,2-7.3-0.4-9.3" />
+								<path d="M96.1,97.1c-2.5,2.8-2,7.3,0.4,9.3" />
+							</g>
+						</g>
+					</g>
+				</g>
+			</g>
+			<g id="lights" transform="translate(27, 10)">
+				<g id="power" transform="translate(0, 0)">
+					<ellipse fill="var(--power, #DDDDDDDD)" cx="47.7" cy="101.3" rx="3.5" ry="3.5" />
+				</g>
+
+				<g id="connection" transform="translate(14, 0)">
+					<ellipse fill="var(--connection, #DDDDDDDD)" cx="45.5" cy="74.4" rx="3.5" ry="3.5" />
+				</g>
+
+				<g id="status" transform="translate(25, -1)">
+					<ellipse fill="var(--status, #DDDDDDDD)" cx="61.5" cy="63.6" rx="3.5" ry="3.5" />
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
