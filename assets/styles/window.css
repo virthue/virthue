@@ -35,6 +35,10 @@ main nav {
     overflow-x: auto;
 }
 
+nav span {
+    flex: 1
+}
+
 nav label {
     display: flex;
     flex-direction: column;
