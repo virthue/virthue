@@ -4,9 +4,16 @@ import Utils from '../../src/Utils.js';
 (new class LicenseBuilder {
     Package = null;
     Locking = null;
+    License = null;
 
     constructor() {
         console.log('Building licenses...');
+
+        try {
+            this.License = FileSystem.readFileSync(Utils.getPath('LICENSE'), 'utf-8');
+        } catch(error) {
+            /* Do Nothing */
+        }
 
         try {
             this.Package = JSON.parse(
@@ -61,6 +68,12 @@ import Utils from '../../src/Utils.js';
 
         try {
             FileSystem.writeFileSync(Utils.getPath('htdocs', 'licenses', 'packages.json'), JSON.stringify(licenses, null, 4));
+        } catch(error) {
+            /* Do Nothing */
+        }
+
+        try {
+            FileSystem.writeFileSync(Utils.getPath('htdocs', 'licenses', 'LICENSE'), this.License);
         } catch(error) {
             /* Do Nothing */
         }

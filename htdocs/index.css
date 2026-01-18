@@ -61,8 +61,10 @@ body {
 
 header {
   flex: 0;
-  background-color: #000000;
-  background: linear-gradient(to bottom, #505050 0%,#000000 100%);
+  background: #000000 linear-gradient(to bottom,
+    #505050,
+    #000000
+  );
   position: relative;
   padding: 0 20px;
   line-height: 51px;
@@ -96,6 +98,17 @@ main {
   justify-content: center;
 }
 
+main ui-license,
+main ui-licenses {
+  display: block;
+  position: relative;
+  margin: 50px 0 50px 0;
+  background: #1A1A1B;
+  border: 1px solid #1A1A1B;
+  border-radius: 10px;
+  padding: 20px;
+}
+
 main object {
   width: 200px;
   margin: 100px 0 0 0;
@@ -110,13 +123,13 @@ main p {
   text-align: center;
 }
 
+main ui-text {
+  padding: 20px;
+}
+
 main p small {
   display: block;
   font-size: 16px;
-}
-
-main article {
-  margin: 100px 100px 0 100px;
 }
 
 main article h2 {

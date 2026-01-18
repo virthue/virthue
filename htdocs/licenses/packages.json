@@ -54,12 +54,6 @@
         "website": "http://github.com/soldair/node-qrcode"
     },
     {
-        "id": "semver",
-        "version": "7.7.3",
-        "license": "ISC",
-        "website": "https://github.com/npm/node-semver#readme"
-    },
-    {
         "id": "electron",
         "version": "40.0.0",
         "license": "MIT",

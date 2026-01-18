@@ -18,23 +18,27 @@
                 </small>
             </p>
 
-            <article>
+            <ui-license></ui-license>
+
+            <ui-text>
                 <h2>OpenSource Licenses</h2>
 
                 This product contains software licensed under an open source license.
                 The acknowledgments and license texts can be found <strong>below</strong>.
                 Copies of the complete corresponding source code for the copyrighted open source software packages used in this product can be found in accordance with the respective license information.
-                To obtain the source code, visit the <a target="_blank" href="https://github.com/virthue">virthue repository</a>  website.
+                To obtain the source code, visit the <a target="_blank" href="https://github.com/virthue">virthue repository</a> website.
+            </ui-text>
 
-                <ui-licenses>
-                    The licenses are available <a href="/licenses/packages.json" >here</a>.
-                </ui-licenses>
-            </article>
+            <ui-licenses>
+                The licenses are available <a href="/licenses/packages.json" >here</a>.
+            </ui-licenses>
         </main>
         <script type="text/javascript">
             (new class Licenses {
-                File        = '/licenses/packages.json';
-                Container   = null;
+                License             = '/licenses/LICENSE';
+                Licenses            = '/licenses/packages.json';
+                LicenseContainer    = null;
+                LicensesContainer   = null;
 
                 constructor() {
                     if(document.readyState === 'loading') {
@@ -44,9 +48,32 @@
                     }
                 }
 
-                async #load() {
-                    this.Container  = document.querySelector('ui-licenses');
-                    const response  = await fetch(this.File);
+                #load() {
+                    this.LicenseContainer = document.querySelector('ui-license');
+                    this.LicensesContainer = document.querySelector('ui-licenses');
+
+                    this.#loadLicense();
+                    this.#loadLicenses();
+                }
+
+                /* Loading project license */
+                async #loadLicense() {
+                    if(!this.License) {
+                        return
+                    }
+
+                    const response  = await fetch(this.License);
+
+                    this.LicenseContainer.innerText = await response.text();
+                }
+
+                /* Loading additional licenses */
+                async #loadLicenses() {
+                    if(!this.Licenses) {
+                        return;
+                    }
+
+                    const response  = await fetch(this.Licenses);
                     const json      = await response.json();
 
                     for(const entry of json) {
@@ -67,7 +94,7 @@
                         element.innerHTML += `<article><label>Website:</label> <a target="_blank" href="${entry.website}">${entry.website}</a></article>`;
                     }
 
-                    this.Container.append(element);
+                    this.LicensesContainer.append(element);
                 }
             }());
         </script>
