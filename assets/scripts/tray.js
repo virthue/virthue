@@ -25,6 +25,8 @@ export default class Tray {
                 break;
             }
         });
+
+        this.send('INIT');
     }
 
     onAction(action, value) {

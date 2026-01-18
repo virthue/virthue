@@ -9,8 +9,6 @@ window.UI = (new class UI {
         } else {
             this.#boot();
         }
-
-        this.send('INIT');
     }
 
     #boot() {

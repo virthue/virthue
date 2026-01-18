@@ -14,6 +14,7 @@ import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
 import Support from '../types/Support.js';
+import Traffic from './Traffic.js';
 
 export default new class Settings {
     Window = null;
@@ -55,32 +56,35 @@ export default new class Settings {
 
                     this.send('SETTINGS', this.Bridge.getConfiguration().toJSON());
                     this.send('ACCOUNTS', this.Bridge.getAuthentication().toJSON());
-                    break;
+                break;
+                case 'TRAFFIC_OPEN':
+                    Traffic.show(this.Bridge);
+                break;
                 case 'URL_OPEN':
                     switch (packet.data?.data) {
                         case 'URL_PHILIPS':
                             Shell.openPath('https://www.philips.de');
-                            break;
+                        break;
                         case 'URL_PHILIPS_LIGTHNING':
                             Shell.openPath('https://www.lighting.philips.de/prof');
-                            break;
+                        break;
                         case 'URL_PHILIPS_HUE':
                             Shell.openPath('https://www.philips-hue.com/');
-                            break;
+                        break;
                         case 'URL_SIGNIFY':
                             Shell.openPath('https://www.signify.com/');
-                            break;
+                        break;
                         case 'GITHUB_ISSUE':
                             Shell.openPath('https://github.com/virthue/virthue/issues');
-                            break;
+                        break;
                         case 'GITHUB_REPOSITORY':
                             Shell.openPath('https://github.com/virthue/virthue');
-                            break;
+                        break;
                         default:
                             console.warn('Unknown URL instruction:', packet.data);
-                            break;
+                        break;
                     }
-                    break;
+                break;
                 case 'SETTINGS_SAVE':
                     let restart = false;
 
@@ -113,38 +117,39 @@ export default new class Settings {
                             }
 
                             this.Bridge.getConfiguration().store();
-                            break;
+                        break;
                         case 'flags':
                             let old_secured = this.Bridge.getConfiguration().supports(Support.SECURED);
                             let old_description = this.Bridge.getConfiguration().supports(Support.DESCRIPTION);
 
-                            for (const support in Support) {
+                            for(const support in Support) {
                                 let value = Support[support];
                                 let active = (typeof (packet.data[value]) !== 'undefined');
 
-                                if (active) {
+                                if(active) {
                                     this.Bridge.getConfiguration().addSupportFlag(value);
                                 } else {
                                     this.Bridge.getConfiguration().removeSupportFlag(value);
                                 }
 
-                                if (value === Support.SECURED && old_secured !== active) {
+                                if(value === Support.SECURED && old_secured !== active) {
                                     restart = true;
                                 }
 
-                                if (value === Support.DESCRIPTION && old_description !== active) {
+                                if(value === Support.DESCRIPTION && old_description !== active) {
                                     restart = true;
                                 }
                             }
 
                             this.Bridge.getConfiguration().store();
-                            break;
+                        break;
                     }
 
-                    if (restart) {
+                    if(restart) {
+                        // @ToDo: Restart Bridge
                         console.log('Restarting Bridge...');
                     }
-                    break;
+                break;
             }
         });
 
@@ -157,12 +162,12 @@ export default new class Settings {
         }
 
         this.Window = new BrowserWindow({
-            width: this.Size.width,
-            height: this.Size.height,
-            minWidth: this.Size.width,
-            minHeight: (this.Size.height / 2),
-            show: false,
-            frame: true,
+            width:      this.Size.width,
+            height:     this.Size.height,
+            minWidth:   this.Size.width,
+            minHeight:  (this.Size.height / 2),
+            show:       false,
+            frame:      true,
             fullscreenable: false,
             resizable: true,
             transparent: false,

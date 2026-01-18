@@ -29,7 +29,8 @@
   "scripts": {
     "start": "electron .",
     "run": "node .",
-    "build:licenses": "node ./bin/build/licenses.js"
+    "build:licenses": "node ./bin/build/licenses.js",
+    "build:icons": "node ./bin/build/icons.js"
   },
   "dependencies": {
     "@fastify/cors": "^11.2.0",
@@ -42,6 +43,7 @@
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
-    "electron": "^40.0.0"
+    "electron": "^40.0.0",
+    "svg-to-ico": "^1.0.17"
   }
 }

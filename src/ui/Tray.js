@@ -9,6 +9,7 @@ import {
     Tray,
     Menu,
     BrowserWindow,
+    nativeImage as NativeImage,
     ipcMain as IPC,
     screen as Screen
 } from 'electron';
@@ -17,11 +18,13 @@ import QRCode from 'qrcode';
 import Utils from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
+import Traffic from './Traffic.js';
 
 export default new class TrayManager {
     Bridge                  = null;
     Tray                    = null;
     Window                  = null;
+    Menu                    = null;
     Size = {
         width:  326,
         height: 569
@@ -50,14 +53,17 @@ export default new class TrayManager {
 
         //Application.dock.hide()
 
-        this.Tray           = new Tray(Utils.getPath('assets', 'icons', 'logo.ico'));
-        const menu   = Menu.buildFromTemplate([{
+        this.Tray   = new Tray(Utils.getPath('assets', 'icons', 'logo.ico'));
+        this.Menu   = Menu.buildFromTemplate([{
                 label: 'Show Bridge',
+                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'bridge.ico')).resize({ width: 16, height: 16 }),
                 click: () => {
                     this.showWindow();
                 }
             }, {
                 label: 'Press Link-Button',
+            icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.ico')).resize({ width: 16, height: 16 }),
+                enabled: true,
                 click: () => {
                     this.Bridge.getLinkButton().activate();
                 }
@@ -65,8 +71,15 @@ export default new class TrayManager {
                 type: 'separator'
             }, {
                 label: 'Settings',
+            icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.ico')).resize({ width: 16, height: 16 }),
                 click: () => {
                     Settings.show(this.Bridge);
+                }
+            }, {
+                label: 'Traffic',
+                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'traffic.ico')).resize({ width: 16, height: 16 }),
+                click: () => {
+                    Traffic.show(this.Bridge);
                 }
             }, {
                 label: 'Quit',
@@ -74,7 +87,7 @@ export default new class TrayManager {
             }
         ]);
 
-        this.Tray.setContextMenu(menu);
+        this.Tray.setContextMenu(this.Menu);
 
         this.Tray.on('click',  () => {
             this.toggle();
@@ -107,7 +120,9 @@ export default new class TrayManager {
                 break;
                 case Events.SETTINGS_OPEN:
                     Settings.show(this.Bridge);
-                   // Request open Settings-Window
+                break;
+                case 'TRAFFIC_OPEN':
+                    Traffic.show(this.Bridge);
                 break;
             }
         });

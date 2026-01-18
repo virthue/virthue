@@ -73,12 +73,18 @@ main footer span {
 
 main footer button {
     flex: 0 0 auto;
+    margin: 0 0 0 15px;
     appearance: none;
     background: none;
     border: none;
     cursor: pointer;
     color: #ACACAC;
     font-size: 18px;
+}
+
+main footer button:first-child,
+main footer button:last-child {
+    margin: 0;
 }
 
 main footer button:hover {

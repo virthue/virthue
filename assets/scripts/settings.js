@@ -102,6 +102,9 @@ export default class Settings {
 
     onAction(action, value, event) {
         switch(action) {
+            case 'traffic':
+                this.send('TRAFFIC_OPEN');
+            break;
             case 'random':
                 switch(value) {
                     case 'id':
