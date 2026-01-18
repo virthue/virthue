@@ -20,6 +20,12 @@
 - Works as background/server application
 - Optional with administrative/interactive UI (yes, you can press the big button or see LED markers!)
 
+<br />
+<br />
+<br />
+<img width="100%" src="docs/screenshots/Preview.png" />
+<br />
+
 # Upcoming Features
 - Restore/load/clone data from an real bridge
 - Full API-Call logs (if you develop Hue applications)
