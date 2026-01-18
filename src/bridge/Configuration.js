@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import FileSystem from 'node:fs';
 import Events from 'node:events';
 import Interfaces from './network/Interfaces.js';

@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import {
     app as Application,
     BrowserWindow,
@@ -7,7 +13,7 @@ import {
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
-import Support from "../types/Support.js";
+import Support from '../types/Support.js';
 
 export default new class Settings {
     Window = null;

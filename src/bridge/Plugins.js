@@ -1,7 +1,13 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import FileSystem from 'node:fs/promises';
 import Path from 'node:path';
 import URL from 'node:url';
-import Utils from "../Utils.js";
+import Utils from '../Utils.js';
 
 export default class Plugins {
     Bridge           = null;

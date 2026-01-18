@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import Plugin from '../../bridge/Plugin.js';
 
 export default class Capabilities extends Plugin {

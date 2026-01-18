@@ -1,15 +1,20 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import * as Events from 'node:events';
-import FileSystem from 'node:fs';
 import Discovery from './network/discovery/Discovery.js';
 import WebServer from './network/server/WebServer.js';
 import ResourceType from '../types/ResourceType.js';
 import Resources from './resource/Resources.js';
 import LinkButton from './LinkButton.js';
-import Authentication from "./Authentication.js";
-import Configuration from "./Configuration.js";
-import Support from "../types/Support.js";
-import Plugins from "./Plugins.js";
-import Utils from "../Utils.js";
+import Authentication from './Authentication.js';
+import Configuration from './Configuration.js';
+import Support from '../types/Support.js';
+import Plugins from './Plugins.js';
+import Utils from '../Utils.js';
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;

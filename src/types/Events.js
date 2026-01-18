@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 const Events = {
     BRIDGE_MODEL:   'BRIDGE_MODEL',
     QR_REQUEST:     'QR_REQUEST',

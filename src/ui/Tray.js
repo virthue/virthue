@@ -1,3 +1,9 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import {
     app as Application,
     Tray,
@@ -11,7 +17,6 @@ import QRCode from 'qrcode';
 import Utils from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
-import Support from "../types/Support.js";
 
 export default new class TrayManager {
     Bridge                  = null;
