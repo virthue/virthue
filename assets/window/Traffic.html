@@ -11,35 +11,41 @@
         <link rel="stylesheet" href="../styles/form.css" />
         <link rel="stylesheet" href="../styles/window.css" />
         <style>
-            #traffic:checked ~ nav label[for="traffic"] {
+            nav label[data-active="true"] {
                 background: rgba(255, 255, 255, 0.1);
                 color: #0F70B8;
             }
 
-            #traffic:checked ~ section[data-name="traffic"],
-            #traffic:checked ~ footer > section[data-name="traffic"] {
+            section[data-name="traffic"] {
+                padding: 0;
                 display: flex !important;
             }
         </style>
     </head>
     <body>
         <main>
-            <input type="radio" name="tabs" id="traffic" checked />
-
             <nav>
-                <label data-action="traffic">
-                    <i class="bi bi-arrow-left-right"></i>
-                    <small>Traffic</small>
+                <label data-action="filter:V1" data-active="true">
+                    <i class="bi bi-1-square"></i>
+                    <small>V1</small>
+                </label>
+                <label data-action="filter:V2" data-active="true">
+                    <i class="bi bi-2-square"></i>
+                    <small>V2</small>
+                </label>
+                <label data-action="filter:SSE" data-active="true">
+                    <i class="bi bi-broadcast-pin"></i>
+                    <small>SSE</small>
                 </label>
             </nav>
 
             <section data-name="traffic">
                 <ui-list data-id="traffic">
-                    <ui-header style="grid-template-columns: 1fr 1fr 1fr 1fr  1fr;">
-                        <div>Name</div>
-                        <div>Token</div>
-                        <div>Created</div>
-                        <div>Last Activity</div>
+                    <ui-header style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+                        <div>Time</div>
+                        <div>Type</div>
+                        <div>Direction</div>
+                        <div>Data</div>
                         <aside>0 Entries</aside>
                     </ui-header>
                     <ui-data></ui-data>
