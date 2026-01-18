@@ -1,4 +1,4 @@
-> [!WARNING]
+> [!NOTE]
 > This application is currently **under development**!
 
 <br />
