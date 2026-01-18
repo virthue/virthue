@@ -13,6 +13,13 @@
 <br />
 <br />
 
+# Main Features
+- Fully developed with newest `ES`-Features with `Node.js`
+- Provides ~~full~~ `V1` and `V2` API (includes `SSE`)
+- Plugin based API handling
+- Works as background/server application
+- Optional with administrative UI
+  
 # Supported Bridges
 <table align="center">
   <tr align="center">
