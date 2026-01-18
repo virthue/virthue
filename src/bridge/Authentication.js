@@ -71,6 +71,8 @@ export default class Authentication {
     async checkAuth(request, reply) {
         const { token } = request.params;
 
+        request.authenticated = false;
+
         if(!this.Users.some(user => user.getToken() === token)) {
             return reply.send([{
                 error: {
@@ -81,7 +83,13 @@ export default class Authentication {
             }]);
         }
 
+        request.authenticated = true;
+
         this.Users.find(user => user.getToken() === token).DateLastUsed = new Date();
+    }
+
+    tokenExists(token) {
+        return this.Users.some(user => user.getToken() === token);
     }
 
     #createUser(name) {

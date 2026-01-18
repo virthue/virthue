@@ -1,0 +1,68 @@
+[
+    {
+        "id": "@fastify/cors",
+        "version": "11.2.0",
+        "license": "MIT",
+        "website": "https://github.com/fastify/fastify-cors#readme"
+    },
+    {
+        "id": "@fastify/formbody",
+        "version": "8.0.2",
+        "license": "MIT",
+        "website": "https://github.com/fastify/fastify-formbody#readme"
+    },
+    {
+        "id": "@fastify/static",
+        "version": "9.0.0",
+        "license": "MIT",
+        "website": "https://github.com/fastify/fastify-static"
+    },
+    {
+        "id": "bonjour",
+        "version": "3.5.0",
+        "license": "MIT",
+        "website": "https://github.com/watson/bonjour"
+    },
+    {
+        "id": "fastify",
+        "version": "5.6.2",
+        "license": "MIT",
+        "website": "https://fastify.dev/"
+    },
+    {
+        "id": "fastify-sse-v2",
+        "version": "4.2.1",
+        "license": "MIT",
+        "website": "https://github.com/nodefactoryio/fastify-sse-v2#readme"
+    },
+    {
+        "id": "multicast-dns",
+        "version": "7.2.5",
+        "license": "MIT",
+        "website": "https://github.com/mafintosh/multicast-dns"
+    },
+    {
+        "id": "pino-pretty",
+        "version": "13.1.3",
+        "license": "MIT",
+        "website": "https://github.com/pinojs/pino-pretty#readme"
+    },
+    {
+        "id": "qrcode",
+        "version": "1.5.4",
+        "license": "MIT",
+        "website": "http://github.com/soldair/node-qrcode"
+    },
+    {
+        "id": "semver",
+        "version": "7.7.3",
+        "license": "ISC",
+        "website": "https://github.com/npm/node-semver#readme"
+    },
+    {
+        "id": "electron",
+        "version": "40.0.0",
+        "license": "MIT",
+        "website": "https://github.com/electron/electron#readme"
+    }
+]

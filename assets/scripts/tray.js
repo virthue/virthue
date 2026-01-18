@@ -12,8 +12,7 @@ export default class Tray {
                     this.send('INIT');
                 break;
                 case 'QR_HIDE':
-                    console.log(packet);
-                    document.querySelector('button[data-action="qr"]').style.display = packet.data ? 'block' : 'none';
+                    document.querySelector('button[data-action="qr"]').style.display = packet.data ? 'none' : 'block';
                 break;
                 case Events.QR_RESPONSE:
                     this.showQRCode(packet.data);

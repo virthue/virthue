@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>virthue - The virtual Hue Bridge</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/index.css" />
+    </head>
+    <body>
+        <header>
+            <h1>virthue - The virtual Hue Bridge</h1>
+        </header>
+        <main>
+            <object data="/logo.svg" type="image/svg+xml"></object>
+            <p>
+                Welcome to virthue - The virtual Hue Bridge.
+                <small>
+                    For more information please see our <a target="_blank" href="https://github.com/virthue">GitHub</a> profile.
+                </small>
+            </p>
+
+            <article>
+                <h2>OpenSource Licenses</h2>
+
+                This product contains software licensed under an open source license.
+                The acknowledgments and license texts can be found <strong>below</strong>.
+                Copies of the complete corresponding source code for the copyrighted open source software packages used in this product can be found in accordance with the respective license information.
+                To obtain the source code, visit the <a target="_blank" href="https://github.com/virthue">virthue repository</a>  website.
+
+                <ui-licenses>
+                    The licenses are available <a href="/licenses/packages.json" >here</a>.
+                </ui-licenses>
+            </article>
+        </main>
+        <script type="text/javascript">
+            (new class Licenses {
+                File        = '/licenses/packages.json';
+                Container   = null;
+
+                constructor() {
+                    if(document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', this.#load.bind(this));
+                    } else {
+                        this.#load();
+                    }
+                }
+
+                async #load() {
+                    this.Container  = document.querySelector('ui-licenses');
+                    const response  = await fetch(this.File);
+                    const json      = await response.json();
+
+                    for(const entry of json) {
+                        this.buildEntry(entry);
+                    }
+                }
+
+                buildEntry(entry) {
+                    let element         = document.createElement('section');
+
+                    element.innerHTML   = `<h3>${entry.id} - ${entry.version}</h3>`;
+
+                    if(entry.license) {
+                        element.innerHTML += `<article><label>License:</label> ${entry.license}</article>`;
+                    }
+
+                    if(entry.website) {
+                        element.innerHTML += `<article><label>Website:</label> <a target="_blank" href="${entry.website}">${entry.website}</a></article>`;
+                    }
+
+                    this.Container.append(element);
+                }
+            }());
+        </script>
+    </body>
+</html>

@@ -1,13 +1,35 @@
 import FileSystem from 'node:fs';
+import Plugin from '../../bridge/Plugin.js';
 import Utils from '../../Utils.js';
 
 export default class Timezone extends Plugin {
-    Timezones = [];
+    Name        = 'Timezone';
+    Description = 'Provides Timezone informations for the device';
+    Version     = '1.0.0';
+    Timezones   = [];
 
-    constructor() {
-        super('/info/timezones', [ 'GET' ]);
+    constructor(plugins, bridge) {
+        super(plugins, bridge);
 
-        // @ToDo Check if file exists, JSON parsing
-        this.Timezones = FileSystem.readFileSync(Utils.getPath('src', 'plugins', 'TimeZone', 'timezones.json'));
+        try {
+            this.Timezones = JSON.parse(
+                FileSystem.readFileSync(Utils.getPath('src', 'plugins', 'Timezone', 'timezones.json'), 'utf-8')
+            );
+        } catch(error) {
+            /* Do Nothing */
+        }
+    }
+
+    /* GET /info/timezone */
+    getCustom() {
+        return this.getValues();
+    }
+
+    getSize() {
+        return this.getValues().length;
+    }
+
+    getValues() {
+        return this.Timezones;
     }
 }

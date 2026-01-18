@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-smoothing: antialiased;
+  font-smooth: always;
+  text-rendering: optimizeLegibility;
+  font-family: 'Google Sans Flex', Arial, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: 'GRAD' 0;
+  scrollbar-color: #4A4A4B #1A1A1B;
+}
+
+:not(input, textarea) {
+  user-select: none;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A1B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4A4A4B;
+  border-radius: 0;
+  border: 2px solid #1A1A1B;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5A5A5B;
+}
+
+/* Links */
+a {
+  color: #0F70B8;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+body {
+  line-height: 1;
+  background: #252525;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-family: tahoma, arial, helvetica, sans-serif;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+header {
+  flex: 0;
+  background-color: #000000;
+  background: linear-gradient(to bottom, #505050 0%,#000000 100%);
+  position: relative;
+  padding: 0 20px;
+  line-height: 51px;
+  color: white;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  flex: 1;
+  height: 4px;
+  background: linear-gradient(to right,
+    #BA2C27,
+    #E08424,
+    #F8F7E6,
+    #97C03E,
+    #0F7697
+  );
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main object {
+  width: 200px;
+  margin: 100px 0 0 0;
+}
+
+main p {
+  display: block;
+  font-size: 32px;
+  margin: 50px 0 0 0;
+  line-height: 40px;
+  color: white;
+  text-align: center;
+}
+
+main p small {
+  display: block;
+  font-size: 16px;
+}
+
+main article {
+  margin: 100px 100px 0 100px;
+}
+
+main article h2 {
+  margin: 0 0 20px 0;
+}
+
+main article ui-licenses {
+  display: block;
+  position: relative;
+  margin: 10px 0 0 0;
+}
+
+main section {
+  margin: 20px 0;
+}
+
+main section h3 {
+  color: #8A8A8A;
+}
+
+main section article {
+  margin: 6px 0 0 20px;
+}
+
+main section article label {
+  font-weight: bold;
+  padding: 0 20px 0 0;
+}

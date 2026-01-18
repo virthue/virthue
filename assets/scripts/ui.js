@@ -5,7 +5,7 @@ window.UI = (new class UI {
 
     constructor() {
         if(document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', this.#boot);
+            document.addEventListener('DOMContentLoaded', this.#boot.bind(this));
         } else {
             this.#boot();
         }

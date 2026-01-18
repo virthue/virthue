@@ -1,6 +1,23 @@
 export default class Plugin {
-    constructor(path, methods) {
-        this.Path       = path;
-        this.Methods    = methods;
+    Plugins = null;
+
+    constructor(plugins) {
+        this.Plugins = plugins;
+    }
+
+    getBridge() {
+        return this.Plugins.getBridge();
+    }
+
+    getName() {
+        return this.Name;
+    }
+
+    getDescription() {
+        return this.Description;
+    }
+
+    getVersion() {
+        return this.Version;
     }
 }

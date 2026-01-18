@@ -1,18 +1,20 @@
 import * as Events from 'node:events';
+import FileSystem from 'node:fs';
 import Discovery from './network/discovery/Discovery.js';
 import WebServer from './network/server/WebServer.js';
 import ResourceType from '../types/ResourceType.js';
 import Resources from './resource/Resources.js';
 import LinkButton from './LinkButton.js';
 import Authentication from "./Authentication.js";
-import FileSystem from "node:fs";
-import Utils from "../Utils.js";
 import Configuration from "./Configuration.js";
 import Support from "../types/Support.js";
+import Plugins from "./Plugins.js";
+import Utils from "../Utils.js";
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;
     HTTPS                   = null;
+    Plugins                 = null;
     Discovery               = null;
     Resources               = null;
     Configuration    = new Configuration();
@@ -24,6 +26,7 @@ export default class Bridge extends Events.EventEmitter {
 
         this.Configuration  = new Configuration();
         this.Resources      = new Resources();
+        this.Plugins        = new Plugins(this);
 
         // Loading Resources
         let bridge = this.Resources.add(ResourceType.BRIDGE, {
@@ -72,14 +75,66 @@ export default class Bridge extends Events.EventEmitter {
     }
 
     async #init() {
-        this.HTTP   = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort());
+        const docRoot = Utils.getPath('htdocs');
+
+        await this.Plugins.loadPlugins();
+        console.log(`Loaded ${this.Plugins.getCount()} plugins`);
+
+        this.HTTP   = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot);
         await this.bindREST(this.HTTP);
 
         if(this.Configuration.supports(Support.SECURED)) {
-            this.HTTPS = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true);
+            this.HTTPS = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot);
             await this.bindREST(this.HTTPS);
-        }
 
+            // @docs https://developers.meethue.com/develop/hue-api-v2/migration-guide-to-the-new-hue-api/
+            if(this.Configuration.getVersion() >= 1948086000) {
+                await this.HTTPS.startSSE('/eventstream/clip/v2', [ 'hue-application-key' ],async (request, reply) => {
+                    const appKey = request.headers['hue-application-key'];
+
+                    if (!appKey || !this.Authentication.tokenExists(appKey)) {
+                        return reply.code(403).send({
+                            error: 'Unauthorized',
+                            description: 'Invalid hue-application-key'
+                        });
+                    }
+
+                    reply.raw.writeHead(200, {
+                        'Content-Type':         'text/event-stream',
+                        'Cache-Control':        'no-cache, no-store, must-revalidate',
+                        'Connection':           'keep-alive',
+                        'X-Accel-Buffering':    'no'
+                    });
+
+                    reply.raw.write(':hi\n\n');
+
+                    /** TODO: the original brigde dont send heatbeasts/pings!
+                     *
+                    const heartbeat = setInterval(() => {
+                        reply.raw.write(':heartbeat\n\n');
+                    }, 30000);*/
+
+                    const sendEvent = (events) => {
+                        const id            = Crypto.randomUUID();
+                        const data   = JSON.stringify(events);
+                        reply.raw.write(`id: ${id}\n`);
+                        reply.raw.write(`data: ${data}\n\n`);
+                    };
+
+                    // Event handlers on changes?
+                    //this.eventEmitter.on('state-change', sendEvent);
+
+                    request.raw.on('close', () => {
+                        if(heartbeat) {
+                            clearInterval(heartbeat);
+                        }
+
+                        //this.eventEmitter.off('state-change', sendEvent);
+                        reply.raw.end();
+                    });
+                });
+            }
+        }
 
         this.Discovery = new Discovery(this);
 
@@ -100,188 +155,63 @@ export default class Bridge extends Events.EventEmitter {
         return this.LinkButton;
     }
 
+    getPlugin(name) {
+        return this.Plugins.getPlugin(name);
+    }
+
     async bindREST(server) {
-        /* Authentication */
+        const preHandler = async (request, reply) => await this.Authentication.checkAuth(request, reply);
+
+        /* Dynamical V1 Routes (Plugins) */
+        this.Plugins.registerV1Routes(server, this.Authentication);
+
+        /* Unauthenticated Routes */
         server.add().post('/api', async (request, reply) => await this.Authentication.onRequest(request, reply));
+        server.add().get('/api/config', async (request, response) =>  this.getPlugin('Config').getAll(request, response));
+        server.add().get('/Description.xml', async (request, response) =>  this.getPlugin('Description').getCustom(request, response));
 
-
-        /* @ToDo Move to TimeZone Plugin */
-        server.add().get('/api/:token/info/timezones', {
-            preHandler: async (request, reply) => await this.Authentication.checkAuth(request, reply)
-        }, async () => {
-            return FileSystem.readFileSync(Utils.getPath('src', 'plugins', 'TimeZone', 'timezones.json'));
-        });
-
-        /* Bridge Infos without Auth */
-        server.add().get('/api/config', async () => {
-            this.emit('INITIAL_CONFIG_REQUESTED');
-
+        /* Special Routes with Authentication */
+        server.add().get('/api/:token', { preHandler }, async (request, response) =>  {
+            // @ToDo iterate over all Plugins & check if <Plugin>.exposing = true is & build these dynamically!
             return {
-                name:               this.Configuration.getName(),
-                apiversion:         this.Configuration.getAPIVersion(),
-                swversion:          `${this.Configuration.getVersion()}`,
-                mac:                this.Configuration.getMACAddress(),
-                bridgeid:           this.Configuration.getId(),
-                modelid:            this.Configuration.getModel(),
-                datastoreversion:   '180',
-                factorynew:         false,
-                replacesbridgeid:   null,
-                starterkitid:       ''
-            };
+                lights: {},
+                groups: {},
+                config: this.getPlugin('Config').getAll(request, response),
+                schedules: {},
+                scenes: {},
+                rules: {},
+                resourcelinks: {},
+            }
         });
 
-        /* @ToDo Move to Description Plugin */
-        if(this.Configuration.supports(Support.DESCRIPTION)) {
-            server.add().get('/Description.xml', async () => {
-                return `<?xml version="1.0" encoding="UTF-8" ?>
-                        <root xmlns="urn:schemas-upnp-org:device-1-0">
-                            <specVersion>
-                                <major>1</major>
-                                <minor>0</minor>
-                            </specVersion>
-                            <URLBase>http://${this.Configuration.getIPAddress()}:${this.Configuration.getPort()}/</URLBase>
-                            <device>
-                                <deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
-                                <friendlyName>${this.Configuration.getName()} (${this.Configuration.getIPAddress()})</friendlyName>
-                                <manufacturer>Signify</manufacturer>
-                                <manufacturerURL>http://www.philips-hue.com</manufacturerURL>
-                                <modelDescription>Philips hue Personal Wireless Lighting</modelDescription>
-                                <modelName>Philips hue bridge 2015</modelName>
-                                <modelNumber>${this.Configuration.getModel()}</modelNumber>
-                                <modelURL>http://www.philips-hue.com</modelURL>
-                                <serialNumber>${this.Configuration.getId()}</serialNumber>
-                                <UDN>uuid:2f402f80-da50-11e1-9b23-${this.Configuration.getId()}</UDN>
-                                <presentationURL>index.html</presentationURL>
-                            </device>
-                        </root>`;
-            });
-        }
+        server.add().get('/info/timezone', { preHandler }, async (request, response) =>  this.getPlugin('Timezone').getCustom(request, response));
 
-        /* Detailed bridge config */
-        server.add().get('/api/:token/:config?', {
-            preHandler: async (request, reply) => await this.Authentication.checkAuth(request, reply)
-        }, async () => {
-            // @ToDo Plugins hook into these to add some entries,..
-            return {
-                name:                   this.Configuration.getName(),
-                zigbeechannel:          25,
-                bridgeid:               this.Configuration.getId(),
-                mac:                    this.Configuration.getMACAddress(),
-                dhcp:                   true,
-                ipaddress:              this.Configuration.getIPAddress(),
-                netmask:                '255.255.255.0',
-                gateway:                '192.168.0.1',
-                proxyaddress:           'none',
-                proxyport:              0,
-                UTC:                    '2026-01-13T18:14:11',
-                localtime:              '2026-01-13T19:14:11',
-                timezone:               'Europe/Berlin',
-                modelid:                this.Configuration.getModel(),
-                datastoreversion:       '180',
-                swversion:              `${this.Configuration.getVersion()}`,
-                apiversion:             this.Configuration.getAPIVersion(),
-                swupdate2: {
-                    checkforupdate:     false,
-                    lastchange:         '2026-01-08T13:55:02',
-                    bridge: {
-                        state:          'noupdates',
-                        lastinstall:    '2026-01-08T13:55:02'
-                    },
-                    state:              'noupdates',
-                    autoinstall: {
-                        updatetime:     'T14:00:00',
-                        on:             true
-                    }
-                },
-                linkbutton:             this.LinkButton.getState(),
-                portalservices:         false,
-                analyticsconsent:       false,
-                portalconnection:       'disconnected',
-                portalstate: {
-                    signedon:           false,
-                    incoming:           false,
-                    outgoing:           false,
-                    communication:      'disconnected'
-                },
-                internetservices: {
-                    internet:           'connected',
-                    remoteaccess:       'connected',
-                    time:               'connected',
-                    swupdate:           'connected'
-                },
-                factorynew:             false,
-                replacesbridgeid:       null,
-                starterkitid:           '',
-                backup: {
-                    status:             'idle',
-                    errorcode:          0
-                },
-                whitelist: this.Authentication.toJSON()
-            };
-        });
-
-        server.add().get('/api/:token/capabilities', async (request, reply) => {
-            return {
-                lights: {
-                    available: 0
-                },
-                groups: {
-                    available: 0
-                },
-                scenes: {
-                    available: 0,
-                    lightstates: {
-                        available: 0
-                    }
-                },
-                rules: {
-                    available: 0
-                },
-                shedules: {
-                    available: 0
-                },
-                resourcelinks: {
-                    available: 0
-                },
-                whitelists: {
-                    available: 1
-                },
-                sensors: {
-                    available: 0,
-                    clip: {
-                        available: 0
-                    },
-                    zll: {
-                        available: 0
-                    },
-                    zgp: {
-                        available: 0
-                    }
-                },
-                timezones: {
-                    available: 1,
-                    values: [
-                        'Europe/Berlin'
-                    ]
-                }
-            };
-        });
-
-        // @ToDO V2 API
-        server.add().get('/eventstream/clip/v2/', async (request, reply) => {
-            return {};
-        });
-
+        /* V2 API */
         server.add().get('/clip/v2/resource', async (request, reply) => {
-            /*
-            * Headers: {
-              'hue-application-key': 'HereIsTheAPIToken',
-                            connection: 'Keep-Alive',
-                 */
+            const token = request.headers['hue-application-key'];
+
+            if(!token || !this.Authentication.tokenExists(token)) {
+                // @ToDo Yep, the HUE-API is INCONSISTENT with data results!
+                return reply.code(403).sendFile('404.html');
+            }
 
             return {
                 errors: [],
-                data: this.Resources
+                data:   this.Resources
+            };
+        });
+
+        server.add().get('/clip/v2/resource/:type/:id', async (request, reply) => {
+            const token = request.headers['hue-application-key'];
+
+            if(!token || !this.Authentication.tokenExists(token)) {
+                // @ToDo Yep, the HUE-API is INCONSISTENT with data results!
+                return reply.code(403).sendFile('404.html');
+            }
+
+            return {
+                errors: [],
+                data:   this.Resources
             };
         });
     }

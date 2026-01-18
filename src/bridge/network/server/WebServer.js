@@ -7,19 +7,23 @@
 import FileSystem from 'node:fs';
 import Stream from 'node:stream';
 import Fastify from 'fastify';
+import SSE from 'fastify-sse-v2';
 import FormBody from '@fastify/formbody';
 import CORS from '@fastify/cors';
+import Static from '@fastify/static';
 
 export default class WebServer {
     Hostname    = null;
     Port        = null;
+    Directory   = null;
     TLS      = false;
     Fastify     = null;
 
-    constructor(hostname, port, secure = false) {
+    constructor(hostname, port, secure = false, directory) {
         this.Hostname   = hostname;
         this.Port       = port;
         this.TLS        = secure;
+        this.Directory  = directory;
 
         this.#init();
     }
@@ -27,7 +31,10 @@ export default class WebServer {
     async #init() {
         // @ToDo TLS-Certs
         this.Fastify = Fastify({
-            ignoreTrailingSlash: true,
+            routerOptions: {
+                ignoreTrailingSlash: true,
+                caseSensitive: false
+            },
             ajv: {
                 customOptions: {
                     strict: false
@@ -39,10 +46,21 @@ export default class WebServer {
                 }
             },
             https: !this.TLS ? null : {
-                key:    FileSystem.readFileSync('./certs/bridge-key.pem'),
-                cert:   FileSystem.readFileSync('./certs/bridge-chain.pem')
+                cert:    FileSystem.readFileSync('./certs/cert.pem'),
+                key:    FileSystem.readFileSync('./certs/cert.pem'),
+                ciphers: 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256',
+                honorCipherOrder: true,
+                secureProtocol: 'TLSv1_2_method'
             }
         });
+
+        /* Bind a www-dir */
+        if(this.Directory) {
+            await this.Fastify.register(Static, {
+                root:   this.Directory,
+                prefix: '/'
+            });
+        }
 
         this.Fastify.addContentTypeParser('application/json', {
             parseAs: 'string'
@@ -62,6 +80,7 @@ export default class WebServer {
 
         await this.Fastify.register(FormBody);
 
+        /* Enable CORS */
         await this.Fastify.register(CORS, {
             origin:     true,
             methods:    [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ]
@@ -95,22 +114,24 @@ export default class WebServer {
         });
 
         /* Default route */
-        this.Fastify.route({
-            method:     [ 'GET', 'POST', 'PUT', 'DELETE', 'PATCH' ],
-            url:        '*',
-            handler:    async (request, reply) => {
-                console.log('Unknown Route:', request.method, request.url);
+        if (!this.Directory) {
+            this.Fastify.route({
+                method: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+                url: '*',
+                handler: async (request, reply) => {
+                    console.log('Unknown Route:', request.method, request.url);
 
-                // @ToDo Enum + Error-Class
-                return [{
-                    error: {
-                        type:           4,
-                        address:        request.url,
-                        description:    `method, GET, not available for resource, ${request.url}`
-                    }
-                }];
-            }
-        });
+                    // @ToDo Enum + Error-Class
+                    return [{
+                        error: {
+                            type: 4,
+                            address: request.url,
+                            description: `method, GET, not available for resource, ${request.url}`
+                        }
+                    }];
+                }
+            });
+        }
 
         try {
             await this.Fastify.listen({ port: this.Port, host: this.Hostname });
@@ -119,6 +140,28 @@ export default class WebServer {
         } catch (err) {
             this.Fastify.log.error(err);
         }
+    }
+
+    async startSSE(path, headers, callback) {
+        await this.Fastify.register(SSE);
+
+        let properties = {};
+
+        for(const name of headers) {
+            properties[name] = { type: 'string' };
+        }
+
+        this.Fastify.get(path, {
+            schema: {
+                headers: {
+                    type:       'object',
+                    properties: properties,
+                    required:   headers
+                }
+            }
+        }, async (request, reply) => {
+            callback(request, reply);
+        });
     }
 
     add() {
