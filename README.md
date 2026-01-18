@@ -18,7 +18,7 @@
 - Provides ~~full~~ `V1` and `V2` API (includes `SSE`)
 - Plugin based API handling
 - Works as background/server application
-- Optional with administrative UI
+- Optional with administrative/interactive UI (yes, you can press the big button or see LED markers!)
   
 # Supported Bridges
 <table align="center">
