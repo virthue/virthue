@@ -19,6 +19,12 @@
 - Plugin based API handling
 - Works as background/server application
 - Optional with administrative/interactive UI (yes, you can press the big button or see LED markers!)
+
+# Upcoming Features
+- Restore/load/clone data from an real bridge
+- Full API-Call logs (if you develop Hue applications)
+- Resource manager
+- Communicate with Live devices/lamps
   
 # Supported Bridges
 <table align="center">
