@@ -17,7 +17,7 @@ export const Family = Object.freeze({
 export default new class Interfaces {
     /**
      * Get network address by IP family
-     * @param {Family} family - IPFamily.IPv4 or IPFamily.IPv6
+     * @param {Family} family - Family.IPv4 or Family.IPv6
      * @returns {string|null} IP address or null if not found
      */
     getAddress(family = Family.IPv4) {
@@ -30,7 +30,7 @@ export default new class Interfaces {
                 }
 
                 if(device.family === family) {
-                    if (family === Family.IPv6 && this.#isLinkLocal(device.address)) {
+                    if(family === Family.IPv6 && this.#isLinkLocal(device.address)) {
                         continue;
                     }
 
