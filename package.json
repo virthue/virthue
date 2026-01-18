@@ -35,7 +35,6 @@
     "@fastify/cors": "^11.2.0",
     "@fastify/formbody": "^8.0.2",
     "@fastify/static": "^9.0.0",
-    "bonjour": "^3.5.0",
     "fastify": "^5.6.2",
     "fastify-sse-v2": "^4.2.1",
     "multicast-dns": "^7.2.5",

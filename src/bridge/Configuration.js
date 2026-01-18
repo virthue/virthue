@@ -6,7 +6,7 @@
  */
 import FileSystem from 'node:fs';
 import Events from 'node:events';
-import Interfaces from './network/Interfaces.js';
+import Interfaces, { Family }  from './network/Interfaces.js';
 import Utils from '../Utils.js';
 
 export default class Configuration extends Events.EventEmitter {
@@ -41,7 +41,7 @@ export default class Configuration extends Events.EventEmitter {
             this.Model                      = Config.bridge.model;
             this.Network.MAC                = Config.network.mac;
             this.Network.Address            = Config.network.address;
-            this.Network.ResolvedAddress    = Interfaces.getAddress();
+            this.Network.ResolvedAddress    = Interfaces.getAddress(Family.IPv4);
             this.Network.Port               = Number(Config.network.port);
             this.Network.TLS                = Number(Config.network.tls);
 
