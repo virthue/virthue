@@ -61,8 +61,9 @@ export default new class TrayManager {
                     this.showWindow();
                 }
             }, {
+                id: 'button',
                 label: 'Press Link-Button',
-            icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.ico')).resize({ width: 16, height: 16 }),
+                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.ico')).resize({ width: 16, height: 16 }),
                 enabled: true,
                 click: () => {
                     this.Bridge.getLinkButton().activate();
@@ -71,7 +72,7 @@ export default new class TrayManager {
                 type: 'separator'
             }, {
                 label: 'Settings',
-            icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.ico')).resize({ width: 16, height: 16 }),
+                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.ico')).resize({ width: 16, height: 16 }),
                 click: () => {
                     Settings.show(this.Bridge);
                 }
@@ -95,6 +96,10 @@ export default new class TrayManager {
 
         this.Bridge.getConfiguration().on('FEATURE_CHANGE', (feature, value) => {
             this.send('QR_HIDE', !value);
+        });
+
+        this.Bridge.on('LINK_BUTTON_CHANGED', (state) => {
+           this.Menu.getMenuItemById('button').enabled = !state;
         });
 
         IPC.on('bridge', (event, packet) => {
