@@ -55,7 +55,11 @@ export default new class Settings {
                         node: Process?.versions?.node || 'N/A'
                     });
 
-                    this.send('SETTINGS', this.Bridge.getConfiguration().toJSON());
+                    this.send('SETTINGS', {
+                        id: this.Bridge.getId(),
+                        ...(this.Bridge.getConfiguration().toJSON())
+                    });
+
                     this.send('ACCOUNTS', this.Bridge.getAuthentication().toJSON());
                 break;
                 case 'TRAFFIC_OPEN':
@@ -97,10 +101,6 @@ export default new class Settings {
 
                             if (packet.data?.name) {
                                 this.Bridge.getConfiguration().setName(packet.data?.name);
-                            }
-
-                            if (packet.data?.id) {
-                                this.Bridge.getConfiguration().setId(packet.data?.id);
                             }
 
                             if (packet.data?.mac) {
@@ -180,7 +180,7 @@ export default new class Settings {
         });
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
-        this.Window.setMenu(null);
+        //this.Window.setMenu(null);
 
         this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 

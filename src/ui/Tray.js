@@ -110,7 +110,7 @@ export default new class TrayManager {
                     this.send(Events.BRIDGE_MODEL, this.Bridge.getConfiguration().getModel());
                 break;
                 case Events.QR_REQUEST:
-                    QRCode.toString(`HUE:I:${this.Bridge.getConfiguration().getId()} W:${new Date().getFullYear()}`, {
+                    QRCode.toString(`HUE:I:${this.Bridge.getId()} W:${new Date().getFullYear()}`, {
                         type: 'svg'
                     }, (error, url) => {
                         if(error) {

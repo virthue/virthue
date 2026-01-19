@@ -162,7 +162,7 @@ export default class Discovery {
         *   if (nsdServiceInfo.getServiceType().equals("_hue._tcp.") && (C1688a.m6022a(nsdServiceInfo.getServiceName(), "Philips Hue - ", false) || C1688a.m6022a(nsdServiceInfo.getServiceName(), "Hue Bridge - ", false))) {
         */
 
-        return `Hue Bridge - ${this.Bridge.getConfiguration().getId(true)}`;
+        return `Hue Bridge - ${this.Bridge.getId(true)}`;
     }
 
     getServicePort() {
@@ -172,7 +172,7 @@ export default class Discovery {
     getServiceData() {
         return {
             modelid:    this.Bridge.getConfiguration().getModel(),
-            bridgeid:   this.Bridge.getConfiguration().getId()
+            bridgeid:   this.Bridge.getId()
         };
     }
 }

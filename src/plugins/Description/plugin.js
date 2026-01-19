@@ -52,8 +52,8 @@ export default class Description extends Plugin {
                         <modelName>Philips hue bridge 2015</modelName>
                         <modelNumber>${config.getModel()}</modelNumber>
                         <modelURL>http://www.philips-hue.com</modelURL>
-                        <serialNumber>${config.getId()}</serialNumber>
-                        <UDN>uuid:2f402f80-da50-11e1-9b23-${config.getId()}</UDN>
+                        <serialNumber>${bridge.getId()}</serialNumber>
+                        <UDN>uuid:2f402f80-da50-11e1-9b23-${bridge.getId()}</UDN>
                         <presentationURL>index.html</presentationURL>
                     </device>
                 </root>`;

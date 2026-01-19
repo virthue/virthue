@@ -23,7 +23,7 @@ export default class Config extends Plugin {
             apiversion:         config.getAPIVersion(),
             swversion:          `${config.getVersion()}`,
             mac:                config.getMACAddress(),
-            bridgeid:           config.getId(),
+            bridgeid:           bridge.getId(),
             modelid:            config.getModel(),
             datastoreversion:   '180',
             factorynew:         false,

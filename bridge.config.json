@@ -1,7 +1,6 @@
 {
     "bridge": {
         "name": "virthue Bridge",
-        "id": "AABBCCDDEEFF0011",
         "model": "BSB003",
         "version": {
             "number": 2071153010,

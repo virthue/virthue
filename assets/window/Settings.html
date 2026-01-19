@@ -110,12 +110,7 @@
                     </ui-entry>
                     <ui-entry>
                         <label for="id">ID</label>
-                        <ui-group>
-                            <input id="id" name="id" type="text" />
-                            <button type="button" data-action="random:id">
-                                <i class="bi bi-arrow-clockwise"></i>
-                            </button>
-                        </ui-group>
+                        <input id="id" name="id" type="text" disabled />
                     </ui-entry>
 
                     <ui-entry>
@@ -124,7 +119,7 @@
                     <ui-entry>
                         <label for="mac">MAC</label>
                         <ui-group>
-                            <input id="mac" name="mac" type="text" />
+                            <input id="mac" name="mac" type="text" placeholder="00:00:00:00:00:00" pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$|^([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}$" required />
                             <button type="button" data-action="random:mac">
                                 <i class="bi bi-arrow-clockwise"></i>
                             </button>

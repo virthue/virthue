@@ -35,7 +35,7 @@ export default class Bridge extends Events.EventEmitter {
 
         // Loading Resources
         let bridge = this.Resources.add(ResourceType.BRIDGE, {
-            bridge_id: this.Configuration.getId(),
+            bridge_id: this.getId(),
             time_zone: {
                 time_zone: 'Europe/Berlin'
             }
@@ -146,6 +146,17 @@ export default class Bridge extends Events.EventEmitter {
         setTimeout(() => {
             this.emit('MODEL_CHANGE');
         }, 1000);
+    }
+
+    getId(short = false) {
+        let mac = this.Configuration.getMACAddress().replace(/:/g, '').toLowerCase();
+        let id  = `${mac.slice(0, 6)}fffe${mac.slice(6)}`;
+
+        if(short) {
+            return id.slice(-6);
+        }
+
+        return id;
     }
 
     getConfiguration() {

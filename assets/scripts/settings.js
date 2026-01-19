@@ -1,12 +1,13 @@
 import Events from '../../src/types/Events.js';
 import Support from "../../src/types/Support.js";
 
+const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+
 export default class Settings {
     constructor() {
         window.IPC.on('settings', (packet) => {
             switch(packet.action) {
                 case 'SETTINGS':
-                    this.update('id', packet.data?.id);
                     this.update('name', packet.data?.name);
                     this.update('model', packet.data?.model);
 
@@ -14,7 +15,13 @@ export default class Settings {
                         let network = packet.data?.network;
 
                         this.update('address', network?.address);
-                        this.update('mac', network?.mac);
+
+                        this.update('mac', network?.mac, (element) => {
+                            element.dispatchEvent(new Event('input', {
+                                bubbles:    false
+                            }));
+                        });
+
                         this.update('port', network?.port);
                         this.update('tls', network?.tls);
 
@@ -66,20 +73,43 @@ export default class Settings {
             document.querySelector('input[name="tls"]').disabled = !event.currentTarget.checked;
         });
 
+        const inputMAC = document.querySelector('input[name="mac"]');
+
+        inputMAC.addEventListener('keyup', (event) => {
+            const element    = event.currentTarget;
+            const mac                   = element.value;
+            const test           = mac.replace(/:/g, '').toLowerCase();
+            const isValid       = REGEX_MAC.test(mac);
+            let id                 = null;
+
+            element.classList.remove('invalid');
+
+            if(mac.length === 0 || !isValid) {
+                element.classList.add('invalid');
+                id = '- Invalid MAC Address -';
+            } else {
+                id =`${test.slice(0, 6)}fffe${test.slice(6)}`;
+            }
+
+            this.update('id', id);
+        });
+
+        inputMAC.addEventListener('input', () => {
+            const mac               = inputMAC.value;
+            const isValid   = REGEX_MAC.test(mac);
+
+            inputMAC.classList.remove('invalid');
+
+            if(mac.length === 0 || !isValid) {
+                inputMAC.classList.add('invalid');
+            }
+
+            inputMAC.dispatchEvent(new Event('keyup', {
+                bubbles:    false
+            }));
+        });
+
         this.send('INIT');
-    }
-
-    generateID(length = 16) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let id      = '';
-
-        for(let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * chars.length);
-
-            id += chars[randomIndex];
-        }
-
-        return id;
     }
 
     generateMacAddress(separator = ':') {
@@ -107,11 +137,16 @@ export default class Settings {
             break;
             case 'random':
                 switch(value) {
-                    case 'id':
-                        this.update(value, this.generateID(16));
-                    break;
                     case 'mac':
-                        this.update(value, this.generateMacAddress());
+                        const mac       = this.generateMacAddress();
+                        let converted   = mac.replace(/:/g, '').toLowerCase();
+
+                        this.update('id', `${converted.slice(0, 6)}fffe${converted.slice(6)}`);
+                        this.update(value, mac, (element) => {
+                            element.dispatchEvent(new Event('input', {
+                                bubbles:    false
+                            }));
+                        });
                     break;
                 }
             break;
@@ -157,7 +192,7 @@ export default class Settings {
         });
     }
 
-    update(name, value) {
+    update(name, value, callback = null) {
         let element = document.querySelector(`[name="${name}"]`);
 
         if(!element) {
@@ -166,6 +201,10 @@ export default class Settings {
         }
 
         element.value = value;
+
+        if(callback) {
+            callback(element);
+        }
     }
 
     content(name, value) {

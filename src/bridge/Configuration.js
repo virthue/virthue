@@ -10,7 +10,6 @@ import Interfaces, { Family }  from './network/Interfaces.js';
 import Utils from '../Utils.js';
 
 export default class Configuration extends Events.EventEmitter {
-    ID      = null;
     Name    = null;
     Model   = null;
     Network = {
@@ -36,7 +35,6 @@ export default class Configuration extends Events.EventEmitter {
         try {
             Config =  JSON.parse(FileSystem.readFileSync(Utils.getPath('bridge.config.json')));
 
-            this.ID                         = Config.bridge.id;
             this.Name                       = Config.bridge.name;
             this.Model                      = Config.bridge.model;
             this.Network.MAC                = Config.network.mac;
@@ -59,7 +57,6 @@ export default class Configuration extends Events.EventEmitter {
             FileSystem.writeFileSync(Utils.getPath('bridge.config.json'), JSON.stringify({
                 bridge: {
                     name:   this.Name,
-                    id:     this.ID,
                     model:  this.Model,
                     version: {
                         number: Number(this.Version.Number),
@@ -100,18 +97,6 @@ export default class Configuration extends Events.EventEmitter {
         this.SupportFlags = this.SupportFlags.filter(f => f !== flag);
 
         this.emit('FEATURE_CHANGE', flag, false);
-    }
-
-    getId(short = false) {
-        if(short) {
-            return this.ID.slice(-6);
-        }
-
-        return this.ID;
-    }
-
-    setId(id) {
-        this.ID = id;
     }
 
     getName() {
@@ -192,7 +177,6 @@ export default class Configuration extends Events.EventEmitter {
 
     toJSON() {
         return {
-            id:     this.ID,
             name:   this.Name,
             model:  this.Model,
             network: {
