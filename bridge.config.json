@@ -1,6 +1,6 @@
 {
     "bridge": {
-        "name": "My little cute virthue",
+        "name": "virthue Bridge",
         "id": "AABBCCDDEEFF0011",
         "model": "BSB003",
         "version": {
@@ -15,7 +15,7 @@
         ]
     },
     "network": {
-        "mac": "41:02:5A:FF:4B:73",
+        "mac": "0C:00:0F:0F:0E:0E",
         "address": "auto",
         "port": 80,
         "tls": 443
