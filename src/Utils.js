@@ -6,6 +6,13 @@
  */
 import URL from 'node:url';
 import Path from 'node:path';
+import OperatingSystem from 'node:os';
+
+export const System = Object.freeze({
+    MAC: 'mac',
+    WINDOWS: 'windows',
+    LINUX: 'linux'
+});
 
 export default (new class Utils {
     Path = null;
@@ -18,5 +25,16 @@ export default (new class Utils {
 
     getPath(...path) {
         return Path.join(this.Path, '..',  ...path);
+    }
+
+    getOS() {
+        switch(OperatingSystem.platform()) {
+            case 'win32':
+                return System.WINDOWS;
+            case 'darwin':
+                return System.MAC;
+            case 'linux':
+                return System.LINUX
+        }
     }
 });

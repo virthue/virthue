@@ -15,7 +15,7 @@ import {
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
-import Utils from '../Utils.js';
+import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
 import Traffic from './Traffic.js';
@@ -52,18 +52,19 @@ export default new class TrayManager {
         }
 
         //Application.dock.hide()
+        const icon = NativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACTSURBVHgBpZKBCYAgEEV/TeAIjuIIbdQIuUGt0CS1gW1iZ2jIVaTnhw+Cvs8/OYDJA4Y8kR3ZR2/kmazxJbpUEfQ/Dm/UG7wVwHkjlQdMFfDdJMFaACebnjJGyDWgcnZu1/lrCrl6NCoEHJBrDwEr5NrT6ko/UV8xdLAC2N49mlc5CylpYh8wCwqrvbBGLoKGvz8Bfq0QPWEUo/EAAAAASUVORK5CYII=')
 
-        this.Tray   = new Tray(Utils.getPath('assets', 'icons', 'logo.ico'));
+        this.Tray   = new Tray(icon); //Utils.getPath('assets', 'icons', 'logo.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico')));
         this.Menu   = Menu.buildFromTemplate([{
                 label: 'Show Bridge',
-                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'bridge.ico')).resize({ width: 16, height: 16 }),
+                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'bridge.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
                 click: () => {
                     this.showWindow();
                 }
             }, {
                 id: 'button',
                 label: 'Press Link-Button',
-                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.ico')).resize({ width: 16, height: 16 }),
+                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
                 enabled: true,
                 click: () => {
                     this.Bridge.getLinkButton().activate();
@@ -72,13 +73,13 @@ export default new class TrayManager {
                 type: 'separator'
             }, {
                 label: 'Settings',
-                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.ico')).resize({ width: 16, height: 16 }),
+                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
                 click: () => {
                     Settings.show(this.Bridge);
                 }
             }, {
                 label: 'Traffic',
-                icon: NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'traffic.ico')).resize({ width: 16, height: 16 }),
+                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'traffic.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
                 click: () => {
                     Traffic.show(this.Bridge);
                 }

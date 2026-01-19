@@ -180,7 +180,8 @@ export default new class Settings {
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
         this.Window.setMenu(null);
-        this.Window.setIcon(Utils.getPath('assets', 'icons', 'logo.ico'));
+
+        //this.Window.setIcon(Utils.getPath('assets', 'icons', 'logo.ico'));
 
         this.Window.on('closed', () => {
             this.Window = null;
