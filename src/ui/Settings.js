@@ -15,6 +15,7 @@ import FileSystem from 'node:fs';
 import Process from 'node:process';
 import Support from '../types/Support.js';
 import Traffic from './Traffic.js';
+import ElectronUtils from "../ElectronUtils.js";
 
 export default new class Settings {
     Window = null;
@@ -181,7 +182,7 @@ export default new class Settings {
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
         this.Window.setMenu(null);
 
-        //this.Window.setIcon(Utils.getPath('assets', 'icons', 'logo.ico'));
+        this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 
         this.Window.on('closed', () => {
             this.Window = null;

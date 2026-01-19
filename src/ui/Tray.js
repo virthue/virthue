@@ -10,8 +10,7 @@ import {
     Menu,
     BrowserWindow,
     ipcMain as IPC,
-    screen as Screen,
-    nativeImage as NativeImage
+    screen as Screen
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
@@ -19,6 +18,7 @@ import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
 import Traffic from './Traffic.js';
+import ElectronUtils from "../ElectronUtils.js";
 
 export default new class TrayManager {
     Bridge                  = null;
@@ -55,17 +55,17 @@ export default new class TrayManager {
             Application.dock.hide();
         }
 
-        this.Tray   = new Tray(this.loadIcon('logo', true));
+        this.Tray   = new Tray(ElectronUtils.getIcon('logo', true));
         this.Menu   = Menu.buildFromTemplate([{
                 label: 'Show Bridge',
-                icon: this.loadIcon('bridge'),
+                icon: ElectronUtils.getIcon('bridge'),
                 click: () => {
                     this.showWindow();
                 }
             }, {
                 id: 'button',
                 label: 'Press Link-Button',
-                icon: this.loadIcon('button'),
+                icon: ElectronUtils.getIcon('button'),
                 enabled: true,
                 click: () => {
                     this.Bridge.getLinkButton().activate();
@@ -74,13 +74,13 @@ export default new class TrayManager {
                 type: 'separator'
             }, {
                 label: 'Settings',
-                icon:this.loadIcon('settings'),
+                icon:ElectronUtils.getIcon('settings'),
                 click: () => {
                     Settings.show(this.Bridge);
                 }
             }, {
                 label: 'Traffic',
-                icon: this.loadIcon('traffic'),
+                icon: ElectronUtils.getIcon('traffic'),
                 click: () => {
                     Traffic.show(this.Bridge);
                 }
@@ -213,16 +213,6 @@ export default new class TrayManager {
                 console.log('LINK_BUTTON_CHANGED', state);
             });
         }
-    }
-
-    loadIcon(name, rawPath = false) {
-        const path = Utils.getOSIcon(name);
-
-        if(rawPath) {
-            return path;
-        }
-
-        return NativeImage.createFromPath(path).resize({ width: 16, height: 16 });
     }
 
     send(name, data) {
