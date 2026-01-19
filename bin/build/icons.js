@@ -1,6 +1,7 @@
 import FileSystem from 'node:fs';
 import Path from 'node:path';
 import SVG2ICO from 'svg-to-ico';
+import SVG2IMG from 'svg2img';
 import Utils from '../../src/Utils.js';
 
 (new class IconBuilder {
@@ -27,14 +28,30 @@ import Utils from '../../src/Utils.js';
                 sizes = this.Sizes.Logo;
             }
 
+            const source = Utils.getPath('assets', 'icons', file);
+
+            /* Convert to ICO  */
             SVG2ICO({
-                input_name:     Utils.getPath('assets', 'icons', file),
+                input_name:     source,
                 output_name:    Utils.getPath('assets', 'icons', `${name}.ico`),
                 sizes:          sizes
             }).then(() => {
                 console.log(`[OK] Converted: ${name} (${sizes})`);
             }).catch((error) => {
                 console.log(`[ERROR] Converted: ${name}`, error);
+            });
+
+            /* Convert to PNG */
+            SVG2IMG(source, {
+                format: 'png'
+            }, function(error, buffer) {
+                if(error) {
+                    console.log(`[ERROR] Converted: ${name}`, error);
+                    return;
+                }
+
+                console.log(`[OK] Converted: ${name} (${sizes})`);
+                FileSystem.writeFileSync(Utils.getPath('assets', 'icons', `${name}.png`), buffer);
             });
         });
     }

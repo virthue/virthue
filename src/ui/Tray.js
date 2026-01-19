@@ -9,9 +9,9 @@ import {
     Tray,
     Menu,
     BrowserWindow,
-    nativeImage as NativeImage,
     ipcMain as IPC,
-    screen as Screen
+    screen as Screen,
+    nativeImage as NativeImage
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
@@ -51,20 +51,21 @@ export default new class TrayManager {
             return;
         }
 
-        //Application.dock.hide()
-        const icon = NativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACTSURBVHgBpZKBCYAgEEV/TeAIjuIIbdQIuUGt0CS1gW1iZ2jIVaTnhw+Cvs8/OYDJA4Y8kR3ZR2/kmazxJbpUEfQ/Dm/UG7wVwHkjlQdMFfDdJMFaACebnjJGyDWgcnZu1/lrCrl6NCoEHJBrDwEr5NrT6ko/UV8xdLAC2N49mlc5CylpYh8wCwqrvbBGLoKGvz8Bfq0QPWEUo/EAAAAASUVORK5CYII=')
+        if(Utils.getOS() === System.MAC) {
+            Application.dock.hide();
+        }
 
-        this.Tray   = new Tray(icon); //Utils.getPath('assets', 'icons', 'logo.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico')));
+        this.Tray   = new Tray(this.loadIcon('logo', true));
         this.Menu   = Menu.buildFromTemplate([{
                 label: 'Show Bridge',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'bridge.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
+                icon: this.loadIcon('bridge'),
                 click: () => {
                     this.showWindow();
                 }
             }, {
                 id: 'button',
                 label: 'Press Link-Button',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
+                icon: this.loadIcon('button'),
                 enabled: true,
                 click: () => {
                     this.Bridge.getLinkButton().activate();
@@ -73,13 +74,13 @@ export default new class TrayManager {
                 type: 'separator'
             }, {
                 label: 'Settings',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
+                icon:this.loadIcon('settings'),
                 click: () => {
                     Settings.show(this.Bridge);
                 }
             }, {
                 label: 'Traffic',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'traffic.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
+                icon: this.loadIcon('traffic'),
                 click: () => {
                     Traffic.show(this.Bridge);
                 }
@@ -212,6 +213,16 @@ export default new class TrayManager {
                 console.log('LINK_BUTTON_CHANGED', state);
             });
         }
+    }
+
+    loadIcon(name, rawPath = false) {
+        const path = Utils.getOSIcon(name);
+
+        if(rawPath) {
+            return path;
+        }
+
+        return NativeImage.createFromPath(path).resize({ width: 16, height: 16 });
     }
 
     send(name, data) {

@@ -6,6 +6,7 @@
  */
 import URL from 'node:url';
 import Path from 'node:path';
+import FileSystem from 'node:fs';
 import OperatingSystem from 'node:os';
 
 export const System = Object.freeze({
@@ -36,5 +37,25 @@ export default (new class Utils {
             case 'linux':
                 return System.LINUX
         }
+    }
+
+    getOSExtension() {
+        switch(this.getOS()) {
+            case System.WINDOWS:
+                return 'ico';
+        }
+
+        return 'png';
+    }
+
+    getOSIcon(name) {
+        const extension    = this.getOSExtension();
+        const path          = this.getPath('assets', 'icons', `${name}.${extension}`);
+
+        if(!FileSystem.existsSync(path)) {
+            return '';
+        }
+
+        return path;
     }
 });
