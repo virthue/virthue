@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>virthue Settings</title>
+        <title i18n-text="virthue Settings">virthue Settings</title>
         <link rel="stylesheet" href="../styles/fonts.css" />
         <link rel="stylesheet" href="../styles/globals.css" />
         <link rel="stylesheet" href="../styles/icons.css" />
@@ -66,38 +66,38 @@
             <nav>
                 <label for="bridge">
                     <i class="bi bi-dice-1"></i>
-                    <small>Bridge</small>
+                    <small i18n-text="Bridge">Bridge</small>
                 </label>
                 <label for="resources">
                     <i class="bi bi-leaf-fill"></i>
-                    <small>Resources</small>
+                    <small i18n-text="Resources">Resources</small>
                 </label>
                 <label for="flags">
                     <i class="bi bi-flag"></i>
-                    <small>Flags</small>
+                    <small i18n-text="Flags">Flags</small>
                 </label>
                 <label for="accounts">
                     <i class="bi bi-key"></i>
-                    <small>Accounts</small>
+                    <small i18n-text="Accounts">Accounts</small>
                 </label>
                 <span></span>
                 <label data-action="traffic">
                     <i class="bi bi-arrow-left-right"></i>
-                    <small>Traffic</small>
+                    <small i18n-text="Traffic">Traffic</small>
                 </label>
                 <label for="about">
                     <i class="bi bi-info-circle"></i>
-                    <small>About</small>
+                    <small i18n-text="About">About</small>
                 </label>
             </nav>
 
             <section data-name="bridge">
                 <form>
                     <ui-entry>
-                        <h1>General</h1>
+                        <h1 i18n-text="General">General</h1>
                     </ui-entry>
                     <ui-entry>
-                        <label for="model">Model</label>
+                        <label for="model" i18n-text="Model">Model</label>
                         <select id="model" name="model">
                             <option value="BSB001">Philips Hue V1 (BSB001)</option>
                             <option value="BSB002">Philips Hue Bridge (BSB002)</option>
@@ -105,11 +105,11 @@
                         </select>
                     </ui-entry>
                     <ui-entry>
-                        <label for="name">Name</label>
+                        <label for="name" i18n-text="Name">Name</label>
                         <input id="name" name="name" type="text" />
                     </ui-entry>
                     <ui-entry>
-                        <label>ID</label>
+                        <label i18n-text="ID">ID</label>
                         <ui-group>
                             <ui-text data-name="id" type="text"></ui-text>
                             <button type="button" data-action="copy:id">
@@ -119,10 +119,10 @@
                     </ui-entry>
 
                     <ui-entry>
-                        <h1>Network Settings</h1>
+                        <h1 i18n-text="Network Settings">Network Settings</h1>
                     </ui-entry>
                     <ui-entry>
-                        <label for="mac">MAC</label>
+                        <label for="mac" i18n-text="MAC">MAC</label>
                         <ui-group>
                             <input id="mac" name="mac" type="text" placeholder="00:00:00:00:00:00" pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$|^([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}$" required />
                             <button type="button" data-action="random:mac">
@@ -131,11 +131,11 @@
                         </ui-group>
                     </ui-entry>
                     <ui-entry>
-                        <label for="address">IP-Address</label>
+                        <label for="address" i18n-text="IP-Address">IP-Address</label>
                         <input id="address" name="address" type="text" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="port">Server-Ports</label>
+                        <label for="port" i18n-text="Server-Ports">Server-Ports</label>
                         <ui-entries>
                             <small>HTTP</small> <input id="port" min="1" max="65535" name="port" type="number" />
                             <small>HTTPS</small> <input id="tls" min="1" max="65535" name="tls" type="number" />
@@ -147,22 +147,22 @@
             <section data-name="flags">
                 <form>
                     <ui-entry>
-                        <h1>Support-Flags</h1>
+                        <h1 i18n-text="Support-Flags">Support-Flags</h1>
                     </ui-entry>
                     <ui-entry>
-                        <label for="qr">QR Code</label>
+                        <label for="qr" i18n-text="QR Code">QR Code</label>
                         <input id="qr" name="qr" type="checkbox" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="description">Old Device-Description</label>
+                        <label for="description" i18n-text="Old Device-Description">Old Device-Description</label>
                         <input id="description" name="description" type="checkbox" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="certified">Certified device</label>
+                        <label for="certified" i18n-text="Certified device">Certified device</label>
                         <input id="certified" name="certified" type="checkbox" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="secured">Secured Connections</label>
+                        <label for="secured" i18n-text="Secured Connections">Secured Connections</label>
                         <input id="secured" name="secured" type="checkbox" />
                     </ui-entry>
                 </form>
@@ -175,11 +175,11 @@
             <section data-name="accounts">
                 <ui-list data-id="accounts">
                     <ui-header style="grid-template-columns: 1fr 1fr 1fr 1fr  1fr;">
-                        <div>Name</div>
-                        <div>Token</div>
-                        <div>Created</div>
-                        <div>Last Activity</div>
-                        <aside>0 Entries</aside>
+                        <div i18n-text="Name">Name</div>
+                        <div i18n-text="Token">Token</div>
+                        <div i18n-text="Created">Created</div>
+                        <div i18n-text="Last Activity">Last Activity</div>
+                        <aside i18n-texts="%d Entrie" i18n-texts="%d Entries" i18n-number="0">0 Entries</aside>
                     </ui-header>
                     <ui-data></ui-data>
                 </ui-list>
@@ -198,15 +198,15 @@
                         <br />
                         <form>
                             <ui-entry>
-                                <label>Version</label>
+                                <label i18n-text="Version">Version</label>
                                 <ui-text data-name="version">N/A</ui-text>
                             </ui-entry>
                             <ui-entry>
-                                <label>Node</label>
+                                <label i18n-text="Node">Node</label>
                                 <ui-text data-name="node">N/A</ui-text>
                             </ui-entry>
                             <ui-entry>
-                                <label>electron</label>
+                                <label i18n-text="electron">electron</label>
                                 <ui-text data-name="electron">N/A</ui-text>
                             </ui-entry>
                         </form>
@@ -219,31 +219,31 @@
                     <span></span>
                     <button data-action="save" class="right">
                         <i class="bi bi-floppy"></i>
-                        <span>Save</span>
+                        <span i18n-text="Save">Save</span>
                     </button>
                 </section>
                 <section data-name="resources">
                     <button data-action="add" class="left">
                         <i class="bi bi-plus"></i>
-                        <small>New Resource</small>
+                        <small i18n-text="New Resource">New Resource</small>
                     </button>
                     <span></span>
                     <button data-action="save" class="right">
                         <i class="bi bi-floppy"></i>
-                        <small>Save</small>
+                        <small i18n-text="Save">Save</small>
                     </button>
                 </section>
                 <section data-name="flags">
                     <span></span>
                     <button data-action="save" class="right">
                         <i class="bi bi-floppy"></i>
-                        <small>Save</small>
+                        <small i18n-text="Save">Save</small>
                     </button>
                 </section>
                 <section data-name="accounts">
                     <!--<button data-action="add" class="left">
                         <i class="bi bi-plus"></i>
-                        <small>Create Account</small>
+                        <small i18n-text="Create Account">Create Account</small>
                     </button>-->
                     <span></span>
                 </section>
@@ -251,11 +251,11 @@
                     <span></span>
                     <button data-action="GITHUB_ISSUE" class="right">
                         <i class="bi bi-bug"></i>
-                        <small>Issues</small>
+                        <small i18n-text="Issues">Issues</small>
                     </button>
                     <button data-action="GITHUB_REPOSITORY" class="right">
                         <i class="bi bi-github"></i>
-                        <small>GitHub</small>
+                        <small i18n-text="GitHub">GitHub</small>
                     </button>
                 </section>
             </footer>

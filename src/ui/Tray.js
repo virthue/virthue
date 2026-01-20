@@ -18,7 +18,8 @@ import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
 import Traffic from './Traffic.js';
-import ElectronUtils from "../ElectronUtils.js";
+import ElectronUtils from '../ElectronUtils.js';
+import I18N from "./I18N.js";
 
 export default new class TrayManager {
     Bridge                  = null;
@@ -57,36 +58,36 @@ export default new class TrayManager {
 
         this.Tray   = new Tray(ElectronUtils.getIcon('logo', true));
         this.Menu   = Menu.buildFromTemplate([{
-                label: 'Show Bridge',
-                icon: ElectronUtils.getIcon('bridge'),
-                click: () => {
+                label:      I18N.__('Show Bridge'),
+                icon:       ElectronUtils.getIcon('bridge'),
+                click:      () => {
                     this.showWindow();
                 }
             }, {
-                id: 'button',
-                label: 'Press Link-Button',
-                icon: ElectronUtils.getIcon('button'),
-                enabled: true,
-                click: () => {
+                id:         'button',
+                label:      I18N.__('Press Link-Button'),
+                icon:       ElectronUtils.getIcon('button'),
+                enabled:    true,
+                click:      () => {
                     this.Bridge.getLinkButton().activate();
                 }
             }, {
-                type: 'separator'
+                type:       'separator'
             }, {
-                label: 'Settings',
-                icon:ElectronUtils.getIcon('settings'),
-                click: () => {
+                label:      I18N.__('Settings'),
+                icon:       ElectronUtils.getIcon('settings'),
+                click:      () => {
                     Settings.show(this.Bridge);
                 }
             }, {
-                label: 'Traffic',
-                icon: ElectronUtils.getIcon('traffic'),
-                click: () => {
+                label:      I18N.__('Traffic'),
+                icon:       ElectronUtils.getIcon('traffic'),
+                click:      () => {
                     Traffic.show(this.Bridge);
                 }
             }, {
-                label: 'Quit',
-                role: 'quit'
+                label:      I18N.__('Quit'),
+                role:       'quit'
             }
         ]);
 
@@ -206,7 +207,7 @@ export default new class TrayManager {
             });
 
             this.Bridge.on('INITIAL_CONFIG_REQUESTED', () => {
-                this.send(Events.LINK_BUTTON_REQUESTED);
+                // Hide QR-Code: this.send(Events.LINK_BUTTON_REQUESTED);
             });
 
             this.Bridge.on('LINK_BUTTON_CHANGED', (state) => {

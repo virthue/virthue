@@ -15,7 +15,7 @@ import FileSystem from 'node:fs';
 import Process from 'node:process';
 import Support from '../types/Support.js';
 import Traffic from './Traffic.js';
-import ElectronUtils from "../ElectronUtils.js";
+import ElectronUtils from '../ElectronUtils.js';
 
 export default new class Settings {
     Window = null;
@@ -50,9 +50,9 @@ export default new class Settings {
             switch (packet.action) {
                 case 'INIT':
                     this.send('VIRTHUE', {
-                        version: packages?.version || 'N/A',
-                        electron: Process?.versions?.electron || 'N/A',
-                        node: Process?.versions?.node || 'N/A'
+                        version:    packages?.version || 'N/A',
+                        electron:   Process?.versions?.electron || 'N/A',
+                        node:       Process?.versions?.node || 'N/A'
                     });
 
                     this.send('SETTINGS', {
@@ -180,7 +180,7 @@ export default new class Settings {
         });
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
-        //this.Window.setMenu(null);
+        this.Window.setMenu(null);
 
         this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 

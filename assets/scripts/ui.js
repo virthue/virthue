@@ -1,5 +1,3 @@
-import Events from "../../src/types/Events.js";
-
 window.UI = (new class UI {
     Modules = {};
 
@@ -18,6 +16,8 @@ window.UI = (new class UI {
        for(let module of modules) {
            this.#loadModule(module);
        }
+
+       // ToDo Inject language
 
         document.addEventListener('click', (event) => {
             let data = event.target.closest('[data-action]');

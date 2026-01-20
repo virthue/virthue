@@ -1,10 +1,14 @@
 import Events from '../../src/types/Events.js';
 
 export default class Tray {
-    Device = null;
+    Device              = null;
+    onLinkButtonClick   = null;
 
     constructor() {
-        this.Device = document.querySelector('object');
+        this.Device             = document.querySelector('object');
+        this.onLinkButtonClick  = () => {
+            this.send(Events.LINK_BUTTON);
+        };
 
         window.IPC.on('bridge', (packet) => {
             switch(packet.action) {
@@ -64,13 +68,12 @@ export default class Tray {
 
     changeModel(type) {
         this.Device.addEventListener('load', () => {
-            let content    = this.Device.contentDocument;
+            let content   = this.Device.contentDocument;
             let button      = content.querySelector('#button');
 
             /* Bind Link-Button */
-            button.addEventListener('click', () => {
-                this.send(Events.LINK_BUTTON);
-            });
+            button.removeEventListener('click', this.onLinkButtonClick);
+            button.addEventListener('click', this.onLinkButtonClick);
         });
 
         this.Device.setAttribute('data', `../devices/${type}.svg`);

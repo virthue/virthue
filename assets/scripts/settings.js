@@ -1,5 +1,6 @@
 import Events from '../../src/types/Events.js';
-import Support from "../../src/types/Support.js";
+import Support from '../../src/types/Support.js';
+import I18N from '../../src/ui/I18N.js';
 
 const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 
@@ -54,7 +55,7 @@ export default class Settings {
                         this.addEntry(entry, account['create date']);
                         this.addEntry(entry, account['last use date']);
                         data.append(entry);
-                        counter.innerHTML = `${++count} Entries`;
+                        counter.innerHTML = I18N.__sp('%d Entrie', '%d Entries', ++count);
                     }
                 break;
                 case 'VIRTHUE':
@@ -62,9 +63,9 @@ export default class Settings {
                         return;
                     }
 
-                    this.content('version', packet.data.version);
-                    this.content('electron', packet.data.electron);
-                    this.content('node', packet.data.node);
+                    this.content('version',     packet.data.version);
+                    this.content('electron',    packet.data.electron);
+                    this.content('node',        packet.data.node);
                 break;
             }
         });
@@ -86,7 +87,7 @@ export default class Settings {
 
             if(mac.length === 0 || !isValid) {
                 element.classList.add('invalid');
-                id = '- Invalid MAC Address -';
+                id = I18N.__('- Invalid MAC Address -');
             } else {
                 id =`${test.slice(0, 6)}fffe${test.slice(6)}`;
             }
