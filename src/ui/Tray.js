@@ -19,7 +19,7 @@ import Events from '../types/Events.js';
 import Settings from './Settings.js';
 import Traffic from './Traffic.js';
 import ElectronUtils from '../ElectronUtils.js';
-import I18N from "./I18N.js";
+import I18N from './I18N.js';
 
 export default new class TrayManager {
     Bridge                  = null;

@@ -135,10 +135,10 @@
                         <input id="address" name="address" type="text" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="port" i18n-text="Server-Ports">Server-Ports</label>
+                        <label i18n-text="Server-Ports">Server-Ports</label>
                         <ui-entries>
-                            <small>HTTP</small> <input id="port" min="1" max="65535" name="port" type="number" />
-                            <small>HTTPS</small> <input id="tls" min="1" max="65535" name="tls" type="number" />
+                            <label for="port"><small>HTTP</small></label> <input id="port" min="1" max="65535" name="port" type="number" />
+                            <label for="tls"><small>HTTPS</small></label> <input id="tls" min="1" max="65535" name="tls" type="number" />
                         </ui-entries>
                     </ui-entry>
                 </form>

@@ -7,6 +7,7 @@
 import Bridge from './bridge/Bridge.js';
 import Tray from './ui/Tray.js';
 import Settings from './ui/Settings.js';
+import I18N from './ui/I18N.js';
 
 (new class Main {
     Bridge = null;
@@ -19,8 +20,12 @@ import Settings from './ui/Settings.js';
         // Init Bridge
         this.Bridge = new Bridge();
 
-        // Init UI
-        Tray.start(this.Bridge);
-        Settings.start(this.Bridge);
+        I18N.init().then(() => {
+            // Init UI
+            Tray.start(this.Bridge);
+            Settings.start(this.Bridge);
+
+            console.log("test", I18N.__("A"));
+        });
     }
 }());

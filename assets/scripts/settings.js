@@ -1,4 +1,3 @@
-import Events from '../../src/types/Events.js';
 import Support from '../../src/types/Support.js';
 import I18N from '../../src/ui/I18N.js';
 
@@ -7,13 +6,13 @@ const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 export default class Settings {
     constructor() {
         window.IPC.on('settings', (packet) => {
-            switch(packet.action) {
+            switch(packet?.action) {
                 case 'SETTINGS':
                     this.update('name', packet.data?.name);
                     this.update('model', packet.data?.model);
 
-                    if(packet.data?.network) {
-                        let network = packet.data?.network;
+                    if(packet?.data?.network) {
+                        let network = packet.data.network;
 
                         this.update('address', network?.address);
 
@@ -23,16 +22,15 @@ export default class Settings {
                             }));
                         });
 
-                        this.update('port', network?.port);
-                        this.update('tls', network?.tls);
-
-                        this.enable('address', !network?.autoresolve);
+                        this.update('port',     network?.port);
+                        this.update('tls',      network?.tls);
+                        this.enable('address',  !network?.autoresolve);
                     }
 
                     for(const support in Support) {
                         let value = Support[support];
 
-                        this.check(value, packet.data?.supports?.includes(value));
+                        this.check(value, packet?.data?.supports?.includes(value));
                     }
                 break;
                 case 'ACCOUNTS':
@@ -81,7 +79,7 @@ export default class Settings {
             const mac                   = element.value;
             const test           = mac.replace(/:/g, '').toLowerCase();
             const isValid       = REGEX_MAC.test(mac);
-            let id                 = null;
+            let id;
 
             element.classList.remove('invalid');
 

@@ -42,8 +42,11 @@ window.UI = (new class UI {
     }
 
     async #loadModule(module) {
-        const imported       = await import(`./${module.toLowerCase()}.js`);
-        this.Modules[module] = new imported.default();
+        return import(`./${module.toLowerCase()}.js`).then((imported) => {
+            this.Modules[module] = new imported.default();
+        }).catch(error => {
+            console.error(error);
+        });
     }
 
     getModule(name) {

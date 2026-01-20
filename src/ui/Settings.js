@@ -180,7 +180,7 @@ export default new class Settings {
         });
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
-        this.Window.setMenu(null);
+        //this.Window.setMenu(null);
 
         this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 
