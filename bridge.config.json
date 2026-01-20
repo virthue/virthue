@@ -1,7 +1,7 @@
 {
     "bridge": {
         "name": "virthue Bridge",
-        "model": "BSB003",
+        "model": "BSB002",
         "version": {
             "number": 2071153010,
             "api": "1.74.0"

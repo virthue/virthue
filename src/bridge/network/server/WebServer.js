@@ -4,13 +4,14 @@
  * @author      Adrian Preuß
  * @version     1.0.0
  */
-import FileSystem from 'node:fs';
+import FileSystem from 'node:fs/promises';
 import Stream from 'node:stream';
 import Fastify from 'fastify';
 import SSE from 'fastify-sse-v2';
 import FormBody from '@fastify/formbody';
 import CORS from '@fastify/cors';
 import Static from '@fastify/static';
+import Utils from '../../../Utils.js';
 
 export default class WebServer {
     Hostname    = null;
@@ -24,12 +25,52 @@ export default class WebServer {
         this.Port       = port;
         this.TLS        = secure;
         this.Directory  = directory;
-
-        this.#init();
     }
 
-    async #init() {
-        // @ToDo TLS-Certs
+    async #loadCertificates(files, options) {
+        let result = {
+            ...options
+        };
+
+        try {
+            const [key, cert, ca] = await Promise.all([
+                FileSystem.readFile(files.key, 'utf8').catch(() => null),
+                FileSystem.readFile(files.cert, 'utf8').catch(() => null),
+                files.ca ? FileSystem.readFile(files.ca, 'utf8').catch(() => null) : null
+            ]);
+
+            if(!key || !cert) {
+                console.warn("Zertifikate unvollständig: Key oder Cert fehlt. Fallback auf HTTP.");
+                return null;
+            }
+
+            result.key      = key;
+            result.cert     = cert;
+
+            if(ca) {
+                result.ca   = ca;
+            }
+
+            return result;
+        } catch(error) {
+            console.error("Fehler beim Laden der Zertifikate:", error);
+            return null;
+        }
+    }
+
+    async init() {
+        let certificates = (this.TLS ? await this.#loadCertificates({
+            key:    Utils.getPath('certs', 'private.key'),
+            cert:   Utils.getPath('certs', 'cert.crt')
+        }, {
+            ciphers: [
+                'ECDHE-ECDSA-AES128-GCM-SHA256',
+                'ECDHE-ECDSA-AES256-GCM-SHA384',
+                'ECDHE-RSA-AES128-GCM-SHA256'
+            ].join(':'),
+            honorCipherOrder:   true
+        }) : {});
+
         this.Fastify = Fastify({
             routerOptions: {
                 ignoreTrailingSlash: true,
@@ -45,15 +86,15 @@ export default class WebServer {
                     target: 'pino-pretty'
                 }
             },
-            https: !this.TLS ? null : {
-                cert:    FileSystem.readFileSync('./certs/cert.pem'),
-                key:    FileSystem.readFileSync('./certs/cert.pem'),
-                ciphers: 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256',
-                honorCipherOrder: true,
-                secureProtocol: 'TLSv1_2_method'
-            }
+            ...(this.TLS ? {
+                https: certificates
+            } : {})
         });
 
+        return this;
+    }
+
+    async start() {
         /* Bind a www-dir */
         if(this.Directory) {
             await this.Fastify.register(Static, {
@@ -61,6 +102,13 @@ export default class WebServer {
                 prefix: '/'
             });
         }
+
+        await this.Fastify.register(FormBody);
+
+        await this.Fastify.register(CORS, {
+            origin:     true,
+            methods:    [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ]
+        });
 
         this.Fastify.addContentTypeParser('application/json', {
             parseAs: 'string'
@@ -78,14 +126,7 @@ export default class WebServer {
             }
         });
 
-        await this.Fastify.register(FormBody);
-
-        /* Enable CORS */
-        await this.Fastify.register(CORS, {
-            origin:     true,
-            methods:    [ 'GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ]
-        });
-
+        /* Fix empty JSON Data */
         this.Fastify.addHook('preParsing', (request, reply, payload, done) => {
             if(request.headers['content-type']?.includes('application/json') && (request.headers['content-length'] === '0' || !request.headers['content-length'])) {
                 request.headers['content-length'] = '2';
@@ -100,7 +141,7 @@ export default class WebServer {
             }
         });
 
-        // Only for Debug
+        // Debug Hook @ToDo forward to Traffic UI
         this.Fastify.addHook('onRequest', async (request, reply) => {
             console.log('\n========================================');
             console.log('ALLE REQUESTS:');
@@ -114,31 +155,40 @@ export default class WebServer {
         });
 
         /* Default route */
-        if (!this.Directory) {
+        if(!this.Directory) {
             this.Fastify.route({
                 method: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-                url: '*',
+                url:    '*',
                 handler: async (request, reply) => {
                     console.log('Unknown Route:', request.method, request.url);
-
-                    // @ToDo Enum + Error-Class
                     return [{
                         error: {
-                            type: 4,
-                            address: request.url,
-                            description: `method, GET, not available for resource, ${request.url}`
+                            type:           4,
+                            address:        request.url,
+                            description:    `method, GET, not available for resource, ${request.url}`
                         }
                     }];
                 }
             });
         }
 
-        try {
-            await this.Fastify.listen({ port: this.Port, host: this.Hostname });
+        await this.Fastify.ready();
 
-            console.log(`WebServer running on Port ${this.Port}`);
-        } catch (err) {
-            this.Fastify.log.error(err);
+        this.Fastify.server.on('tlsClientError', (err) => {
+            console.error('TLS Client Error:', err);
+        });
+
+        this.Fastify.server.on('error', (err) => {
+            console.error('Server Error:', err);
+        });
+
+        try {
+            await this.Fastify.listen({
+                port: this.Port,
+                host: this.Hostname
+            });
+        } catch(error) {
+            throw error;
         }
     }
 

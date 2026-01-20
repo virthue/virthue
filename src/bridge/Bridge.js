@@ -15,6 +15,7 @@ import Configuration from './Configuration.js';
 import Support from '../types/Support.js';
 import Plugins from './Plugins.js';
 import Utils from '../Utils.js';
+import Certificate from "./network/security/Certificate.js";
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;
@@ -72,10 +73,13 @@ export default class Bridge extends Events.EventEmitter {
             software_version_string:    '1.3.0'
         });
 
-        // Init
-        this.#init().then(() => {
-            console.log('BRIDGE_READY');
-            this.emit('BRIDGE_READY');
+        /* Generate TLS Certificate */
+        Certificate.generate(this.getId()).then(() => {
+            this.#init().then(() => {
+                this.emit('BRIDGE_READY');
+            });
+        }).catch(error => {
+            console.error('TLS_CERTIFICATE_ERROR', error);
         });
     }
 
@@ -85,11 +89,11 @@ export default class Bridge extends Events.EventEmitter {
         await this.Plugins.loadPlugins();
         console.log(`Loaded ${this.Plugins.getCount()} plugins`);
 
-        this.HTTP   = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot);
+        this.HTTP   = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot).init();
         await this.bindREST(this.HTTP);
 
         if(this.Configuration.supports(Support.SECURED)) {
-            this.HTTPS = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot);
+            this.HTTPS = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot).init();
             await this.bindREST(this.HTTPS);
 
             // @docs https://developers.meethue.com/develop/hue-api-v2/migration-guide-to-the-new-hue-api/
@@ -139,6 +143,16 @@ export default class Bridge extends Events.EventEmitter {
                     });
                 });
             }
+        }
+
+        try {
+            await this.HTTP.start();
+
+            if(this.HTTPS) {
+                await this.HTTPS.start();
+            }
+        } catch(error) {
+            throw error;
         }
 
         this.Discovery = new Discovery(this);
