@@ -109,8 +109,13 @@
                         <input id="name" name="name" type="text" />
                     </ui-entry>
                     <ui-entry>
-                        <label for="id">ID</label>
-                        <input id="id" name="id" type="text" disabled />
+                        <label>ID</label>
+                        <ui-group>
+                            <ui-text data-name="id" type="text"></ui-text>
+                            <button type="button" data-action="copy:id">
+                                <i class="bi bi-copy"></i>
+                            </button>
+                        </ui-group>
                     </ui-entry>
 
                     <ui-entry>

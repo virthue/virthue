@@ -91,7 +91,7 @@ export default class Settings {
                 id =`${test.slice(0, 6)}fffe${test.slice(6)}`;
             }
 
-            this.update('id', id);
+            this.content('id', id);
         });
 
         inputMAC.addEventListener('input', () => {
@@ -132,6 +132,11 @@ export default class Settings {
 
     onAction(action, value, event) {
         switch(action) {
+            case 'copy':
+                let text = document.querySelector('[data-name="' + value + '"]').textContent;
+
+                navigator.clipboard.writeText(text).then(() => {});
+            break;
             case 'traffic':
                 this.send('TRAFFIC_OPEN');
             break;
