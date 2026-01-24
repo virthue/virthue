@@ -43,7 +43,11 @@ window.UI = (new class UI {
 
     async #loadModule(module) {
         return import(`./${module.toLowerCase()}.js`).then((imported) => {
-            this.Modules[module] = new imported.default();
+            try {
+                this.Modules[module] = new imported.default();
+            } catch(error) {
+                console.error(error);
+            }
         }).catch(error => {
             console.error(error);
         });

@@ -1,11 +1,10 @@
 import Support from '../../src/types/Support.js';
-import I18N from '../../src/ui/I18N.js';
 
 const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 
 export default class Settings {
     constructor() {
-        window.IPC.on('settings', (packet) => {
+        window.IPC.on('settings', async (packet) => {
             switch(packet?.action) {
                 case 'SETTINGS':
                     this.update('name', packet.data?.name);
@@ -53,7 +52,7 @@ export default class Settings {
                         this.addEntry(entry, account['create date']);
                         this.addEntry(entry, account['last use date']);
                         data.append(entry);
-                        counter.innerHTML = I18N.__sp('%d Entrie', '%d Entries', ++count);
+                        counter.innerHTML = await window.I18N.__sp('%d Entrie', '%d Entries', ++count);
                     }
                 break;
                 case 'VIRTHUE':

@@ -16,6 +16,7 @@ import Process from 'node:process';
 import Support from '../types/Support.js';
 import Traffic from './Traffic.js';
 import ElectronUtils from '../ElectronUtils.js';
+import I18N from "./I18N.js";
 
 export default new class Settings {
     Window = null;
@@ -45,6 +46,23 @@ export default new class Settings {
         } catch (error) {
             /* Do Nothing */
         }
+
+        IPC.handle('I18N:__', (event, string) => {
+            return I18N.__(string);
+        });
+
+        IPC.handle('I18N:__sp', (event, singular, plural, count) => {
+            return I18N.__sp(singular, plural, count);
+        });
+
+        IPC.handle('I18N:setLanguage', (event, lang) => {
+            I18N.Language = lang;
+            return true;
+        });
+
+        IPC.handle('I18N:getLanguage', () => {
+            return I18N.Language;
+        });
 
         IPC.on('settings', (event, packet) => {
             switch (packet.action) {
