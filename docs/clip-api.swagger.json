@@ -9,12 +9,12 @@
     {
       "url": "http://{bridge_ip}/api/v1",
       "description": "Hue Bridge API",
-	  "variables": {
-		  "bridge_ip": {
-			 "default": "127.0.0.1",
-			 "description": "IP address of your bridge"
-		  }
-	  }
+      "variables": {
+        "bridge_ip": {
+          "default": "127.0.0.1",
+          "description": "IP address of your bridge"
+        }
+      }
     }
   ],
   "paths": {
