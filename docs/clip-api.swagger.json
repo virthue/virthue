@@ -1080,19 +1080,19 @@
         "type": "object",
         "properties": {
           "on": {
-            "$ref": "#/definitions/OnFeatureBasicGet"
+            "$ref": "#/components/schemas/OnFeatureBasicGet"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicGet"
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
           },
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
           },
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
           },
           "gradient": {
-            "$ref": "#/definitions/GradientFeatureBasicGet"
+            "$ref": "#/components/schemas/GradientFeatureBasicGet"
           }
         }
       },
@@ -1101,19 +1101,19 @@
         "type": "object",
         "properties": {
           "on": {
-            "$ref": "#/definitions/OnFeatureBasicPost"
+            "$ref": "#/components/schemas/OnFeatureBasicPost"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPost"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
           },
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPost"
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
           },
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicPost"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPost"
           },
           "gradient": {
-            "$ref": "#/definitions/GradientFeatureBasicPost"
+            "$ref": "#/components/schemas/GradientFeatureBasicPost"
           }
         }
       },
@@ -1122,19 +1122,19 @@
         "type": "object",
         "properties": {
           "on": {
-            "$ref": "#/definitions/OnFeatureBasicPut"
+            "$ref": "#/components/schemas/OnFeatureBasicPut"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPut"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
           },
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPut"
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
           },
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicPut"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
           },
           "gradient": {
-            "$ref": "#/definitions/GradientFeatureBasicPut"
+            "$ref": "#/components/schemas/GradientFeatureBasicPut"
           }
         }
       },
@@ -1142,10 +1142,10 @@
         "type": "object",
         "properties": {
           "target": {
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           },
           "action": {
-            "$ref": "#/definitions/ActionActionGet"
+            "$ref": "#/components/schemas/ActionActionGet"
           }
         },
         "required": [
@@ -1157,10 +1157,10 @@
         "type": "object",
         "properties": {
           "target": {
-            "$ref": "#/definitions/ResourceIdentifierPost"
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
           },
           "action": {
-            "$ref": "#/definitions/ActionActionPost"
+            "$ref": "#/components/schemas/ActionActionPost"
           }
         },
         "required": [
@@ -1172,10 +1172,10 @@
         "type": "object",
         "properties": {
           "target": {
-            "$ref": "#/definitions/ResourceIdentifierPut"
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
           },
           "action": {
-            "$ref": "#/definitions/ActionActionPut"
+            "$ref": "#/components/schemas/ActionActionPut"
           }
         },
         "required": [
@@ -1195,7 +1195,7 @@
           "action_values": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/AlertEffectType"
+              "$ref": "#/components/schemas/AlertEffectType"
             }
           }
         },
@@ -1207,7 +1207,7 @@
         "type": "object",
         "properties": {
           "action": {
-            "$ref": "#/definitions/AlertEffectType"
+            "$ref": "#/components/schemas/AlertEffectType"
           }
         },
         "required": [
@@ -1217,7 +1217,7 @@
       "BehaviorInstanceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ScriptInstanceGet"
+            "$ref": "#/components/schemas/ScriptInstanceGet"
           },
           {
             "properties": {
@@ -1225,7 +1225,7 @@
                 "enum": [
                   "behavior_instance"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1235,7 +1235,7 @@
       "BehaviorInstancePost": {
         "allOf": [
           {
-            "$ref": "#/definitions/ScriptInstancePost"
+            "$ref": "#/components/schemas/ScriptInstancePost"
           },
           {
             "properties": {
@@ -1243,7 +1243,7 @@
                 "enum": [
                   "behavior_instance"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1253,7 +1253,7 @@
       "BehaviorInstancePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ScriptInstancePut"
+            "$ref": "#/components/schemas/ScriptInstancePut"
           },
           {
             "properties": {
@@ -1261,7 +1261,7 @@
                 "enum": [
                   "behavior_instance"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1271,7 +1271,7 @@
       "BehaviorScriptGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ScriptDefinitionGet"
+            "$ref": "#/components/schemas/ScriptDefinitionGet"
           },
           {
             "properties": {
@@ -1279,7 +1279,7 @@
                 "enum": [
                   "behavior_script"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1289,7 +1289,7 @@
       "BridgeGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -1297,13 +1297,13 @@
                 "enum": [
                   "bridge"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "bridge_id": {
                 "type": "string"
               },
               "time_zone": {
-                "$ref": "#/definitions/TimeZoneFeature"
+                "$ref": "#/components/schemas/TimeZoneFeature"
               }
             },
             "required": [
@@ -1318,7 +1318,7 @@
         "description": "Home resource lists all rooms in a home and all devices which are not assigned to a room.\nHome only contains children of type \"device\" and \"room\" ",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupGet"
+            "$ref": "#/components/schemas/GroupGet"
           },
           {
             "properties": {
@@ -1326,11 +1326,11 @@
                 "enum": [
                   "bridge_home"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "children": {
                 "description": "Rooms and devices not assigned to a room grouped in the home\nFollowing children are allowed: - room - device ",
-                "$ref": "#/definitions/ServiceListGet"
+                "$ref": "#/components/schemas/ServiceListGet"
               }
             },
             "required": [
@@ -1344,7 +1344,7 @@
         "description": "Home resource lists all rooms in a home and all devices which are not assigned to a room.\nHome only contains children of type \"device\" and \"room\" ",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPut"
+            "$ref": "#/components/schemas/GroupPut"
           },
           {
             "properties": {
@@ -1352,7 +1352,7 @@
                 "enum": [
                   "bridge_home"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1362,7 +1362,7 @@
       "BridgePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -1370,7 +1370,7 @@
                 "enum": [
                   "bridge"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1398,7 +1398,7 @@
         "type": "object",
         "properties": {
           "last_event": {
-            "$ref": "#/definitions/ButtonEvent"
+            "$ref": "#/components/schemas/ButtonEvent"
           }
         },
         "required": [
@@ -1408,7 +1408,7 @@
       "ButtonGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -1416,13 +1416,13 @@
                 "enum": [
                   "button"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "metadata": {
-                "$ref": "#/definitions/SwitchInputMetadataGet"
+                "$ref": "#/components/schemas/SwitchInputMetadataGet"
               },
               "button": {
-                "$ref": "#/definitions/ButtonFeatureGet"
+                "$ref": "#/components/schemas/ButtonFeatureGet"
               }
             },
             "required": [
@@ -1436,7 +1436,7 @@
       "ButtonPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -1444,7 +1444,7 @@
                 "enum": [
                   "button"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -1458,7 +1458,7 @@
           "errors": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Error"
+              "$ref": "#/components/schemas/Error"
             }
           }
         },
@@ -1469,14 +1469,14 @@
       "ClipMessageBehaviorInstanceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/BehaviorInstanceGet"
+                  "$ref": "#/components/schemas/BehaviorInstanceGet"
                 }
               }
             },
@@ -1490,14 +1490,14 @@
       "ClipMessageBehaviorScriptGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/BehaviorScriptGet"
+                  "$ref": "#/components/schemas/BehaviorScriptGet"
                 }
               }
             },
@@ -1511,14 +1511,14 @@
       "ClipMessageBridgeGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/BridgeGet"
+                  "$ref": "#/components/schemas/BridgeGet"
                 }
               }
             },
@@ -1532,14 +1532,14 @@
       "ClipMessageBridgeHomeGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/BridgeHomeGet"
+                  "$ref": "#/components/schemas/BridgeHomeGet"
                 }
               }
             },
@@ -1553,14 +1553,14 @@
       "ClipMessageButtonGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ButtonGet"
+                  "$ref": "#/components/schemas/ButtonGet"
                 }
               }
             },
@@ -1574,14 +1574,14 @@
       "ClipMessageDeviceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/DeviceGet"
+                  "$ref": "#/components/schemas/DeviceGet"
                 }
               }
             },
@@ -1595,14 +1595,14 @@
       "ClipMessageDevicePowerGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/DevicePowerGet"
+                  "$ref": "#/components/schemas/DevicePowerGet"
                 }
               }
             },
@@ -1616,14 +1616,14 @@
       "ClipMessageEntertainmentConfigurationGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/EntertainmentConfigurationGet"
+                  "$ref": "#/components/schemas/EntertainmentConfigurationGet"
                 }
               }
             },
@@ -1637,14 +1637,14 @@
       "ClipMessageEntertainmentGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/EntertainmentGet"
+                  "$ref": "#/components/schemas/EntertainmentGet"
                 }
               }
             },
@@ -1658,14 +1658,14 @@
       "ClipMessageGeofenceClientGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/GeofenceClientGet"
+                  "$ref": "#/components/schemas/GeofenceClientGet"
                 }
               }
             },
@@ -1679,14 +1679,14 @@
       "ClipMessageGeolocationGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/GeolocationGet"
+                  "$ref": "#/components/schemas/GeolocationGet"
                 }
               }
             },
@@ -1700,14 +1700,14 @@
       "ClipMessageGroupedLightGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/GroupedLightGet"
+                  "$ref": "#/components/schemas/GroupedLightGet"
                 }
               }
             },
@@ -1721,14 +1721,14 @@
       "ClipMessageHomekitGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/HomekitGet"
+                  "$ref": "#/components/schemas/HomekitGet"
                 }
               }
             },
@@ -1742,14 +1742,14 @@
       "ClipMessageLightGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/LightGet"
+                  "$ref": "#/components/schemas/LightGet"
                 }
               }
             },
@@ -1763,14 +1763,14 @@
       "ClipMessageLightLevelGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/LightLevelGet"
+                  "$ref": "#/components/schemas/LightLevelGet"
                 }
               }
             },
@@ -1784,14 +1784,14 @@
       "ClipMessageMotionGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/MotionGet"
+                  "$ref": "#/components/schemas/MotionGet"
                 }
               }
             },
@@ -1805,14 +1805,14 @@
       "ClipMessageRelativeRotaryGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/RelativeRotaryGet"
+                  "$ref": "#/components/schemas/RelativeRotaryGet"
                 }
               }
             },
@@ -1826,14 +1826,14 @@
       "ClipMessageResourceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceGet"
+                  "$ref": "#/components/schemas/ResourceGet"
                 }
               }
             },
@@ -1847,14 +1847,14 @@
       "ClipMessageResourceIdentifierDelete": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceIdentifierDelete"
+                  "$ref": "#/components/schemas/ResourceIdentifierDelete"
                 }
               }
             },
@@ -1868,14 +1868,14 @@
       "ClipMessageResourceIdentifierPost": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceIdentifierPost"
+                  "$ref": "#/components/schemas/ResourceIdentifierPost"
                 }
               }
             },
@@ -1889,14 +1889,14 @@
       "ClipMessageResourceIdentifierPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceIdentifierPut"
+                  "$ref": "#/components/schemas/ResourceIdentifierPut"
                 }
               }
             },
@@ -1910,14 +1910,14 @@
       "ClipMessageRoomGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/RoomGet"
+                  "$ref": "#/components/schemas/RoomGet"
                 }
               }
             },
@@ -1931,14 +1931,14 @@
       "ClipMessageSceneGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/SceneGet"
+                  "$ref": "#/components/schemas/SceneGet"
                 }
               }
             },
@@ -1952,14 +1952,14 @@
       "ClipMessageTemperatureGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/TemperatureGet"
+                  "$ref": "#/components/schemas/TemperatureGet"
                 }
               }
             },
@@ -1973,14 +1973,14 @@
       "ClipMessageZgpConnectivityGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ZgpConnectivityGet"
+                  "$ref": "#/components/schemas/ZgpConnectivityGet"
                 }
               }
             },
@@ -1994,14 +1994,14 @@
       "ClipMessageZigbeeConnectivityGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ZigbeeConnectivityGet"
+                  "$ref": "#/components/schemas/ZigbeeConnectivityGet"
                 }
               }
             },
@@ -2015,14 +2015,14 @@
       "ClipMessageZoneGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ClipMessage"
+            "$ref": "#/components/schemas/ClipMessage"
           },
           {
             "properties": {
               "data": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ZoneGet"
+                  "$ref": "#/components/schemas/ZoneGet"
                 }
               }
             },
@@ -2042,7 +2042,7 @@
         "type": "object",
         "properties": {
           "xy": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           }
         },
         "required": [
@@ -2053,7 +2053,7 @@
         "type": "object",
         "properties": {
           "xy": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           }
         },
         "required": [
@@ -2064,7 +2064,7 @@
         "type": "object",
         "properties": {
           "xy": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           }
         }
       },
@@ -2073,13 +2073,13 @@
         "type": "object",
         "properties": {
           "red": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           },
           "green": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           },
           "blue": {
-            "$ref": "#/definitions/ColorPoint"
+            "$ref": "#/components/schemas/ColorPoint"
           }
         },
         "required": [
@@ -2091,12 +2091,12 @@
       "ColorFeatureGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ColorFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
           },
           {
             "properties": {
               "gamut": {
-                "$ref": "#/definitions/ColorFeatureGamut"
+                "$ref": "#/components/schemas/ColorFeatureGamut"
               },
               "gamut_type": {
                 "enum": [
@@ -2117,16 +2117,16 @@
         ]
       },
       "ColorFeaturePut": {
-        "$ref": "#/definitions/ColorFeatureBasicPut"
+        "$ref": "#/components/schemas/ColorFeatureBasicPut"
       },
       "ColorPaletteGet": {
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicGet"
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
           }
         },
         "required": [
@@ -2138,10 +2138,10 @@
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPost"
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPost"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
           }
         },
         "required": [
@@ -2153,10 +2153,10 @@
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPut"
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPut"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
           }
         },
         "required": [
@@ -2190,7 +2190,7 @@
         "type": "object",
         "properties": {
           "mirek": {
-            "$ref": "#/definitions/ColorTemperatureMirek"
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
           }
         },
         "required": [
@@ -2201,7 +2201,7 @@
         "type": "object",
         "properties": {
           "mirek": {
-            "$ref": "#/definitions/ColorTemperatureMirek"
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
           }
         },
         "required": [
@@ -2212,14 +2212,14 @@
         "type": "object",
         "properties": {
           "mirek": {
-            "$ref": "#/definitions/ColorTemperatureMirek"
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
           }
         }
       },
       "ColorTemperatureFeatureGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
           },
           {
             "properties": {
@@ -2227,7 +2227,7 @@
                 "type": "boolean"
               },
               "mirek_schema": {
-                "$ref": "#/definitions/ColorTemperatureMirekSchemaGet"
+                "$ref": "#/components/schemas/ColorTemperatureMirekSchemaGet"
               }
             },
             "required": [
@@ -2239,7 +2239,7 @@
         ]
       },
       "ColorTemperatureFeaturePut": {
-        "$ref": "#/definitions/ColorTemperatureFeatureBasicPut"
+        "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
       },
       "ColorTemperatureMirek": {
         "minimum": 153,
@@ -2251,10 +2251,10 @@
         "type": "object",
         "properties": {
           "mirek_minimum": {
-            "$ref": "#/definitions/ColorTemperatureMirek"
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
           },
           "mirek_maximum": {
-            "$ref": "#/definitions/ColorTemperatureMirek"
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
           }
         },
         "required": [
@@ -2266,10 +2266,10 @@
         "type": "object",
         "properties": {
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicGet"
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
           }
         },
         "required": [
@@ -2281,10 +2281,10 @@
         "type": "object",
         "properties": {
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicPost"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPost"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPost"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
           }
         },
         "required": [
@@ -2296,10 +2296,10 @@
         "type": "object",
         "properties": {
           "color_temperature": {
-            "$ref": "#/definitions/ColorTemperatureFeatureBasicPut"
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPut"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
           }
         },
         "required": [
@@ -2310,7 +2310,7 @@
       "ConnectivityServiceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -2341,7 +2341,7 @@
       "ConnectivityServicePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -2372,10 +2372,10 @@
           },
           "target": {
             "description": "Id of the dependency resource (target).",
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           },
           "level": {
-            "$ref": "#/definitions/DependencyLevel"
+            "$ref": "#/components/schemas/DependencyLevel"
           }
         },
         "required": [
@@ -2437,7 +2437,7 @@
       "DeviceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/GroupGet"
+            "$ref": "#/components/schemas/GroupGet"
           },
           {
             "properties": {
@@ -2448,10 +2448,10 @@
                 "type": "string"
               },
               "product_data": {
-                "$ref": "#/definitions/DeviceProductDataGet"
+                "$ref": "#/components/schemas/DeviceProductDataGet"
               },
               "metadata": {
-                "$ref": "#/definitions/DeviceMetadataGet"
+                "$ref": "#/components/schemas/DeviceMetadataGet"
               },
               "creation_time": {
                 "type": "string",
@@ -2470,12 +2470,12 @@
       "DeviceMetadataGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataGet"
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/DeviceArchetypes"
+                "$ref": "#/components/schemas/DeviceArchetypes"
               }
             },
             "required": [
@@ -2488,12 +2488,12 @@
       "DeviceMetadataPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataPut"
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/DeviceArchetypes"
+                "$ref": "#/components/schemas/DeviceArchetypes"
               }
             },
             "type": "object"
@@ -2503,7 +2503,7 @@
       "DevicePowerGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -2511,10 +2511,10 @@
                 "enum": [
                   "device_power"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "power_state": {
-                "$ref": "#/definitions/DevicePowerStateGet"
+                "$ref": "#/components/schemas/DevicePowerStateGet"
               }
             },
             "required": [
@@ -2527,7 +2527,7 @@
       "DevicePowerPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -2535,7 +2535,7 @@
                 "enum": [
                   "device_power"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -2576,7 +2576,7 @@
             "type": "string"
           },
           "product_archetype": {
-            "$ref": "#/definitions/DeviceArchetypes"
+            "$ref": "#/components/schemas/DeviceArchetypes"
           },
           "certified": {
             "type": "boolean"
@@ -2599,7 +2599,7 @@
       "DevicePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPut"
+            "$ref": "#/components/schemas/GroupPut"
           },
           {
             "properties": {
@@ -2610,10 +2610,10 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/DeviceMetadataPut"
+                "$ref": "#/components/schemas/DeviceMetadataPut"
               },
               "identify": {
-                "$ref": "#/definitions/IdentifyFeaturePut"
+                "$ref": "#/components/schemas/IdentifyFeaturePut"
               }
             },
             "type": "object"
@@ -2624,7 +2624,7 @@
         "type": "object",
         "properties": {
           "brightness": {
-            "$ref": "#/definitions/Brightness"
+            "$ref": "#/components/schemas/Brightness"
           }
         },
         "required": [
@@ -2635,7 +2635,7 @@
         "type": "object",
         "properties": {
           "brightness": {
-            "$ref": "#/definitions/Brightness"
+            "$ref": "#/components/schemas/Brightness"
           }
         },
         "required": [
@@ -2646,15 +2646,15 @@
         "type": "object",
         "properties": {
           "brightness": {
-            "$ref": "#/definitions/Brightness"
+            "$ref": "#/components/schemas/Brightness"
           }
         }
       },
       "DimmingFeatureGet": {
-        "$ref": "#/definitions/DimmingFeatureBasicGet"
+        "$ref": "#/components/schemas/DimmingFeatureBasicGet"
       },
       "DimmingFeaturePut": {
-        "$ref": "#/definitions/DimmingFeatureBasicPut"
+        "$ref": "#/components/schemas/DimmingFeatureBasicPut"
       },
       "Duration": {
         "minimum": 0,
@@ -2689,17 +2689,17 @@
       "DynamicsFeatureGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/DynamicFeatureBasicGet"
+            "$ref": "#/components/schemas/DynamicFeatureBasicGet"
           },
           {
             "properties": {
               "status": {
-                "$ref": "#/definitions/SupportedDynamicStatus"
+                "$ref": "#/components/schemas/SupportedDynamicStatus"
               },
               "status_values": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/SupportedDynamicStatus"
+                  "$ref": "#/components/schemas/SupportedDynamicStatus"
                 }
               },
               "speed_valid": {
@@ -2718,12 +2718,12 @@
       "DynamicsFeaturePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/DynamicFeatureBasicPut"
+            "$ref": "#/components/schemas/DynamicFeatureBasicPut"
           },
           {
             "properties": {
               "duration": {
-                "$ref": "#/definitions/Duration"
+                "$ref": "#/components/schemas/Duration"
               }
             },
             "type": "object"
@@ -2742,13 +2742,13 @@
           },
           "position": {
             "description": "xyz position of this channel. It is the average position of its members",
-            "$ref": "#/definitions/Position"
+            "$ref": "#/components/schemas/Position"
           },
           "members": {
             "description": "List that references segments that are members of that channel",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/SegmentReferenceGet"
+              "$ref": "#/components/schemas/SegmentReferenceGet"
             }
           }
         },
@@ -2762,7 +2762,7 @@
         "description": "Entertainment configuration",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -2773,11 +2773,11 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/EntertainmentConfigurationMetadata"
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
               },
               "name": {
                 "description": "Friendly name of the entertainment configuration\nDeprecated: use metadata/name ",
-                "$ref": "#/definitions/ResourceName"
+                "$ref": "#/components/schemas/ResourceName"
               },
               "configuration_type": {
                 "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
@@ -2799,27 +2799,27 @@
               },
               "active_streamer": {
                 "description": "Expected value is of a ResourceIdentifier of the type auth_v1",
-                "$ref": "#/definitions/ResourceIdentifierGet"
+                "$ref": "#/components/schemas/ResourceIdentifierGet"
               },
               "stream_proxy": {
-                "$ref": "#/definitions/StreamingProxyGet"
+                "$ref": "#/components/schemas/StreamingProxyGet"
               },
               "channels": {
                 "description": "Holds the channels. Each channel groups segments of one or different light",
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/EntertainmentChannelGet"
+                  "$ref": "#/components/schemas/EntertainmentChannelGet"
                 }
               },
               "locations": {
                 "description": "Entertertainment services of the lights that are in the zone have locations",
-                "$ref": "#/definitions/EntertainmentLocationsGet"
+                "$ref": "#/components/schemas/EntertainmentLocationsGet"
               },
               "light_services": {
                 "description": "list of light services that belong to this entertainment configuration",
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceIdentifierGet"
+                  "$ref": "#/components/schemas/ResourceIdentifierGet"
                 }
               }
             },
@@ -2840,7 +2840,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           }
         },
         "required": [
@@ -2851,7 +2851,7 @@
         "description": "Entertainment configuration",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePost"
+            "$ref": "#/components/schemas/ResourcePost"
           },
           {
             "properties": {
@@ -2862,7 +2862,7 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/EntertainmentConfigurationMetadata"
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
               },
               "configuration_type": {
                 "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
@@ -2875,11 +2875,11 @@
                 "type": "string"
               },
               "stream_proxy": {
-                "$ref": "#/definitions/StreamingProxyPost"
+                "$ref": "#/components/schemas/StreamingProxyPost"
               },
               "locations": {
                 "description": "Entertertainment services of the lights that are in the zone have locations",
-                "$ref": "#/definitions/EntertainmentLocationsPost"
+                "$ref": "#/components/schemas/EntertainmentLocationsPost"
               }
             },
             "required": [
@@ -2895,7 +2895,7 @@
         "description": "Entertainment configuration",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -2906,7 +2906,7 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/EntertainmentConfigurationMetadata"
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
               },
               "configuration_type": {
                 "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
@@ -2927,11 +2927,11 @@
                 "type": "string"
               },
               "stream_proxy": {
-                "$ref": "#/definitions/StreamingProxyPut"
+                "$ref": "#/components/schemas/StreamingProxyPut"
               },
               "locations": {
                 "description": "Entertertainment services of the lights that are in the zone have locations",
-                "$ref": "#/definitions/EntertainmentLocationsPut"
+                "$ref": "#/components/schemas/EntertainmentLocationsPut"
               }
             },
             "type": "object"
@@ -2941,7 +2941,7 @@
       "EntertainmentGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -2962,7 +2962,7 @@
                 "type": "integer"
               },
               "segments": {
-                "$ref": "#/definitions/SegmentationProperties"
+                "$ref": "#/components/schemas/SegmentationProperties"
               }
             },
             "required": [
@@ -2980,7 +2980,7 @@
           "service_locations": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ServiceLocationGet"
+              "$ref": "#/components/schemas/ServiceLocationGet"
             }
           }
         },
@@ -2995,7 +2995,7 @@
           "service_locations": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ServiceLocationPost"
+              "$ref": "#/components/schemas/ServiceLocationPost"
             }
           }
         },
@@ -3010,7 +3010,7 @@
           "service_locations": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ServiceLocationPut"
+              "$ref": "#/components/schemas/ServiceLocationPut"
             }
           }
         },
@@ -3021,7 +3021,7 @@
       "EntertainmentPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3042,7 +3042,7 @@
                 "type": "integer"
               },
               "segments": {
-                "$ref": "#/definitions/SegmentationProperties"
+                "$ref": "#/components/schemas/SegmentationProperties"
               }
             },
             "required": [
@@ -3077,7 +3077,7 @@
         "description": "Representation of Geofence Client.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -3085,7 +3085,7 @@
                 "enum": [
                   "geofence_client"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "name": {
                 "minLength": 1,
@@ -3104,7 +3104,7 @@
         "description": "Representation of Geofence Client.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePost"
+            "$ref": "#/components/schemas/ResourcePost"
           },
           {
             "properties": {
@@ -3112,7 +3112,7 @@
                 "enum": [
                   "geofence_client"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "is_at_home": {
                 "description": "Indicator if Geofence Client is at home.",
@@ -3132,7 +3132,7 @@
         "description": "Representation of Geofence Client.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3140,7 +3140,7 @@
                 "enum": [
                   "geofence_client"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "is_at_home": {
                 "description": "Indicator if Geofence Client is at home.",
@@ -3160,7 +3160,7 @@
         "description": "Representation of the geo location of the bridge",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -3168,7 +3168,7 @@
                 "enum": [
                   "geolocation"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "is_configured": {
                 "default": false,
@@ -3187,7 +3187,7 @@
         "description": "Representation of the geo location of the bridge",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3195,7 +3195,7 @@
                 "enum": [
                   "geolocation"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "longitude": {
                 "minimum": -180,
@@ -3227,7 +3227,7 @@
             "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/GradientPointGet"
+              "$ref": "#/components/schemas/GradientPointGet"
             }
           }
         },
@@ -3244,7 +3244,7 @@
             "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/GradientPointPost"
+              "$ref": "#/components/schemas/GradientPointPost"
             }
           }
         },
@@ -3261,7 +3261,7 @@
             "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/GradientPointPut"
+              "$ref": "#/components/schemas/GradientPointPut"
             }
           }
         },
@@ -3272,7 +3272,7 @@
       "GradientFeatureGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/GradientFeatureBasicGet"
+            "$ref": "#/components/schemas/GradientFeatureBasicGet"
           },
           {
             "properties": {
@@ -3288,14 +3288,14 @@
         ]
       },
       "GradientFeaturePut": {
-        "$ref": "#/definitions/GradientFeatureBasicPut"
+        "$ref": "#/components/schemas/GradientFeatureBasicPut"
       },
       "GradientPointGet": {
         "description": "Color point for creating gradient(s).",
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicGet"
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
           }
         },
         "required": [
@@ -3307,7 +3307,7 @@
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPost"
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
           }
         },
         "required": [
@@ -3319,7 +3319,7 @@
         "type": "object",
         "properties": {
           "color": {
-            "$ref": "#/definitions/ColorFeatureBasicPut"
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
           }
         },
         "required": [
@@ -3330,19 +3330,19 @@
         "description": "supertype of all groups grouping devices or services",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
               "grouped_services": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceIdentifierGet"
+                  "$ref": "#/components/schemas/ResourceIdentifierGet"
                 }
               },
               "services": {
                 "description": "References all services aggregating control and state of children in the group.\nThis includes all services grouped in the group hiearchy given by child relation This includes all services of a device grouped in the group hiearchy given by child relation Aggregation is per service type, ie every service type which can be grouped has a corresponding definition of grouped type Supported types \"light\" ",
-                "$ref": "#/definitions/ServiceListGet"
+                "$ref": "#/components/schemas/ServiceListGet"
               }
             },
             "required": [
@@ -3354,16 +3354,16 @@
       },
       "GroupPost": {
         "description": "supertype of all groups grouping devices or services",
-        "$ref": "#/definitions/ResourcePost"
+        "$ref": "#/components/schemas/ResourcePost"
       },
       "GroupPut": {
         "description": "supertype of all groups grouping devices or services",
-        "$ref": "#/definitions/ResourcePut"
+        "$ref": "#/components/schemas/ResourcePut"
       },
       "GroupedLightGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -3374,10 +3374,10 @@
                 "type": "string"
               },
               "on": {
-                "$ref": "#/definitions/OnFeatureBasicGet"
+                "$ref": "#/components/schemas/OnFeatureBasicGet"
               },
               "alert": {
-                "$ref": "#/definitions/AlertFeatureGet"
+                "$ref": "#/components/schemas/AlertFeatureGet"
               }
             },
             "type": "object"
@@ -3387,7 +3387,7 @@
       "GroupedLightPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3398,10 +3398,10 @@
                 "type": "string"
               },
               "on": {
-                "$ref": "#/definitions/OnFeatureBasicPut"
+                "$ref": "#/components/schemas/OnFeatureBasicPut"
               },
               "alert": {
-                "$ref": "#/definitions/AlertFeaturePut"
+                "$ref": "#/components/schemas/AlertFeaturePut"
               }
             },
             "type": "object"
@@ -3411,7 +3411,7 @@
       "HomekitGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -3434,7 +3434,7 @@
       "HomekitPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3467,7 +3467,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           }
         }
       },
@@ -3517,7 +3517,7 @@
       "LightGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -3528,31 +3528,31 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/LightMetadataGet"
+                "$ref": "#/components/schemas/LightMetadataGet"
               },
               "on": {
-                "$ref": "#/definitions/OnFeatureGet"
+                "$ref": "#/components/schemas/OnFeatureGet"
               },
               "dimming": {
-                "$ref": "#/definitions/DimmingFeatureGet"
+                "$ref": "#/components/schemas/DimmingFeatureGet"
               },
               "color_temperature": {
-                "$ref": "#/definitions/ColorTemperatureFeatureGet"
+                "$ref": "#/components/schemas/ColorTemperatureFeatureGet"
               },
               "color": {
-                "$ref": "#/definitions/ColorFeatureGet"
+                "$ref": "#/components/schemas/ColorFeatureGet"
               },
               "dynamics": {
-                "$ref": "#/definitions/DynamicsFeatureGet"
+                "$ref": "#/components/schemas/DynamicsFeatureGet"
               },
               "alert": {
-                "$ref": "#/definitions/AlertFeatureGet"
+                "$ref": "#/components/schemas/AlertFeatureGet"
               },
               "mode": {
-                "$ref": "#/definitions/LightModeValues"
+                "$ref": "#/components/schemas/LightModeValues"
               },
               "gradient": {
-                "$ref": "#/definitions/GradientFeatureGet"
+                "$ref": "#/components/schemas/GradientFeatureGet"
               }
             },
             "required": [
@@ -3568,7 +3568,7 @@
         "description": "service measuring ambient light level at the sensor location",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServiceGet"
+            "$ref": "#/components/schemas/SensingServiceGet"
           },
           {
             "properties": {
@@ -3576,10 +3576,10 @@
                 "enum": [
                   "light_level"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "light": {
-                "$ref": "#/definitions/LightLevelSensorFeatureGet"
+                "$ref": "#/components/schemas/LightLevelSensorFeatureGet"
               }
             },
             "required": [
@@ -3593,7 +3593,7 @@
         "description": "service measuring ambient light level at the sensor location",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServicePut"
+            "$ref": "#/components/schemas/SensingServicePut"
           },
           {
             "properties": {
@@ -3601,7 +3601,7 @@
                 "enum": [
                   "light_level"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -3626,12 +3626,12 @@
       "LightMetadataGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataGet"
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/LightArchetypes"
+                "$ref": "#/components/schemas/LightArchetypes"
               }
             },
             "required": [
@@ -3644,12 +3644,12 @@
       "LightMetadataPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataPut"
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/LightArchetypes"
+                "$ref": "#/components/schemas/LightArchetypes"
               }
             },
             "type": "object"
@@ -3666,7 +3666,7 @@
       "LightPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -3677,28 +3677,28 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/LightMetadataPut"
+                "$ref": "#/components/schemas/LightMetadataPut"
               },
               "on": {
-                "$ref": "#/definitions/OnFeaturePut"
+                "$ref": "#/components/schemas/OnFeaturePut"
               },
               "dimming": {
-                "$ref": "#/definitions/DimmingFeaturePut"
+                "$ref": "#/components/schemas/DimmingFeaturePut"
               },
               "color_temperature": {
-                "$ref": "#/definitions/ColorTemperatureFeaturePut"
+                "$ref": "#/components/schemas/ColorTemperatureFeaturePut"
               },
               "color": {
-                "$ref": "#/definitions/ColorFeaturePut"
+                "$ref": "#/components/schemas/ColorFeaturePut"
               },
               "dynamics": {
-                "$ref": "#/definitions/DynamicsFeaturePut"
+                "$ref": "#/components/schemas/DynamicsFeaturePut"
               },
               "alert": {
-                "$ref": "#/definitions/AlertFeaturePut"
+                "$ref": "#/components/schemas/AlertFeaturePut"
               },
               "gradient": {
-                "$ref": "#/definitions/GradientFeaturePut"
+                "$ref": "#/components/schemas/GradientFeaturePut"
               }
             },
             "type": "object"
@@ -3709,7 +3709,7 @@
         "description": "service detecting motion",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServiceGet"
+            "$ref": "#/components/schemas/SensingServiceGet"
           },
           {
             "properties": {
@@ -3717,10 +3717,10 @@
                 "enum": [
                   "motion"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "motion": {
-                "$ref": "#/definitions/MotionSensingFeatureGet"
+                "$ref": "#/components/schemas/MotionSensingFeatureGet"
               }
             },
             "required": [
@@ -3734,7 +3734,7 @@
         "description": "service detecting motion",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServicePut"
+            "$ref": "#/components/schemas/SensingServicePut"
           },
           {
             "properties": {
@@ -3742,7 +3742,7 @@
                 "enum": [
                   "motion"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -3768,12 +3768,12 @@
         "description": "additional metadata including a user given name",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceMetadataGet"
+            "$ref": "#/components/schemas/ResourceMetadataGet"
           },
           {
             "properties": {
               "name": {
-                "$ref": "#/definitions/ResourceName"
+                "$ref": "#/components/schemas/ResourceName"
               }
             },
             "required": [
@@ -3787,12 +3787,12 @@
         "description": "additional metadata including a user given name",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceMetadataPost"
+            "$ref": "#/components/schemas/ResourceMetadataPost"
           },
           {
             "properties": {
               "name": {
-                "$ref": "#/definitions/ResourceName"
+                "$ref": "#/components/schemas/ResourceName"
               }
             },
             "required": [
@@ -3806,12 +3806,12 @@
         "description": "additional metadata including a user given name",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceMetadataPut"
+            "$ref": "#/components/schemas/ResourceMetadataPut"
           },
           {
             "properties": {
               "name": {
-                "$ref": "#/definitions/ResourceName"
+                "$ref": "#/components/schemas/ResourceName"
               }
             },
             "type": "object"
@@ -3849,10 +3849,10 @@
         }
       },
       "OnFeatureGet": {
-        "$ref": "#/definitions/OnFeatureBasicGet"
+        "$ref": "#/components/schemas/OnFeatureBasicGet"
       },
       "OnFeaturePut": {
-        "$ref": "#/definitions/OnFeatureBasicPut"
+        "$ref": "#/components/schemas/OnFeatureBasicPut"
       },
       "PaletteGet": {
         "type": "object",
@@ -3862,7 +3862,7 @@
             "maxItems": 9,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorPaletteGet"
+              "$ref": "#/components/schemas/ColorPaletteGet"
             }
           },
           "dimming": {
@@ -3870,7 +3870,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/DimmingFeatureBasicGet"
+              "$ref": "#/components/schemas/DimmingFeatureBasicGet"
             }
           },
           "color_temperature": {
@@ -3878,7 +3878,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorTemperaturePaletteGet"
+              "$ref": "#/components/schemas/ColorTemperaturePaletteGet"
             }
           }
         },
@@ -3896,7 +3896,7 @@
             "maxItems": 9,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorPalettePost"
+              "$ref": "#/components/schemas/ColorPalettePost"
             }
           },
           "dimming": {
@@ -3904,7 +3904,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/DimmingFeatureBasicPost"
+              "$ref": "#/components/schemas/DimmingFeatureBasicPost"
             }
           },
           "color_temperature": {
@@ -3912,7 +3912,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorTemperaturePalettePost"
+              "$ref": "#/components/schemas/ColorTemperaturePalettePost"
             }
           }
         },
@@ -3930,7 +3930,7 @@
             "maxItems": 9,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorPalettePut"
+              "$ref": "#/components/schemas/ColorPalettePut"
             }
           },
           "dimming": {
@@ -3938,7 +3938,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/DimmingFeatureBasicPut"
+              "$ref": "#/components/schemas/DimmingFeatureBasicPut"
             }
           },
           "color_temperature": {
@@ -3946,7 +3946,7 @@
             "maxItems": 1,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ColorTemperaturePalettePut"
+              "$ref": "#/components/schemas/ColorTemperaturePalettePut"
             }
           }
         },
@@ -3960,13 +3960,13 @@
         "type": "object",
         "properties": {
           "x": {
-            "$ref": "#/definitions/Coordinate"
+            "$ref": "#/components/schemas/Coordinate"
           },
           "y": {
-            "$ref": "#/definitions/Coordinate"
+            "$ref": "#/components/schemas/Coordinate"
           },
           "z": {
-            "$ref": "#/definitions/Coordinate"
+            "$ref": "#/components/schemas/Coordinate"
           }
         },
         "required": [
@@ -3992,17 +3992,17 @@
             "type": "string"
           },
           "duration": {
-            "$ref": "#/definitions/Duration"
+            "$ref": "#/components/schemas/Duration"
           },
           "dimming": {
-            "$ref": "#/definitions/DimmingFeatureBasicPut"
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
           }
         }
       },
       "RelativeRotaryGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -4010,7 +4010,7 @@
                 "enum": [
                   "relative_rotary"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -4020,7 +4020,7 @@
       "RelativeRotaryPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -4028,7 +4028,7 @@
                 "enum": [
                   "relative_rotary"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -4037,19 +4037,19 @@
       },
       "ResourceDependeeGet": {
         "description": "Represents a resource which (this) resource is dependent on.",
-        "$ref": "#/definitions/DependencyGet"
+        "$ref": "#/components/schemas/DependencyGet"
       },
       "ResourceGet": {
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "#/definitions/GUID"
+            "$ref": "#/components/schemas/GUID"
           },
           "type": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           },
           "id_v1": {
-            "$ref": "#/definitions/ClipV1ID"
+            "$ref": "#/components/schemas/ClipV1ID"
           }
         },
         "required": [
@@ -4060,10 +4060,10 @@
         "type": "object",
         "properties": {
           "rid": {
-            "$ref": "#/definitions/GUID"
+            "$ref": "#/components/schemas/GUID"
           },
           "rtype": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         },
         "required": [
@@ -4075,10 +4075,10 @@
         "type": "object",
         "properties": {
           "rid": {
-            "$ref": "#/definitions/GUID"
+            "$ref": "#/components/schemas/GUID"
           },
           "rtype": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         },
         "required": [
@@ -4090,10 +4090,10 @@
         "type": "object",
         "properties": {
           "rid": {
-            "$ref": "#/definitions/GUID"
+            "$ref": "#/components/schemas/GUID"
           },
           "rtype": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         }
       },
@@ -4101,10 +4101,10 @@
         "type": "object",
         "properties": {
           "rid": {
-            "$ref": "#/definitions/GUID"
+            "$ref": "#/components/schemas/GUID"
           },
           "rtype": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         }
       },
@@ -4154,7 +4154,7 @@
         "type": "object",
         "properties": {
           "type": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         }
       },
@@ -4162,7 +4162,7 @@
         "type": "object",
         "properties": {
           "type": {
-            "$ref": "#/definitions/ResourceTypes"
+            "$ref": "#/components/schemas/ResourceTypes"
           }
         }
       },
@@ -4254,7 +4254,7 @@
         "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupGet"
+            "$ref": "#/components/schemas/GroupGet"
           },
           {
             "properties": {
@@ -4262,14 +4262,14 @@
                 "enum": [
                   "room"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataGet"
+                "$ref": "#/components/schemas/RoomMetadataGet"
               },
               "children": {
                 "description": "Devices to group by the Room\nFollowing children are allowed: - device ",
-                "$ref": "#/definitions/ServiceListGet"
+                "$ref": "#/components/schemas/ServiceListGet"
               }
             },
             "required": [
@@ -4284,12 +4284,12 @@
         "description": "configuration object for a room",
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataGet"
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/RoomArchetype"
+                "$ref": "#/components/schemas/RoomArchetype"
               }
             },
             "required": [
@@ -4303,12 +4303,12 @@
         "description": "configuration object for a room",
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataPost"
+            "$ref": "#/components/schemas/NamedResourceMetadataPost"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/RoomArchetype"
+                "$ref": "#/components/schemas/RoomArchetype"
               }
             },
             "required": [
@@ -4322,12 +4322,12 @@
         "description": "configuration object for a room",
         "allOf": [
           {
-            "$ref": "#/definitions/NamedResourceMetadataPut"
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
           },
           {
             "properties": {
               "archetype": {
-                "$ref": "#/definitions/RoomArchetype"
+                "$ref": "#/components/schemas/RoomArchetype"
               }
             },
             "type": "object"
@@ -4338,7 +4338,7 @@
         "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPost"
+            "$ref": "#/components/schemas/GroupPost"
           },
           {
             "properties": {
@@ -4346,10 +4346,10 @@
                 "enum": [
                   "room"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataPost"
+                "$ref": "#/components/schemas/RoomMetadataPost"
               }
             },
             "required": [
@@ -4363,7 +4363,7 @@
         "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPut"
+            "$ref": "#/components/schemas/GroupPut"
           },
           {
             "properties": {
@@ -4371,10 +4371,10 @@
                 "enum": [
                   "room"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataPut"
+                "$ref": "#/components/schemas/RoomMetadataPut"
               }
             },
             "type": "object"
@@ -4384,12 +4384,12 @@
       "SceneGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/SceneServiceGet"
+            "$ref": "#/components/schemas/SceneServiceGet"
           },
           {
             "properties": {
               "metadata": {
-                "$ref": "#/definitions/SceneMetadataGet"
+                "$ref": "#/components/schemas/SceneMetadataGet"
               },
               "type": {
                 "enum": [
@@ -4398,10 +4398,10 @@
                 "type": "string"
               },
               "group": {
-                "$ref": "#/definitions/ResourceIdentifierGet"
+                "$ref": "#/components/schemas/ResourceIdentifierGet"
               },
               "palette": {
-                "$ref": "#/definitions/PaletteGet"
+                "$ref": "#/components/schemas/PaletteGet"
               },
               "speed": {
                 "minimum": 0,
@@ -4422,10 +4422,10 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           },
           "image": {
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           }
         },
         "required": [
@@ -4436,10 +4436,10 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           },
           "image": {
-            "$ref": "#/definitions/ResourceIdentifierPost"
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
           }
         },
         "required": [
@@ -4450,7 +4450,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           }
         },
         "required": [
@@ -4460,12 +4460,12 @@
       "ScenePost": {
         "allOf": [
           {
-            "$ref": "#/definitions/SceneServicePost"
+            "$ref": "#/components/schemas/SceneServicePost"
           },
           {
             "properties": {
               "metadata": {
-                "$ref": "#/definitions/SceneMetadataPost"
+                "$ref": "#/components/schemas/SceneMetadataPost"
               },
               "type": {
                 "enum": [
@@ -4474,10 +4474,10 @@
                 "type": "string"
               },
               "group": {
-                "$ref": "#/definitions/ResourceIdentifierPost"
+                "$ref": "#/components/schemas/ResourceIdentifierPost"
               },
               "palette": {
-                "$ref": "#/definitions/PalettePost"
+                "$ref": "#/components/schemas/PalettePost"
               },
               "speed": {
                 "minimum": 0,
@@ -4496,12 +4496,12 @@
       "ScenePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/SceneServicePut"
+            "$ref": "#/components/schemas/SceneServicePut"
           },
           {
             "properties": {
               "metadata": {
-                "$ref": "#/definitions/SceneMetadataPut"
+                "$ref": "#/components/schemas/SceneMetadataPut"
               },
               "type": {
                 "enum": [
@@ -4510,7 +4510,7 @@
                 "type": "string"
               },
               "palette": {
-                "$ref": "#/definitions/PalettePut"
+                "$ref": "#/components/schemas/PalettePut"
               },
               "speed": {
                 "minimum": 0,
@@ -4525,14 +4525,14 @@
       "SceneServiceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
               "actions": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ActionGet"
+                  "$ref": "#/components/schemas/ActionGet"
                 }
               }
             },
@@ -4546,14 +4546,14 @@
       "SceneServicePost": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePost"
+            "$ref": "#/components/schemas/ResourcePost"
           },
           {
             "properties": {
               "actions": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ActionPost"
+                  "$ref": "#/components/schemas/ActionPost"
                 }
               }
             },
@@ -4567,18 +4567,18 @@
       "SceneServicePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
               "actions": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ActionPut"
+                  "$ref": "#/components/schemas/ActionPut"
                 }
               },
               "recall": {
-                "$ref": "#/definitions/RecallFeaturePut"
+                "$ref": "#/components/schemas/RecallFeaturePut"
               }
             },
             "type": "object"
@@ -4589,12 +4589,12 @@
         "description": "Definition of a script.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
               "type": {
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "description": {
                 "description": "Short description of script.",
@@ -4614,10 +4614,10 @@
               },
               "version": {
                 "description": "Version of script.",
-                "$ref": "#/definitions/Version"
+                "$ref": "#/components/schemas/Version"
               },
               "metadata": {
-                "$ref": "#/definitions/ScriptMetadataGet"
+                "$ref": "#/components/schemas/ScriptMetadataGet"
               }
             },
             "required": [
@@ -4636,16 +4636,16 @@
         "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
               "type": {
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "script_id": {
                 "description": "Identifier to ScriptDefinition.",
-                "$ref": "#/definitions/GUID"
+                "$ref": "#/components/schemas/GUID"
               },
               "enabled": {
                 "description": "Indicated whether a scripts is enabled.",
@@ -4663,22 +4663,22 @@
                 "description": "Represents all resources which this instance depends on.",
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/ResourceDependeeGet"
+                  "$ref": "#/components/schemas/ResourceDependeeGet"
                 }
               },
               "status": {
                 "description": "Script status. If the script is in the errored state then check errors for more details about the error.",
-                "$ref": "#/definitions/ScriptInstanceStatus"
+                "$ref": "#/components/schemas/ScriptInstanceStatus"
               },
               "last_error": {
                 "description": "Last error happened while executing the script.",
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/InstanceMetadata"
+                "$ref": "#/components/schemas/InstanceMetadata"
               },
               "migrated_from": {
-                "$ref": "#/definitions/ClipV1ID"
+                "$ref": "#/components/schemas/ClipV1ID"
               }
             },
             "required": [
@@ -4698,16 +4698,16 @@
         "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePost"
+            "$ref": "#/components/schemas/ResourcePost"
           },
           {
             "properties": {
               "type": {
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "script_id": {
                 "description": "Identifier to ScriptDefinition.",
-                "$ref": "#/definitions/GUID"
+                "$ref": "#/components/schemas/GUID"
               },
               "enabled": {
                 "description": "Indicated whether a scripts is enabled.",
@@ -4718,10 +4718,10 @@
                 "type": "object"
               },
               "metadata": {
-                "$ref": "#/definitions/InstanceMetadata"
+                "$ref": "#/components/schemas/InstanceMetadata"
               },
               "migrated_from": {
-                "$ref": "#/definitions/ClipV1ID"
+                "$ref": "#/components/schemas/ClipV1ID"
               }
             },
             "required": [
@@ -4737,12 +4737,12 @@
         "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
               "type": {
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "enabled": {
                 "description": "Indicated whether a scripts is enabled.",
@@ -4757,7 +4757,7 @@
                 "type": "object"
               },
               "metadata": {
-                "$ref": "#/definitions/InstanceMetadata"
+                "$ref": "#/components/schemas/InstanceMetadata"
               }
             },
             "type": "object"
@@ -4778,7 +4778,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "#/definitions/ResourceName"
+            "$ref": "#/components/schemas/ResourceName"
           }
         }
       },
@@ -4804,7 +4804,7 @@
         "type": "object",
         "properties": {
           "service": {
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           },
           "index": {
             "type": "integer"
@@ -4832,7 +4832,7 @@
             "description": "Contains the segments configuration of the device for entertainment purposes.\nA device can be segmented in a single way ",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Segment"
+              "$ref": "#/components/schemas/Segment"
             }
           }
         },
@@ -4845,7 +4845,7 @@
       "SensingServiceGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourceGet"
+            "$ref": "#/components/schemas/ResourceGet"
           },
           {
             "properties": {
@@ -4863,7 +4863,7 @@
       "SensingServicePut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ResourcePut"
+            "$ref": "#/components/schemas/ResourcePut"
           },
           {
             "properties": {
@@ -4879,24 +4879,24 @@
         "description": "List the references to all resources grouped by this group",
         "type": "array",
         "items": {
-          "$ref": "#/definitions/ResourceIdentifierGet"
+          "$ref": "#/components/schemas/ResourceIdentifierGet"
         }
       },
       "ServiceLocationGet": {
         "type": "object",
         "properties": {
           "service": {
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           },
           "position": {
-            "$ref": "#/definitions/Position"
+            "$ref": "#/components/schemas/Position"
           },
           "positions": {
             "minItems": 1,
             "maxItems": 2,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Position"
+              "$ref": "#/components/schemas/Position"
             }
           }
         },
@@ -4909,14 +4909,14 @@
         "type": "object",
         "properties": {
           "service": {
-            "$ref": "#/definitions/ResourceIdentifierPost"
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
           },
           "positions": {
             "minItems": 1,
             "maxItems": 2,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Position"
+              "$ref": "#/components/schemas/Position"
             }
           }
         },
@@ -4929,14 +4929,14 @@
         "type": "object",
         "properties": {
           "service": {
-            "$ref": "#/definitions/ResourceIdentifierPut"
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
           },
           "positions": {
             "minItems": 1,
             "maxItems": 2,
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Position"
+              "$ref": "#/components/schemas/Position"
             }
           }
         },
@@ -4956,7 +4956,7 @@
             "type": "string"
           },
           "node": {
-            "$ref": "#/definitions/ResourceIdentifierGet"
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
           }
         },
         "required": [
@@ -4975,7 +4975,7 @@
             "type": "string"
           },
           "node": {
-            "$ref": "#/definitions/ResourceIdentifierPost"
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
           }
         },
         "required": [
@@ -4993,7 +4993,7 @@
             "type": "string"
           },
           "node": {
-            "$ref": "#/definitions/ResourceIdentifierPut"
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
           }
         },
         "required": [
@@ -5026,7 +5026,7 @@
         "description": "service measuring ambient temperature",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServiceGet"
+            "$ref": "#/components/schemas/SensingServiceGet"
           },
           {
             "properties": {
@@ -5034,10 +5034,10 @@
                 "enum": [
                   "temperature"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "temperature": {
-                "$ref": "#/definitions/TemperatureSensorFeatureGet"
+                "$ref": "#/components/schemas/TemperatureSensorFeatureGet"
               }
             },
             "required": [
@@ -5051,7 +5051,7 @@
         "description": "service measuring ambient temperature",
         "allOf": [
           {
-            "$ref": "#/definitions/SensingServicePut"
+            "$ref": "#/components/schemas/SensingServicePut"
           },
           {
             "properties": {
@@ -5059,7 +5059,7 @@
                 "enum": [
                   "temperature"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -5099,7 +5099,7 @@
       "ZgpConnectivityGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ConnectivityServiceGet"
+            "$ref": "#/components/schemas/ConnectivityServiceGet"
           },
           {
             "properties": {
@@ -5107,7 +5107,7 @@
                 "enum": [
                   "zgp_connectivity"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               },
               "source_id": {
                 "type": "string"
@@ -5123,7 +5123,7 @@
       "ZgpConnectivityPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ConnectivityServicePut"
+            "$ref": "#/components/schemas/ConnectivityServicePut"
           },
           {
             "properties": {
@@ -5131,7 +5131,7 @@
                 "enum": [
                   "zgp_connectivity"
                 ],
-                "$ref": "#/definitions/ResourceTypes"
+                "$ref": "#/components/schemas/ResourceTypes"
               }
             },
             "type": "object"
@@ -5141,7 +5141,7 @@
       "ZigbeeConnectivityGet": {
         "allOf": [
           {
-            "$ref": "#/definitions/ConnectivityServiceGet"
+            "$ref": "#/components/schemas/ConnectivityServiceGet"
           },
           {
             "properties": {
@@ -5165,7 +5165,7 @@
       "ZigbeeConnectivityPut": {
         "allOf": [
           {
-            "$ref": "#/definitions/ConnectivityServicePut"
+            "$ref": "#/components/schemas/ConnectivityServicePut"
           },
           {
             "properties": {
@@ -5184,7 +5184,7 @@
         "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupGet"
+            "$ref": "#/components/schemas/GroupGet"
           },
           {
             "properties": {
@@ -5195,11 +5195,11 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataGet"
+                "$ref": "#/components/schemas/RoomMetadataGet"
               },
               "children": {
                 "description": "Child services to group by the Zone\nFollowing children are allowed: - light ",
-                "$ref": "#/definitions/ServiceListGet"
+                "$ref": "#/components/schemas/ServiceListGet"
               }
             },
             "required": [
@@ -5214,7 +5214,7 @@
         "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPost"
+            "$ref": "#/components/schemas/GroupPost"
           },
           {
             "properties": {
@@ -5225,7 +5225,7 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataPost"
+                "$ref": "#/components/schemas/RoomMetadataPost"
               }
             },
             "required": [
@@ -5239,7 +5239,7 @@
         "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
         "allOf": [
           {
-            "$ref": "#/definitions/GroupPut"
+            "$ref": "#/components/schemas/GroupPut"
           },
           {
             "properties": {
@@ -5250,7 +5250,7 @@
                 "type": "string"
               },
               "metadata": {
-                "$ref": "#/definitions/RoomMetadataPut"
+                "$ref": "#/components/schemas/RoomMetadataPut"
               }
             },
             "required": [
