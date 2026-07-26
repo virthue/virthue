@@ -141,7 +141,11 @@ export default class Configuration extends Events.EventEmitter {
     }
 
     setMACAddress(mac) {
-        this.Network.MAC = mac;
+		if(this.Network.MAC !== mac) {
+            this.emit('MAC_ADDRESS_CHANGE', this.Network.MAC, mac);
+        }
+		
+        this.Network.MAC = mac;        
     }
 
     automaticResolveIPAddress() {

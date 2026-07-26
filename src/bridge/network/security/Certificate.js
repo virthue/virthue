@@ -9,6 +9,55 @@ import { execSync } from 'node:child_process';
 import Utils from '../../../Utils.js';
 
 class Certificate {
+    async #getCertificateSubject(certPath) {
+        try {
+            const openSSLEnv = { ...process.env, OPENSSL_CONF: '' };
+            const output = execSync(`openssl x509 -in "${certPath}" -noout -subject`, { env: openSSLEnv }).toString();
+            return output.trim();
+        } catch {
+            return null;
+        }
+    }
+
+    async #extractCNFromSubject(subject) {
+        const match = subject.match(/CN\s*=\s*([^,]+)/i);
+        return match ? match[1].trim() : null;
+    }
+
+    async verify(id) {
+        const cleanId = id.replace(/[:\-]/g, '').toLowerCase();
+        const certDir = Utils.getPath('.certs');
+        const certPath = `${certDir}\\cert.crt`;
+
+        try {
+            await FileSystem.access(certPath);
+            const subject = await this.#getCertificateSubject(certPath);
+
+            if (!subject) {
+                return false;
+            }
+
+            const cn = await this.#extractCNFromSubject(subject);
+            return cn === cleanId;
+        } catch {
+            return false;
+        }
+    }
+
+    async exists() {
+        const certDir = Utils.getPath('.certs');
+        const certPath = `${certDir}\\cert.crt`;
+        const keyPath = `${certDir}\\private.key`;
+
+        try {
+            await FileSystem.access(certPath);
+            await FileSystem.access(keyPath);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
     async generate(id) {
         const cleanId           = id.replace(/[:\-]/g, '').toLowerCase();
         const certDir           = Utils.getPath('.certs');

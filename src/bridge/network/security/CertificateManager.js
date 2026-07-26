@@ -18,13 +18,23 @@ class CertificateManager {
     }
 
     async initialize() {
+        const bridgeId = this.bridge.getId();
         const isCertified = this.configuration.supports('provisioning');
 
         if(isCertified) {
             await this.#initializeCSRProvisioning();
         } else {
+            const certExists = await Certificate.exists();
+            if(certExists) {
+                const isValid = await Certificate.verify(bridgeId);
+                if(isValid) {
+                    Logger.info('TLS', `Certificate valid for Bridge ID: ${bridgeId}`);
+                    return;
+                }
+                Logger.warn('TLS', `Certificate Bridge ID mismatch. Expected: ${bridgeId}. Regenerating...`);
+            }
             Logger.info('TLS', 'Generating self-signed certificate...');
-            await Certificate.generate(this.bridge.getId());
+            await Certificate.generate(bridgeId);
         }
     }
 

@@ -84,6 +84,12 @@ export default class Bridge extends Events.EventEmitter {
             Logger.error('Bridge', 'TLS_CERTIFICATE_ERROR:', error.message);
             process.exit(1);
         });
+
+        /* Listen for Bridge ID changes */
+        this.Configuration.on('MAC_ADDRESS_CHANGE', async (oldMac, newMac) => {
+            Logger.info('Bridge', `Bridge ID changed from ${oldMac} to ${newMac}`);
+            await this.#restartWithNewCertificate(certManager);
+        });
     }
 
     async #init() {
@@ -172,6 +178,43 @@ export default class Bridge extends Events.EventEmitter {
         setTimeout(() => {
             this.emit('MODEL_CHANGE');
         }, 1000);
+    }
+
+    async #restartWithNewCertificate(certManager) {
+        try {
+            Logger.info('Bridge', 'Stopping servers...');
+
+            if(this.HTTP) {
+                await this.HTTP.Fastify.close();
+            }
+
+            if(this.HTTPS) {
+                await this.HTTPS.Fastify.close();
+            }
+
+            Logger.info('Bridge', 'Regenerating certificate...');
+            await certManager.initialize();
+
+            Logger.info('Bridge', 'Restarting servers...');
+            const docRoot = Utils.getPath('htdocs');
+
+            if(this.HTTP) {
+                this.HTTP = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot).init();
+                await this.bindREST(this.HTTP);
+                await this.HTTP.start();
+            }
+
+            if(this.HTTPS) {
+                this.HTTPS = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot).init();
+                await this.bindREST(this.HTTPS);
+                await this.HTTPS.start();
+            }
+
+            Logger.info('Bridge', 'Servers restarted successfully');
+            this.emit('MODEL_CHANGE');
+        } catch(error) {
+            Logger.error('Bridge', 'Failed to restart servers:', error.message);
+        }
     }
 
     #buildAuthenticatedAPIResponse(request, response) {
