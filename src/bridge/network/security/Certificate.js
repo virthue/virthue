@@ -1,75 +1,55 @@
+/**
+ * virthue - Virtual Philips Hue Bridge
+ *
+ * @author      Adrian Preuß
+ * @version     1.0.0
+ */
 import FileSystem from 'node:fs/promises';
-import Signer from 'selfsigned';
-import Utils from "../../../Utils.js";
+import { execSync } from 'node:child_process';
+import Utils from '../../../Utils.js';
 
-export default (new class Certificate {
+class Certificate {
     async generate(id) {
-        const queue = [];
+        const cleanId           = id.replace(/[:\-]/g, '').toLowerCase();
+        const certDir           = Utils.getPath('.certs');
+        const openSSLEnv = { ...process.env, OPENSSL_CONF: '' };
 
-        // @ToDo Issuer: root-bridge, Philips Hue?
-        const time_from             = new Date('2017-01-01');
-        const time_to               = new Date(time_from);
+        try {
+            // Stelle sicher, dass das Verzeichnis existiert
+            await FileSystem.mkdir(certDir, { recursive: true });
 
-        time_to.setFullYear(time_to.getFullYear() + 21);
+            // 1. Generiere privaten EC Key (P-256)
+            execSync(`openssl ecparam -name prime256v1 -genkey -noout -out "${certDir}\\private.key"`, { env: openSSLEnv });
 
-        const serial               = BigInt('0x' + id.replace(/[:\-\u200e]/g, '')).toString();
-        const certificates  = await Signer.generate([{
-            name:   'commonName',
-            value:  id
-        },  {
-            name:   'countryName',
-            value:  'NL'
-        }, {
-            name:   'organizationName',
-            value:  'Philips Hue'
-        }], {
-            clientCertificate:  true,
-            keyType:            'ec',
-            algorithm:          'sha256',
-            curve:              'P-256',
-            keySize:            2048,
-            notBeforeDate:      time_from,
-            notAfterDate:       time_to,
-            serialNumber:       serial
-        });
+            // 2. Generiere self-signed Zertifikat
+            const subject = `/C=NL/O=Philips Hue/CN=${cleanId}`;
 
-        if(certificates.private) {
-            queue.push(this.#save('private.key', certificates.private).then(() => {
-                //console.log('Generated private key');
-            }).catch(error => {
-                console.log(error);
-            }));
+            execSync(`openssl req -new -x509 -key "${certDir}\\private.key" -out "${certDir}\\cert.crt" -days 7665 -subj "${subject}"`, { env: openSSLEnv });
+
+            // 3. Lese Keys und Cert
+            const privatePem = await FileSystem.readFile(`${certDir}\\private.key`, 'utf8');
+            const certPem = await FileSystem.readFile(`${certDir}\\cert.crt`, 'utf8');
+
+            // 4. Berechne Fingerprint
+            const fingerprintOutput = execSync(`openssl x509 -in "${certDir}\\cert.crt" -noout -fingerprint -sha1`, { env: openSSLEnv }).toString();
+            const fingerprint = fingerprintOutput.split('=')[1].trim();
+
+            return {
+                private: privatePem,
+                cert: certPem,
+                fingerprint
+            };
+        } catch (error) {
+            throw new Error(`Failed to generate certificate: ${error.message}`);
         }
-
-        if(certificates.public) {
-            queue.push(this.#save('public.key', certificates.public).then(() => {
-                //console.log('Generated public key');
-            }).catch(error => {
-                console.log(error);
-            }));
-        }
-
-        if(certificates.cert) {
-            queue.push(this.#save('cert.crt', certificates.cert).then(() => {
-                //console.log('Generated certificate');
-            }).catch(error => {
-                console.log(error);
-            }));
-        }
-
-        if(certificates.private && certificates.cert) {
-            queue.push(this.#save('cert.pem', certificates.private + certificates.cert).then(() => {
-                // console.log('Generated bundled certificate');
-            }).catch(error => {
-                console.log(error);
-            }));
-        }
-
-        await Promise.all(queue);
-        console.log('Generated TLS-Certificate with Fingerprint:', certificates.fingerprint);
     }
 
     async #save(name, content) {
-        return await FileSystem.writeFile(Utils.getPath('certs', name), content);
+        return await FileSystem.writeFile(
+            Utils.getPath('.certs', name),
+            content
+        );
     }
-}());
+}
+
+export default new Certificate();
