@@ -1,7 +1,8 @@
 const Support = {
     DESCRIPTION:    'description',
     QR:             'qr',
-    CERTIFIED:      'certified',
+	CERTIFIED:      'certified',
+    PROVISIONING:   'provisioning',
     SECURED:        'secured'
 };
 
