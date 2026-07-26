@@ -2,6 +2,19 @@ import Support from '../../src/types/Support.js';
 
 const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 
+const BANNED_RANGES = [
+    {
+        low:    0x001788FFFE1E0000n,
+        high:   0x001788FFFE1E00FFn,
+        name:   'Range 1 (0x001788FFFE1E0000-0x001788FFFE1E00FF)'
+    },
+    {
+        low:    0x001788FFFE200000n,
+        high:   0x001788FFFE2001C5n,
+        name:   'Range 2 (0x001788FFFE200000-0x001788FFFE2001C5)'
+    }
+];
+
 export default class Settings {
     constructor() {
         window.IPC.on('settings', async (packet) => {
@@ -76,15 +89,20 @@ export default class Settings {
         inputMAC.addEventListener('keyup', (event) => {
             const element    = event.currentTarget;
             const mac                   = element.value;
-            const test           = mac.replace(/:/g, '').toLowerCase();
+            const test           = mac.replace(/[:\-]/g, '').toLowerCase();
             const isValid       = REGEX_MAC.test(mac);
+            const blacklisted   = this.isBlacklisted(mac);
             let id;
 
             element.classList.remove('invalid');
 
-            if(mac.length === 0 || !isValid) {
+            if(mac.length === 0 || !isValid || blacklisted) {
                 element.classList.add('invalid');
-                id = I18N.__('- Invalid MAC Address -');
+                if (blacklisted) {
+                    id = I18N.__('- Blacklisted MAC Address -') + ` (${blacklisted})`;
+                } else {
+                    id = I18N.__('- Invalid MAC Address -');
+                }
             } else {
                 id =`${test.slice(0, 6)}fffe${test.slice(6)}`;
             }
@@ -95,10 +113,11 @@ export default class Settings {
         inputMAC.addEventListener('input', () => {
             const mac               = inputMAC.value;
             const isValid   = REGEX_MAC.test(mac);
+            const blacklisted = this.isBlacklisted(mac);
 
             inputMAC.classList.remove('invalid');
 
-            if(mac.length === 0 || !isValid) {
+            if(mac.length === 0 || !isValid || blacklisted) {
                 inputMAC.classList.add('invalid');
             }
 
@@ -110,22 +129,46 @@ export default class Settings {
         this.send('INIT');
     }
 
-    generateMacAddress(separator = ':') {
-        const hexChars  = '0123456789ABCDEF';
-        const octets    = [];
+    isBlacklisted(mac) {
+        const cleanMac = mac.replace(/[:\-]/g, '').toLowerCase();
+        if (cleanMac.length !== 12) return false;
 
-        for(let i = 0; i < 6; i++) {
-            let octet = '';
+        const eui64 = `${cleanMac.slice(0, 6)}fffe${cleanMac.slice(6)}`;
+        const macValue = BigInt('0x' + eui64);
 
-            for(let j = 0; j < 2; j++) {
-                const randomIndex = Math.floor(Math.random() * hexChars.length);
-                octet += hexChars[randomIndex];
+        for (const range of BANNED_RANGES) {
+            if (macValue >= range.low && macValue <= range.high) {
+                return range.name;
             }
-
-            octets.push(octet);
         }
 
-        return octets.join(separator);
+        return false;
+    }
+
+    generateMacAddress(separator = ':') {
+        const hexChars  = '0123456789ABCDEF';
+        let mac;
+        let isValid;
+
+        do {
+            const octets = [];
+
+            for(let i = 0; i < 6; i++) {
+                let octet = '';
+
+                for(let j = 0; j < 2; j++) {
+                    const randomIndex = Math.floor(Math.random() * hexChars.length);
+                    octet += hexChars[randomIndex];
+                }
+
+                octets.push(octet);
+            }
+
+            mac = octets.join(separator);
+            isValid = !this.isBlacklisted(mac);
+        } while (!isValid);
+
+        return mac;
     }
 
     onAction(action, value, event) {
