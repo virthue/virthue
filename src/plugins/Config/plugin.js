@@ -11,7 +11,37 @@ export default class Config extends Plugin {
     Description = 'Provides the Config from the device';
     Version     = '1.0.0';
 
-    /* GET /api/:token/config */
+    /* GET /api/config (unauthenticated) */
+    getPublic() {
+        const bridge = this.getBridge();
+        const config = bridge.getConfiguration();
+
+        return {
+            name: config.getName(),
+            datastoreversion: '189',
+            swversion: config.getVersion().toString(),
+            apiversion: '1.78.0',
+            mac: config.getMACAddress(),
+            bridgeid: bridge.getId(),
+            factorynew: true,
+            replacesbridgeid: null,
+            modelid: config.getModel(),
+            starterkitid: ''
+        };
+    }
+
+    /* POST /api/config (requires authentication) */
+    updatePublic(reply) {
+        return reply.code(401).send([{
+            error: {
+                type: 1,
+                address: '/',
+                description: 'unauthorized user'
+            }
+        }]);
+    }
+
+    /* GET /api/:token/config (authenticated) */
     getAll(request) {
         const bridge = this.getBridge();
         const config = bridge.getConfiguration();
@@ -25,7 +55,7 @@ export default class Config extends Plugin {
             mac:                config.getMACAddress(),
             bridgeid:           bridge.getId(),
             modelid:            config.getModel(),
-            datastoreversion:   '180',
+            datastoreversion:   '189',
             factorynew:         false,
             replacesbridgeid:   null,
             starterkitid:       ''
