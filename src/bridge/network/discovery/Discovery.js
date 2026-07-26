@@ -11,7 +11,7 @@ import MulticastDNS from 'multicast-dns';
 export default class Discovery {
     Bridge                           = null;
     Multicast   = MulticastDNS();
-    Services                = new Map();
+    Services                 = new Map();
     Service                          = null;
 
     constructor(bridge) {
@@ -109,7 +109,7 @@ export default class Discovery {
     }
 
     #createAddressRecords(host, ttl) {
-        const records   = [];
+        const records    = [];
         const ipv4  = Interfaces.getAddress(Family.IPv4);
         const ipv6  = Interfaces.getAddress(Family.IPv6);
 

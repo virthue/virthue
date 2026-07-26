@@ -7,7 +7,7 @@
 import {
     nativeImage as NativeImage
 } from 'electron';
-import Utils, { System } from './Utils.js';
+import Utils from './Utils.js';
 
 export default (new class ElectronUtils {
     getIcon(name, rawPath = false) {
