@@ -15,7 +15,8 @@ import Configuration from './Configuration.js';
 import Support from '../types/Support.js';
 import Plugins from './Plugins.js';
 import Utils from '../Utils.js';
-import Certificate from "./network/security/Certificate.js";
+import Logger from '../utils/Logger.js';
+import CertificateManager from './network/security/CertificateManager.js';
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;
@@ -73,25 +74,32 @@ export default class Bridge extends Events.EventEmitter {
             software_version_string:    '1.3.0'
         });
 
-        /* Generate TLS Certificate */
-        Certificate.generate(this.getId()).then(() => {
+        /* Initialize TLS Certificate */
+        const certManager = new CertificateManager(this, this.Configuration);
+        certManager.initialize().then(() => {
             this.#init().then(() => {
                 this.emit('BRIDGE_READY');
             });
         }).catch(error => {
-            console.error('TLS_CERTIFICATE_ERROR', error);
+            Logger.error('Bridge', 'TLS_CERTIFICATE_ERROR:', error.message);
+            process.exit(1);
         });
     }
 
     async #init() {
         const docRoot = Utils.getPath('htdocs');
 
-        await this.Plugins.loadPlugins();
-        console.log(`Loaded ${this.Plugins.getCount()} plugins`);
+        await this.Authentication.loadUsers();
+        Logger.info('Bridge', `Loaded ${this.Authentication.getCount()} users`);
 
+        await this.Plugins.loadPlugins();
+        Logger.info('Bridge', `Loaded ${this.Plugins.getCount()} plugins`);
+
+        // HTTP Server
         this.HTTP   = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot).init();
         await this.bindREST(this.HTTP);
 
+        // HTTPS Server (wenn konfiguriert)
         if(this.Configuration.supports(Support.SECURED)) {
             this.HTTPS = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot).init();
             await this.bindREST(this.HTTPS);
@@ -119,9 +127,9 @@ export default class Bridge extends Events.EventEmitter {
 
                     /** TODO: the original brigde dont send heatbeasts/pings!
                      *
-                    const heartbeat = setInterval(() => {
-                        reply.raw.write(':heartbeat\n\n');
-                    }, 30000);*/
+                     const heartbeat = setInterval(() => {
+                     reply.raw.write(':heartbeat\n\n');
+                     }, 30000);*/
 
                     const sendEvent = (events) => {
                         const id            = Crypto.randomUUID();
@@ -134,13 +142,17 @@ export default class Bridge extends Events.EventEmitter {
                     //this.eventEmitter.on('state-change', sendEvent);
 
                     request.raw.on('close', () => {
-                        if(heartbeat) {
+                        /*if(heartbeat) {
                             clearInterval(heartbeat);
-                        }
+                        }*/
 
                         //this.eventEmitter.off('state-change', sendEvent);
                         reply.raw.end();
                     });
+                });
+
+                this.on('LINK_BUTTON_CHANGED', (state) => {
+                    //console.log("SSE BUTTON!!");
                 });
             }
         }
@@ -162,15 +174,36 @@ export default class Bridge extends Events.EventEmitter {
         }, 1000);
     }
 
-    getId(short = false) {
-        let mac = this.Configuration.getMACAddress().replace(/:/g, '').toLowerCase();
-        let id  = `${mac.slice(0, 6)}fffe${mac.slice(6)}`;
+    #buildAuthenticatedAPIResponse(request, response) {
+        const apiResponse = {};
 
-        if(short) {
-            return id.slice(-6);
+        // Hardcoded top-level categories
+        const categories = ['lights', 'groups', 'schedules', 'scenes', 'rules', 'resourcelinks'];
+        categories.forEach(cat => apiResponse[cat] = {});
+
+        // Add config from Config plugin
+        const configPlugin = this.getPlugin('Config');
+
+        if(configPlugin) {
+            apiResponse.config = configPlugin.getAll(request, response);
         }
 
-        return id;
+        return apiResponse;
+    }
+
+    getId(short = false) {
+		let mac = this.Configuration.getMACAddress()
+		.replace(/[:\-\u200e]/g, '')
+		.toLowerCase()
+		.padStart(12, '0');
+		
+		// Wenn short aktiv ist (z.B. für interne ID-Zwecke), die letzten 6 Zeichen
+		if(short) {
+			return mac.slice(-6);
+		}
+
+		// Standardmäßig: lange BridgeID mit FFFE (EUI-64 Format)
+		return (mac.substring(0, 6) + 'FFFE' + mac.substring(6)).toUpperCase();
     }
 
     getConfiguration() {
@@ -202,16 +235,7 @@ export default class Bridge extends Events.EventEmitter {
 
         /* Special Routes with Authentication */
         server.add().get('/api/:token', { preHandler }, async (request, response) =>  {
-            // @ToDo iterate over all Plugins & check if <Plugin>.exposing = true is & build these dynamically!
-            return {
-                lights: {},
-                groups: {},
-                config: this.getPlugin('Config').getAll(request, response),
-                schedules: {},
-                scenes: {},
-                rules: {},
-                resourcelinks: {},
-            }
+            return this.#buildAuthenticatedAPIResponse(request, response);
         });
 
         server.add().get('/info/timezone', { preHandler }, async (request, response) =>  this.getPlugin('Timezone').getCustom(request, response));
