@@ -3,7 +3,7 @@
         "name": "virthue Bridge",
         "model": "BSB002",
         "version": {
-            "number": 2071153010,
+            "number": 1978074000,
             "api": "1.74.0"
         },
         "supports": [
@@ -14,9 +14,16 @@
         ]
     },
     "network": {
-        "mac": "0C:00:0F:0F:0E:0E",
+        "mac": "00:17:88:24:15:8E",
         "address": "auto",
         "port": 80,
         "tls": 443
+    },
+    "portal": {
+        "key": "c2451d00a4b6c3d983de740c8d450eeb",
+        "ctn": "HueBridge2K15"
+    },
+    "tls": {
+        "rejectUnauthorized": false
     }
 }
