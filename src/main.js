@@ -7,6 +7,7 @@
 import 'reflect-metadata';
 import Path from 'node:path';
 import FileSystem from 'node:fs/promises';
+import Logger from './utils/Logger.js';
 import Bridge from './bridge/Bridge.js';
 import Tray from './ui/Tray.js';
 import Settings from './ui/Settings.js';
@@ -38,9 +39,9 @@ import I18N from './ui/I18N.js';
 
             try {
                 await FileSystem.mkdir(dirPath, { recursive: true });
-                console.log(`[Init] Directory ensured: ${dir}/`);
+                Logger.info('Init', `Directory ensured: ${dir}/`);
             } catch (error) {
-                console.error(`[Init] Failed to create directory ${dir}:`, error.message);
+                Logger.error('Init', `Failed to create directory ${dir}:`, error.message);
                 throw error;
             }
         }

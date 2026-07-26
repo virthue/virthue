@@ -1,5 +1,6 @@
 import FileSystem from 'node:fs/promises';
 import Path from 'node:path';
+import Logger from '../../utils/Logger.js';
 import Utils from '../Utils.js';
 
 export default (new class I18N {
@@ -45,7 +46,7 @@ export default (new class I18N {
                         await FileSystem.readFile(Path.join(entry.parentPath, file), 'utf-8')
                     );
                 } catch (error) {
-                    console.error(`Failed to load language ${entry.name}:`, error);
+                    Logger.error('I18N', `Failed to load language ${entry.name}:`, error.message);
                 }
             }
         }

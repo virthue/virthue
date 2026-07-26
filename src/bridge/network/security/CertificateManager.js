@@ -4,6 +4,7 @@
  * @author      Adrian Preuß
  * @version     1.0.0
  */
+import Logger from '../../../utils/Logger.js';
 import Certificate from './Certificate.js';
 import CSRManager from './CSRManager.js';
 
@@ -22,7 +23,7 @@ class CertificateManager {
         if(isCertified) {
             await this.#initializeCSRProvisioning();
         } else {
-            console.log('[TLS] Generating self-signed certificate...');
+            Logger.info('TLS', 'Generating self-signed certificate...');
             await Certificate.generate(this.bridge.getId());
         }
     }
@@ -35,17 +36,17 @@ class CertificateManager {
             throw new Error(`[CSR] Invalid portal key length (${portalKey?.length || 0} chars). Key must be at least 16 characters.`);
         }
 
-        console.log('[CSR] Configuration check:');
-        console.log(`  Bridge ID: ${this.bridge.getId()}`);
-        console.log(`  CTN: ${ctn}`);
-        console.log(`  Portal Key: ${portalKey.substring(0, 8)}... (length: ${portalKey.length})`);
-        console.log(`  Supports: ${this.configuration.getSupportFlags()}`);
+        Logger.info('CSR', 'Configuration check:');
+        Logger.info('CSR', `  Bridge ID: ${this.bridge.getId()}`);
+        Logger.info('CSR', `  CTN: ${ctn}`);
+        Logger.info('CSR', `  Portal Key: ${portalKey.substring(0, 8)}... (length: ${portalKey.length})`);
+        Logger.info('CSR', `  Supports: ${this.configuration.getSupportFlags()}`);
 
         if(ctn === 'localhost') {
             await this.#startMockServer();
         }
 
-        console.log('[CSR] Provisioning - Starting CSR provisioning...');
+        Logger.info('CSR', 'Provisioning - Starting CSR provisioning...');
 
         try {
             const csr = new CSRManager({
@@ -58,15 +59,15 @@ class CertificateManager {
             });
 
             if(csr.isCertificateProvisioned()) {
-                console.log('[CSR] ✓ Using existing provisioned certificate');
+                Logger.info('CSR', 'Using existing provisioned certificate');
                 return;
             }
 
-            console.log('[CSR] Performing initial provisioning...');
+            Logger.info('CSR', 'Performing initial provisioning...');
             const result = await csr.provisionInitial();
 
             if(result.success) {
-                console.log('[CSR] ✓ Certificate provisioning successful');
+                Logger.info('CSR', 'Certificate provisioning successful');
                 return;
             }
 
@@ -78,7 +79,7 @@ class CertificateManager {
 
     async #startMockServer() {
         try {
-            console.log('[CSR] Starting mock provisioning server on localhost:3000...');
+            Logger.info('CSR', 'Starting mock provisioning server on localhost:3000...');
 
             const { default: http } = await import('node:http');
             const { default: crypto } = await import('node:crypto');
@@ -158,12 +159,12 @@ class CertificateManager {
 
             return new Promise((resolve) => {
                 mockServer.listen(3000, () => {
-                    console.log('[CSR] Mock server running on http://localhost:3000');
+                    Logger.info('CSR', 'Mock server running on http://localhost:3000');
                     resolve();
                 });
             });
         } catch (error) {
-            console.warn('[CSR] Failed to start mock server:', error.message);
+            Logger.warn('CSR', 'Failed to start mock server:', error.message);
             throw new Error('Mock server startup failed');
         }
     }

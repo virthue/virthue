@@ -7,6 +7,7 @@
 import FileSystem from 'node:fs/promises';
 import Path from 'node:path';
 import URL from 'node:url';
+import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
 
 export default class Plugins {
@@ -33,7 +34,7 @@ export default class Plugins {
 
                     this.Plugins.set(entry.name.toLowerCase(), instance);
                 } catch (err) {
-                    console.error(`Failed to load plugin ${entry.name}:`, err);
+                    Logger.error('Plugins', `Failed to load plugin ${entry.name}:`, err.message);
                 }
             }
         }

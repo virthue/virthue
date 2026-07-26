@@ -10,6 +10,7 @@ import {
     ipcMain as IPC,
     shell as Shell
 } from 'electron';
+import Logger from '../../utils/Logger.js';
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
@@ -132,7 +133,7 @@ export default new class Settings {
                             Shell.openPath('https://github.com/virthue/virthue');
                         break;
                         default:
-                            console.warn('Unknown URL instruction:', packet.data);
+                            Logger.warn('Settings', 'Unknown URL instruction:', packet.data);
                         break;
                     }
                 break;
@@ -151,7 +152,7 @@ export default new class Settings {
 
                             if(packet.data?.mac) {
                                 if(isBlacklistedMAC(packet.data?.mac)) {
-                                    console.warn('Attempted to set blacklisted MAC address:', packet.data?.mac);
+                                    Logger.warn('Settings', 'Attempted to set blacklisted MAC address:', packet.data?.mac);
 
                                     this.send('ERROR', {
                                         message: 'Blacklisted MAC address. This MAC range is prohibited for cloud access.'
@@ -201,8 +202,7 @@ export default new class Settings {
                     }
 
                     if(restart) {
-                        // @ToDo: Restart Bridge
-                        console.log('Restarting Bridge...');
+                        Logger.info('Settings', 'Restarting Bridge...');
                     }
                 break;
             }

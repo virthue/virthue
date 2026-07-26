@@ -14,6 +14,7 @@ import {
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
+import Logger from '../../utils/Logger.js';
 import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
@@ -115,7 +116,7 @@ export default new class TrayManager {
                         type: 'svg'
                     }, (error, url) => {
                         if(error) {
-                            console.error(error);
+                            Logger.error('Tray', 'Failed to generate QR code:', error.message);
                             return;
                         }
 
@@ -211,7 +212,7 @@ export default new class TrayManager {
             });
 
             this.Bridge.on('LINK_BUTTON_CHANGED', (state) => {
-                console.log('LINK_BUTTON_CHANGED', state);
+                Logger.debug('Tray', `LINK_BUTTON_CHANGED: ${state}`);
             });
         }
     }

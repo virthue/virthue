@@ -4,6 +4,7 @@
  * @author      Adrian Preuß
  * @version     1.0.0
  */
+import Logger from '../../../utils/Logger.js';
 import PrivateKey from './PrivateKey.js';
 import CSR from './CSR.js';
 import CryptoBridge from './CryptoBridge.js';
@@ -155,8 +156,8 @@ class ProvisioningClient {
             if(!response.ok) {
                 const responseBody = await response.text();
 
-                console.error(`[CSR] HTTP ${response.status} ${response.statusText}`);
-                console.error(`[CSR] Response: ${responseBody.substring(0, 200)}`);
+                Logger.error('ProvisioningClient', `HTTP ${response.status} ${response.statusText}`);
+                Logger.error('ProvisioningClient', `Response: ${responseBody.substring(0, 200)}`);
 
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
@@ -207,12 +208,12 @@ class ProvisioningClient {
         };
 
         try {
-            console.log(`[CSR] Configuration:`);
-            console.log(`  Server URL: ${url}`);
-            console.log(`  Bridge ID: ${this.bridgeId}`);
-            console.log(`  CTN: ${Object.keys(ProvisioningClient.CONFIG_PROFILES).find(key => ProvisioningClient.CONFIG_PROFILES[key].serverUrl === this.serverUrl)}`);
-            console.log(`  TLS Verify: ${!this.skipTlsVerify}`);
-            console.log(`[CSR] Sending request to ${url}...`);
+            Logger.debug('ProvisioningClient', `Configuration:`);
+            Logger.debug('ProvisioningClient', `  Server URL: ${url}`);
+            Logger.debug('ProvisioningClient', `  Bridge ID: ${this.bridgeId}`);
+            Logger.debug('ProvisioningClient', `  CTN: ${Object.keys(ProvisioningClient.CONFIG_PROFILES).find(key => ProvisioningClient.CONFIG_PROFILES[key].serverUrl === this.serverUrl)}`);
+            Logger.debug('ProvisioningClient', `  TLS Verify: ${!this.skipTlsVerify}`);
+            Logger.debug('ProvisioningClient', `Sending request to ${url}...`);
 
             // Disable TLS verification if configured
             if(this.skipTlsVerify) {
@@ -222,43 +223,38 @@ class ProvisioningClient {
             const response = await fetch(url, fetchOptions);
 
             // Log HTTP status
-            console.log(`[CSR] HTTP Status: ${response.status} ${response.statusText}`);
+            Logger.debug('ProvisioningClient', `HTTP Status: ${response.status} ${response.statusText}`);
 
             return response;
         } catch (error) {
-            console.error(`[CSR] ✗ Network Request Failed!`);
-            console.error(`[CSR]`);
-            console.error(`[CSR] Server:        ${this.serverUrl}`);
-            console.error(`[CSR] Error:         ${error.message}`);
-            console.error(`[CSR] Error Code:    ${error.code || 'N/A'}`);
-            console.error(`[CSR]`);
-            console.error(`[CSR] ⚠️  Diagnostik:`);
+            Logger.error('ProvisioningClient', 'Network Request Failed!');
+            Logger.error('ProvisioningClient', `Server: ${this.serverUrl}`);
+            Logger.error('ProvisioningClient', `Error: ${error.message}`);
+            Logger.error('ProvisioningClient', `Error Code: ${error.code || 'N/A'}`);
 
             if(error.code === 'ECONNREFUSED') {
-                console.error(`[CSR]   Server-Verbindung abgelehnt`);
-                console.error(`[CSR]   Server läuft nicht oder ist nicht erreichbar`);
-                console.error(`[CSR]   Überprüfe CTN-Konfiguration`);
+                Logger.error('ProvisioningClient', 'Server-Verbindung abgelehnt');
+                Logger.error('ProvisioningClient', 'Server läuft nicht oder ist nicht erreichbar');
+                Logger.error('ProvisioningClient', 'Überprüfe CTN-Konfiguration');
             } else if(error.message.includes('getaddrinfo') || error.message.includes('ENOTFOUND')) {
-                console.error(`[CSR]   Hostname kann nicht aufgelöst werden`);
-                console.error(`[CSR]   DNS-Problem oder Netzwerkfehler`);
-                console.error(`[CSR]   Teste: ping provision.meethue.com`);
+                Logger.error('ProvisioningClient', 'Hostname kann nicht aufgelöst werden');
+                Logger.error('ProvisioningClient', 'DNS-Problem oder Netzwerkfehler');
+                Logger.error('ProvisioningClient', 'Teste: ping provision.meethue.com');
             } else if(error.message.includes('ECONNRESET')) {
-                console.error(`[CSR]   Verbindung vom Server zurückgesetzt`);
-                console.error(`[CSR]   Server-Problem oder Timeout`);
+                Logger.error('ProvisioningClient', 'Verbindung vom Server zurückgesetzt');
+                Logger.error('ProvisioningClient', 'Server-Problem oder Timeout');
             } else if(error.message.includes('CERT') || error.message.includes('certificate')) {
-                console.error(`[CSR]   TLS/SSL-Zertifikat Problem`);
-                console.error(`[CSR]   Versuche: export NODE_TLS_REJECT_UNAUTHORIZED=0`);
+                Logger.error('ProvisioningClient', 'TLS/SSL-Zertifikat Problem');
+                Logger.error('ProvisioningClient', 'Versuche: export NODE_TLS_REJECT_UNAUTHORIZED=0');
             } else {
-                console.error(`[CSR]   Netzwerk nicht erreichbar`);
-                console.error(`[CSR]   Firewall, Proxy oder VPN Problem`);
-                console.error(`[CSR]   Überprüfe Internetverbindung`);
+                Logger.error('ProvisioningClient', 'Netzwerk nicht erreichbar');
+                Logger.error('ProvisioningClient', 'Firewall, Proxy oder VPN Problem');
+                Logger.error('ProvisioningClient', 'Überprüfe Internetverbindung');
             }
 
-            console.error(`[CSR]`);
-            console.error(`[CSR] Lösung für Tests:`);
-            console.error(`[CSR]  export CTN=localhost`);
-            console.error(`[CSR]  npm run start`);
-            console.error(`[CSR]`);
+            Logger.error('ProvisioningClient', 'Solution for tests:');
+            Logger.error('ProvisioningClient', 'export CTN=localhost');
+            Logger.error('ProvisioningClient', 'npm run start');
 
             throw new Error(`Network request to ${this.serverUrl} failed: ${error.message}`);
         } finally {

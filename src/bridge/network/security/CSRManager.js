@@ -6,6 +6,7 @@
  */
 import * as FileSystem from 'node:fs';
 import * as Path from 'node:path';
+import Logger from '../../../utils/Logger.js';
 import ProvisioningClient from './ProvisioningClient.js';
 import CertificateState from './CertificateState.js';
 
@@ -109,7 +110,7 @@ class CSRManager {
             const data = FileSystem.readFileSync(this.paths.stateFile, 'utf8');
             return Object.assign(defaultState, JSON.parse(data));
         } catch (error) {
-            console.error('Failed to load CSR state:', error.message);
+            Logger.error('CSRManager', 'Failed to load CSR state:', error.message);
             return defaultState;
         }
     }
@@ -122,7 +123,7 @@ class CSRManager {
         try {
             FileSystem.writeFileSync(this.paths.stateFile, JSON.stringify(this.state, null, 2));
         } catch (error) {
-            console.error('Failed to save CSR state:', error.message);
+            Logger.error('CSRManager', 'Failed to save CSR state:', error.message);
         }
     }
 
@@ -131,7 +132,7 @@ class CSRManager {
      * @returns {Object} Provisioning result.
      */
     async provisionInitial() {
-        console.log(`[CSR] Starting initial provisioning for bridge ${this.bridgeId}`);
+        Logger.info('CSR', `Starting initial provisioning for bridge ${this.bridgeId}`);
 
         try {
             const result = await this.client.provision({
@@ -162,7 +163,7 @@ class CSRManager {
             this.state.lastError = null;
             this.saveState();
 
-            console.log('[CSR] Initial provisioning successful');
+            Logger.info('CSR', 'Initial provisioning successful');
 
             return {
                 success: true,
@@ -175,7 +176,7 @@ class CSRManager {
             this.state.failureCount++;
             this.saveState();
 
-            console.error('[CSR] Initial provisioning failed:', error.message);
+            Logger.error('CSR', 'Initial provisioning failed:', error.message);
             return {
                 success: false,
                 type: 'initial',
@@ -191,11 +192,11 @@ class CSRManager {
      * @returns {Object} Renewal result.
      */
     async renewCertificate(generateNewKey = false) {
-        console.log(`[CSR] Starting certificate renewal for bridge ${this.bridgeId}`);
+        Logger.info('CSR', `Starting certificate renewal for bridge ${this.bridgeId}`);
 
         // Check if certificate exists
         if(!this.isCertificateProvisioned()) {
-            console.log('[CSR] No provisioned certificate found, performing initial provisioning');
+            Logger.info('CSR', 'No provisioned certificate found, performing initial provisioning');
             return this.provisionInitial();
         }
 
@@ -226,7 +227,7 @@ class CSRManager {
             this.state.lastError = null;
             this.saveState();
 
-            console.log('[CSR] Certificate renewal successful');
+            Logger.info('CSR', 'Certificate renewal successful');
 
             return {
                 success: true,
@@ -239,7 +240,7 @@ class CSRManager {
             this.state.failureCount++;
             this.saveState();
 
-            console.error('[CSR] Certificate renewal failed:', error.message);
+            Logger.error('CSR', 'Certificate renewal failed:', error.message);
             return {
                 success: false,
                 type: 'renewal',
@@ -260,7 +261,7 @@ class CSRManager {
         });
 
         if(!result.valid) {
-            console.warn('[CSR] Certificate integrity check failed:', result.message);
+            Logger.warn('CSR', 'Certificate integrity check failed:', result.message);
         }
 
         return result;
@@ -385,7 +386,7 @@ class CSRManager {
 
         // Auto-renewal if enabled and needed
         if(this.autoRenew && status.needsRenewal && status.provisioned) {
-            console.log('[CSR] Auto-renewal triggered');
+            Logger.info('CSR', 'Auto-renewal triggered');
             return this.renewCertificate();
         }
 
@@ -415,7 +416,7 @@ class CSRManager {
         this.state = this.loadState();
         this.saveState();
 
-        console.log('[CSR] State reset');
+        Logger.info('CSR', 'State reset');
     }
 }
 

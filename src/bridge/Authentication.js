@@ -9,7 +9,7 @@ import FileSystem from 'node:fs/promises';
 import FSCore from 'node:fs';
 import Crypto from 'node:crypto';
 import { EventEmitter } from 'node:events';
-import Logger from '../../utils/Logger.js';
+import Logger from '../utils/Logger.js';
 import User from './User.js';
 
 /*
