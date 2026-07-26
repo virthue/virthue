@@ -10,8 +10,6 @@
 <br />
 <br />
 <br />
-<br />
-<br />
 
 # Main Features
 - Fully developed with newest `ES`-Features with `Node.js`
@@ -31,6 +29,7 @@
 - Full API-Call logs (if you develop Hue applications)
 - Resource manager
 - Communicate with Live devices/lamps
+- Full REST-API: [![SWAGGER]](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/virthue/virthue/refs/heads/main/docs/clip-api.swagger.json)
   
 # Supported Bridges
 <table align="center">
@@ -57,3 +56,5 @@
     </td>
   </tr>
 </table>
+
+[SWAGGER]: https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white

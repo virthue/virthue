@@ -1,0 +1,5271 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Philips Hue CLIP API",
+    "version": "2.0",
+    "description": "Philips Hue CLIP (Connected Lighting InterFace Protocol) API"
+  },
+  "servers": [
+    {
+      "url": "http://{bridge_ip}/api/v1",
+      "description": "Hue Bridge API",
+      "variables": {
+        "bridge_ip": {
+          "default": "127.0.0.1",
+          "description": "IP address of your bridge"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/resource/behavior_instance": {
+      "post": {
+        "summary": "POST behavior_instance",
+        "tags": [
+          "behavior_instance"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BehaviorInstancePost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BehaviorInstancePost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/behavior_instance/{id}": {
+      "put": {
+        "summary": "PUT behavior_instance",
+        "tags": [
+          "behavior_instance"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BehaviorInstancePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BehaviorInstancePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/bridge/{id}": {
+      "put": {
+        "summary": "PUT bridge",
+        "tags": [
+          "bridge"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BridgePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BridgePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/bridge_home/{id}": {
+      "put": {
+        "summary": "PUT bridge_home",
+        "tags": [
+          "bridge_home"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BridgeHomePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BridgeHomePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/button/{id}": {
+      "put": {
+        "summary": "PUT button",
+        "tags": [
+          "button"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ButtonPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ButtonPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/device/{id}": {
+      "put": {
+        "summary": "PUT device",
+        "tags": [
+          "device"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevicePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevicePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/device_power/{id}": {
+      "put": {
+        "summary": "PUT device_power",
+        "tags": [
+          "device_power"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevicePowerPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevicePowerPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/entertainment/{id}": {
+      "put": {
+        "summary": "PUT entertainment",
+        "tags": [
+          "entertainment"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntertainmentPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntertainmentPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/entertainment_configuration": {
+      "post": {
+        "summary": "POST entertainment_configuration",
+        "tags": [
+          "entertainment_configuration"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntertainmentConfigurationPost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntertainmentConfigurationPost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/entertainment_configuration/{id}": {
+      "put": {
+        "summary": "PUT entertainment_configuration",
+        "tags": [
+          "entertainment_configuration"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntertainmentConfigurationPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntertainmentConfigurationPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/geofence_client": {
+      "post": {
+        "summary": "POST geofence_client",
+        "tags": [
+          "geofence_client"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeofenceClientPost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeofenceClientPost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/geofence_client/{id}": {
+      "put": {
+        "summary": "PUT geofence_client",
+        "tags": [
+          "geofence_client"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeofenceClientPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeofenceClientPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/geolocation/{id}": {
+      "put": {
+        "summary": "PUT geolocation",
+        "tags": [
+          "geolocation"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeolocationPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GeolocationPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/grouped_light/{id}": {
+      "put": {
+        "summary": "PUT grouped_light",
+        "tags": [
+          "grouped_light"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupedLightPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupedLightPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/homekit/{id}": {
+      "put": {
+        "summary": "PUT homekit",
+        "tags": [
+          "homekit"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomekitPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HomekitPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/light/{id}": {
+      "put": {
+        "summary": "PUT light",
+        "tags": [
+          "light"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LightPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/light_level/{id}": {
+      "put": {
+        "summary": "PUT light_level",
+        "tags": [
+          "light_level"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightLevelPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LightLevelPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/motion/{id}": {
+      "put": {
+        "summary": "PUT motion",
+        "tags": [
+          "motion"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MotionPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MotionPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/relative_rotary/{id}": {
+      "put": {
+        "summary": "PUT relative_rotary",
+        "tags": [
+          "relative_rotary"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RelativeRotaryPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelativeRotaryPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/room": {
+      "post": {
+        "summary": "POST room",
+        "tags": [
+          "room"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomPost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomPost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/room/{id}": {
+      "put": {
+        "summary": "PUT room",
+        "tags": [
+          "room"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/scene": {
+      "post": {
+        "summary": "POST scene",
+        "tags": [
+          "scene"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenePost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenePost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/scene/{id}": {
+      "put": {
+        "summary": "PUT scene",
+        "tags": [
+          "scene"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/temperature/{id}": {
+      "put": {
+        "summary": "PUT temperature",
+        "tags": [
+          "temperature"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemperaturePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemperaturePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/zgp_connectivity/{id}": {
+      "put": {
+        "summary": "PUT zgp_connectivity",
+        "tags": [
+          "zgp_connectivity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZgpConnectivityPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZgpConnectivityPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/zigbee_connectivity/{id}": {
+      "put": {
+        "summary": "PUT zigbee_connectivity",
+        "tags": [
+          "zigbee_connectivity"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZigbeeConnectivityPut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZigbeeConnectivityPut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/resource/zone": {
+      "post": {
+        "summary": "POST zone",
+        "tags": [
+          "zone"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZonePost"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZonePost"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resource/zone/{id}": {
+      "put": {
+        "summary": "PUT zone",
+        "tags": [
+          "zone"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ZonePut"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZonePut"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionActionGet": {
+        "description": "the action to be executed on recall",
+        "type": "object",
+        "properties": {
+          "on": {
+            "$ref": "#/components/schemas/OnFeatureBasicGet"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
+          },
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
+          },
+          "gradient": {
+            "$ref": "#/components/schemas/GradientFeatureBasicGet"
+          }
+        }
+      },
+      "ActionActionPost": {
+        "description": "the action to be executed on recall",
+        "type": "object",
+        "properties": {
+          "on": {
+            "$ref": "#/components/schemas/OnFeatureBasicPost"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
+          },
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPost"
+          },
+          "gradient": {
+            "$ref": "#/components/schemas/GradientFeatureBasicPost"
+          }
+        }
+      },
+      "ActionActionPut": {
+        "description": "the action to be executed on recall",
+        "type": "object",
+        "properties": {
+          "on": {
+            "$ref": "#/components/schemas/OnFeatureBasicPut"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+          },
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
+          },
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
+          },
+          "gradient": {
+            "$ref": "#/components/schemas/GradientFeatureBasicPut"
+          }
+        }
+      },
+      "ActionGet": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionActionGet"
+          }
+        },
+        "required": [
+          "target",
+          "action"
+        ]
+      },
+      "ActionPost": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionActionPost"
+          }
+        },
+        "required": [
+          "target",
+          "action"
+        ]
+      },
+      "ActionPut": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionActionPut"
+          }
+        },
+        "required": [
+          "target",
+          "action"
+        ]
+      },
+      "AlertEffectType": {
+        "enum": [
+          "breathe"
+        ],
+        "type": "string"
+      },
+      "AlertFeatureGet": {
+        "type": "object",
+        "properties": {
+          "action_values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertEffectType"
+            }
+          }
+        },
+        "required": [
+          "action_values"
+        ]
+      },
+      "AlertFeaturePut": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/AlertEffectType"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "BehaviorInstanceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ScriptInstanceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "behavior_instance"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BehaviorInstancePost": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ScriptInstancePost"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "behavior_instance"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BehaviorInstancePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ScriptInstancePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "behavior_instance"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BehaviorScriptGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ScriptDefinitionGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "behavior_script"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BridgeGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "bridge"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "bridge_id": {
+                "type": "string"
+              },
+              "time_zone": {
+                "$ref": "#/components/schemas/TimeZoneFeature"
+              }
+            },
+            "required": [
+              "bridge_id",
+              "time_zone"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "BridgeHomeGet": {
+        "description": "Home resource lists all rooms in a home and all devices which are not assigned to a room.\nHome only contains children of type \"device\" and \"room\" ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "bridge_home"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "children": {
+                "description": "Rooms and devices not assigned to a room grouped in the home\nFollowing children are allowed: - room - device ",
+                "$ref": "#/components/schemas/ServiceListGet"
+              }
+            },
+            "required": [
+              "children"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "BridgeHomePut": {
+        "description": "Home resource lists all rooms in a home and all devices which are not assigned to a room.\nHome only contains children of type \"device\" and \"room\" ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "bridge_home"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "BridgePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "bridge"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "Brightness": {
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Brightness percentage. value cannot be 0, writing 0 changes it to lowest possible brightness",
+        "type": "number"
+      },
+      "ButtonEvent": {
+        "description": "event which can be send by a button control",
+        "enum": [
+          "initial_press",
+          "repeat",
+          "short_release",
+          "long_release",
+          "double_short_release"
+        ],
+        "type": "string"
+      },
+      "ButtonFeatureGet": {
+        "type": "object",
+        "properties": {
+          "last_event": {
+            "$ref": "#/components/schemas/ButtonEvent"
+          }
+        },
+        "required": [
+          "last_event"
+        ]
+      },
+      "ButtonGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "button"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/SwitchInputMetadataGet"
+              },
+              "button": {
+                "$ref": "#/components/schemas/ButtonFeatureGet"
+              }
+            },
+            "required": [
+              "metadata",
+              "button"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ButtonPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "button"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessage": {
+        "description": "Basic message body for all return messages on GET, data contains full expanded resource",
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "required": [
+          "errors"
+        ]
+      },
+      "ClipMessageBehaviorInstanceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BehaviorInstanceGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageBehaviorScriptGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BehaviorScriptGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageBridgeGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BridgeGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageBridgeHomeGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/BridgeHomeGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageButtonGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ButtonGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageDeviceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviceGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageDevicePowerGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DevicePowerGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageEntertainmentConfigurationGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntertainmentConfigurationGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageEntertainmentGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntertainmentGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageGeofenceClientGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GeofenceClientGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageGeolocationGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GeolocationGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageGroupedLightGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GroupedLightGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageHomekitGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HomekitGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageLightGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LightGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageLightLevelGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LightLevelGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageMotionGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MotionGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageRelativeRotaryGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RelativeRotaryGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageResourceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageResourceIdentifierDelete": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifierDelete"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageResourceIdentifierPost": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifierPost"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageResourceIdentifierPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifierPut"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageRoomGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RoomGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageSceneGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SceneGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageTemperatureGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TemperatureGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageZgpConnectivityGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ZgpConnectivityGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageZigbeeConnectivityGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ZigbeeConnectivityGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipMessageZoneGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ClipMessage"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ZoneGet"
+                }
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ClipV1ID": {
+        "pattern": "^(\\/[a-z]{4,32}\\/[0-9a-zA-Z-]{1,32})?$",
+        "description": "Clip v1 resource identifier",
+        "type": "string"
+      },
+      "ColorFeatureBasicGet": {
+        "type": "object",
+        "properties": {
+          "xy": {
+            "$ref": "#/components/schemas/ColorPoint"
+          }
+        },
+        "required": [
+          "xy"
+        ]
+      },
+      "ColorFeatureBasicPost": {
+        "type": "object",
+        "properties": {
+          "xy": {
+            "$ref": "#/components/schemas/ColorPoint"
+          }
+        },
+        "required": [
+          "xy"
+        ]
+      },
+      "ColorFeatureBasicPut": {
+        "type": "object",
+        "properties": {
+          "xy": {
+            "$ref": "#/components/schemas/ColorPoint"
+          }
+        }
+      },
+      "ColorFeatureGamut": {
+        "description": "Color gamut of color bulb. Some bulbs do not properly return the Gamut information. In this case this is not present.",
+        "type": "object",
+        "properties": {
+          "red": {
+            "$ref": "#/components/schemas/ColorPoint"
+          },
+          "green": {
+            "$ref": "#/components/schemas/ColorPoint"
+          },
+          "blue": {
+            "$ref": "#/components/schemas/ColorPoint"
+          }
+        },
+        "required": [
+          "red",
+          "green",
+          "blue"
+        ]
+      },
+      "ColorFeatureGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
+          },
+          {
+            "properties": {
+              "gamut": {
+                "$ref": "#/components/schemas/ColorFeatureGamut"
+              },
+              "gamut_type": {
+                "enum": [
+                  "A",
+                  "B",
+                  "C",
+                  "mixed",
+                  "other"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "gamut_type"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ColorFeaturePut": {
+        "$ref": "#/components/schemas/ColorFeatureBasicPut"
+      },
+      "ColorPaletteGet": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
+          }
+        },
+        "required": [
+          "color",
+          "dimming"
+        ]
+      },
+      "ColorPalettePost": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
+          }
+        },
+        "required": [
+          "color",
+          "dimming"
+        ]
+      },
+      "ColorPalettePut": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+          }
+        },
+        "required": [
+          "color",
+          "dimming"
+        ]
+      },
+      "ColorPoint": {
+        "description": "CIE XY gamut position",
+        "type": "object",
+        "properties": {
+          "x": {
+            "minimum": 0,
+            "maximum": 1,
+            "description": "X position in color gamut",
+            "type": "number"
+          },
+          "y": {
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Y position in color gamut",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ]
+      },
+      "ColorTemperatureFeatureBasicGet": {
+        "type": "object",
+        "properties": {
+          "mirek": {
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
+          }
+        },
+        "required": [
+          "mirek"
+        ]
+      },
+      "ColorTemperatureFeatureBasicPost": {
+        "type": "object",
+        "properties": {
+          "mirek": {
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
+          }
+        },
+        "required": [
+          "mirek"
+        ]
+      },
+      "ColorTemperatureFeatureBasicPut": {
+        "type": "object",
+        "properties": {
+          "mirek": {
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
+          }
+        }
+      },
+      "ColorTemperatureFeatureGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
+          },
+          {
+            "properties": {
+              "mirek_valid": {
+                "type": "boolean"
+              },
+              "mirek_schema": {
+                "$ref": "#/components/schemas/ColorTemperatureMirekSchemaGet"
+              }
+            },
+            "required": [
+              "mirek_valid",
+              "mirek_schema"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ColorTemperatureFeaturePut": {
+        "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
+      },
+      "ColorTemperatureMirek": {
+        "minimum": 153,
+        "maximum": 500,
+        "description": "color temperature in mirek or null when the light color is not in the ct spectrum",
+        "type": "integer"
+      },
+      "ColorTemperatureMirekSchemaGet": {
+        "type": "object",
+        "properties": {
+          "mirek_minimum": {
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
+          },
+          "mirek_maximum": {
+            "$ref": "#/components/schemas/ColorTemperatureMirek"
+          }
+        },
+        "required": [
+          "mirek_minimum",
+          "mirek_maximum"
+        ]
+      },
+      "ColorTemperaturePaletteGet": {
+        "type": "object",
+        "properties": {
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicGet"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicGet"
+          }
+        },
+        "required": [
+          "color_temperature",
+          "dimming"
+        ]
+      },
+      "ColorTemperaturePalettePost": {
+        "type": "object",
+        "properties": {
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPost"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPost"
+          }
+        },
+        "required": [
+          "color_temperature",
+          "dimming"
+        ]
+      },
+      "ColorTemperaturePalettePut": {
+        "type": "object",
+        "properties": {
+          "color_temperature": {
+            "$ref": "#/components/schemas/ColorTemperatureFeatureBasicPut"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+          }
+        },
+        "required": [
+          "color_temperature",
+          "dimming"
+        ]
+      },
+      "ConnectivityServiceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "status": {
+                "enum": [
+                  "connected",
+                  "disconnected",
+                  "connectivity_issue",
+                  "unidirectional_incoming"
+                ],
+                "type": "string"
+              },
+              "type": {
+                "enum": [
+                  "zigbee_connectivity",
+                  "zgp_connectivity"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "status"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ConnectivityServicePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zigbee_connectivity",
+                  "zgp_connectivity"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "Coordinate": {
+        "minimum": -1,
+        "maximum": 1,
+        "description": "Coordinate of a single axis",
+        "type": "number"
+      },
+      "DependencyGet": {
+        "description": "Defines target resource of a dependency.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "target": {
+            "description": "Id of the dependency resource (target).",
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          },
+          "level": {
+            "$ref": "#/components/schemas/DependencyLevel"
+          }
+        },
+        "required": [
+          "target",
+          "level"
+        ]
+      },
+      "DependencyLevel": {
+        "description": "#- non_critical: Defines a dependency between resources: although source is impacted by removal of target, source remains of target means removal of source.\n- critical: Defines a critical dependency between resources: source cannot function without target, hence removal of target means removal of source. ",
+        "enum": [
+          "critical"
+        ],
+        "type": "string"
+      },
+      "DeviceArchetypes": {
+        "enum": [
+          "bridge_v2",
+          "unknown_archetype",
+          "classic_bulb",
+          "sultan_bulb",
+          "flood_bulb",
+          "spot_bulb",
+          "candle_bulb",
+          "luster_bulb",
+          "pendant_round",
+          "pendant_long",
+          "ceiling_round",
+          "ceiling_square",
+          "floor_shade",
+          "floor_lantern",
+          "table_shade",
+          "recessed_ceiling",
+          "recessed_floor",
+          "single_spot",
+          "double_spot",
+          "table_wash",
+          "wall_lantern",
+          "wall_shade",
+          "flexible_lamp",
+          "ground_spot",
+          "wall_spot",
+          "plug",
+          "hue_go",
+          "hue_lightstrip",
+          "hue_iris",
+          "hue_bloom",
+          "bollard",
+          "wall_washer",
+          "hue_play",
+          "vintage_bulb",
+          "christmas_tree",
+          "hue_centris",
+          "hue_lightstrip_tv",
+          "hue_tube",
+          "hue_signe"
+        ],
+        "type": "string"
+      },
+      "DeviceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "device"
+                ],
+                "type": "string"
+              },
+              "product_data": {
+                "$ref": "#/components/schemas/DeviceProductDataGet"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/DeviceMetadataGet"
+              },
+              "creation_time": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "product_data",
+              "metadata",
+              "creation_time"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "DeviceMetadataGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/DeviceArchetypes"
+              }
+            },
+            "required": [
+              "archetype"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "DeviceMetadataPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/DeviceArchetypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DevicePowerGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "device_power"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "power_state": {
+                "$ref": "#/components/schemas/DevicePowerStateGet"
+              }
+            },
+            "required": [
+              "power_state"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "DevicePowerPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "device_power"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DevicePowerStateGet": {
+        "type": "object",
+        "properties": {
+          "battery_state": {
+            "enum": [
+              "normal",
+              "low",
+              "critical"
+            ],
+            "type": "string"
+          },
+          "battery_level": {
+            "minimum": 0,
+            "maximum": 100,
+            "type": "integer"
+          }
+        }
+      },
+      "DeviceProductDataGet": {
+        "type": "object",
+        "properties": {
+          "model_id": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string"
+          },
+          "manufacturer_name": {
+            "type": "string"
+          },
+          "product_name": {
+            "type": "string"
+          },
+          "product_archetype": {
+            "$ref": "#/components/schemas/DeviceArchetypes"
+          },
+          "certified": {
+            "type": "boolean"
+          },
+          "software_version": {
+            "pattern": "\\d+\\.\\d+\\.\\d+",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model_id",
+          "product_id",
+          "manufacturer_name",
+          "product_name",
+          "product_archetype",
+          "certified",
+          "software_version"
+        ]
+      },
+      "DevicePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "device"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/DeviceMetadataPut"
+              },
+              "identify": {
+                "$ref": "#/components/schemas/IdentifyFeaturePut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "DimmingFeatureBasicGet": {
+        "type": "object",
+        "properties": {
+          "brightness": {
+            "$ref": "#/components/schemas/Brightness"
+          }
+        },
+        "required": [
+          "brightness"
+        ]
+      },
+      "DimmingFeatureBasicPost": {
+        "type": "object",
+        "properties": {
+          "brightness": {
+            "$ref": "#/components/schemas/Brightness"
+          }
+        },
+        "required": [
+          "brightness"
+        ]
+      },
+      "DimmingFeatureBasicPut": {
+        "type": "object",
+        "properties": {
+          "brightness": {
+            "$ref": "#/components/schemas/Brightness"
+          }
+        }
+      },
+      "DimmingFeatureGet": {
+        "$ref": "#/components/schemas/DimmingFeatureBasicGet"
+      },
+      "DimmingFeaturePut": {
+        "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+      },
+      "Duration": {
+        "minimum": 0,
+        "maximum": 6000000,
+        "multipleOf": 100,
+        "description": "Duration of a light transition in ms. Accuracy is in 100ms steps.",
+        "type": "integer"
+      },
+      "DynamicFeatureBasicGet": {
+        "type": "object",
+        "properties": {
+          "speed": {
+            "minimum": 0,
+            "maximum": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "speed"
+        ]
+      },
+      "DynamicFeatureBasicPut": {
+        "type": "object",
+        "properties": {
+          "speed": {
+            "minimum": 0,
+            "maximum": 1,
+            "type": "number"
+          }
+        }
+      },
+      "DynamicsFeatureGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DynamicFeatureBasicGet"
+          },
+          {
+            "properties": {
+              "status": {
+                "$ref": "#/components/schemas/SupportedDynamicStatus"
+              },
+              "status_values": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SupportedDynamicStatus"
+                }
+              },
+              "speed_valid": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "status",
+              "status_values",
+              "speed_valid"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "DynamicsFeaturePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DynamicFeatureBasicPut"
+          },
+          {
+            "properties": {
+              "duration": {
+                "$ref": "#/components/schemas/Duration"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "EntertainmentChannelGet": {
+        "description": "Holds position of the channel and list of members, which is an array of segments resource identifiers",
+        "type": "object",
+        "properties": {
+          "channel_id": {
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Bridge assigns a number upon creation. This is the number to be used by the HueStream API when addressing the channel",
+            "type": "integer"
+          },
+          "position": {
+            "description": "xyz position of this channel. It is the average position of its members",
+            "$ref": "#/components/schemas/Position"
+          },
+          "members": {
+            "description": "List that references segments that are members of that channel",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SegmentReferenceGet"
+            }
+          }
+        },
+        "required": [
+          "channel_id",
+          "position",
+          "members"
+        ]
+      },
+      "EntertainmentConfigurationGet": {
+        "description": "Entertainment configuration",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "entertainment_configuration"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
+              },
+              "name": {
+                "description": "Friendly name of the entertainment configuration\nDeprecated: use metadata/name ",
+                "$ref": "#/components/schemas/ResourceName"
+              },
+              "configuration_type": {
+                "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
+                "enum": [
+                  "screen",
+                  "music",
+                  "3dspace",
+                  "other"
+                ],
+                "type": "string"
+              },
+              "status": {
+                "description": "Read only field reporting if the stream is active or not",
+                "enum": [
+                  "active",
+                  "inactive"
+                ],
+                "type": "string"
+              },
+              "active_streamer": {
+                "description": "Expected value is of a ResourceIdentifier of the type auth_v1",
+                "$ref": "#/components/schemas/ResourceIdentifierGet"
+              },
+              "stream_proxy": {
+                "$ref": "#/components/schemas/StreamingProxyGet"
+              },
+              "channels": {
+                "description": "Holds the channels. Each channel groups segments of one or different light",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntertainmentChannelGet"
+                }
+              },
+              "locations": {
+                "description": "Entertertainment services of the lights that are in the zone have locations",
+                "$ref": "#/components/schemas/EntertainmentLocationsGet"
+              },
+              "light_services": {
+                "description": "list of light services that belong to this entertainment configuration",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifierGet"
+                }
+              }
+            },
+            "required": [
+              "metadata",
+              "configuration_type",
+              "status",
+              "active_streamer",
+              "stream_proxy",
+              "channels",
+              "locations"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "EntertainmentConfigurationMetadata": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "EntertainmentConfigurationPost": {
+        "description": "Entertainment configuration",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePost"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "entertainment_configuration"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
+              },
+              "configuration_type": {
+                "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
+                "enum": [
+                  "screen",
+                  "music",
+                  "3dspace",
+                  "other"
+                ],
+                "type": "string"
+              },
+              "stream_proxy": {
+                "$ref": "#/components/schemas/StreamingProxyPost"
+              },
+              "locations": {
+                "description": "Entertertainment services of the lights that are in the zone have locations",
+                "$ref": "#/components/schemas/EntertainmentLocationsPost"
+              }
+            },
+            "required": [
+              "metadata",
+              "configuration_type",
+              "locations"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "EntertainmentConfigurationPut": {
+        "description": "Entertainment configuration",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "entertainment_configuration"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/EntertainmentConfigurationMetadata"
+              },
+              "configuration_type": {
+                "description": "Defines for which type of application this channel assignment was optimized for\n\"screen\" : Channels are organized around content from a screen \"music\": Channels are organized for music synchronization \"3dspace: Channels are organized to provide 3d spacial effects \"other\": General use case ",
+                "enum": [
+                  "screen",
+                  "music",
+                  "3dspace",
+                  "other"
+                ],
+                "type": "string"
+              },
+              "action": {
+                "description": "If status is \"inactive\" -> write start to start streaming. Writing start when it's already active\ndoes not change the owership of the streaming. If status is \"active\" -> write \"stop\" to end the current streaming. In order to start streaming when other application is already streaming first write \"stop\" and then \"start\" ",
+                "enum": [
+                  "start",
+                  "stop"
+                ],
+                "type": "string"
+              },
+              "stream_proxy": {
+                "$ref": "#/components/schemas/StreamingProxyPut"
+              },
+              "locations": {
+                "description": "Entertertainment services of the lights that are in the zone have locations",
+                "$ref": "#/components/schemas/EntertainmentLocationsPut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "EntertainmentGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "entertainment"
+                ],
+                "type": "string"
+              },
+              "renderer": {
+                "type": "boolean"
+              },
+              "proxy": {
+                "type": "boolean"
+              },
+              "max_streams": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "segments": {
+                "$ref": "#/components/schemas/SegmentationProperties"
+              }
+            },
+            "required": [
+              "renderer",
+              "proxy"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "EntertainmentLocationsGet": {
+        "description": "Sets the position of each entertainment service in the configuration. If the service has several segments, more than one x,y,z location may be needed",
+        "type": "object",
+        "properties": {
+          "service_locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceLocationGet"
+            }
+          }
+        },
+        "required": [
+          "service_locations"
+        ]
+      },
+      "EntertainmentLocationsPost": {
+        "description": "Sets the position of each entertainment service in the configuration. If the service has several segments, more than one x,y,z location may be needed",
+        "type": "object",
+        "properties": {
+          "service_locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceLocationPost"
+            }
+          }
+        },
+        "required": [
+          "service_locations"
+        ]
+      },
+      "EntertainmentLocationsPut": {
+        "description": "Sets the position of each entertainment service in the configuration. If the service has several segments, more than one x,y,z location may be needed",
+        "type": "object",
+        "properties": {
+          "service_locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServiceLocationPut"
+            }
+          }
+        },
+        "required": [
+          "service_locations"
+        ]
+      },
+      "EntertainmentPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "entertainment"
+                ],
+                "type": "string"
+              },
+              "renderer": {
+                "type": "boolean"
+              },
+              "proxy": {
+                "type": "boolean"
+              },
+              "max_streams": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "segments": {
+                "$ref": "#/components/schemas/SegmentationProperties"
+              }
+            },
+            "required": [
+              "renderer",
+              "proxy",
+              "max_streams",
+              "segments"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "Error": {
+        "description": "Error object which is returned when at least one error occured on a API call",
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "a human-readable explanation specific to this occurrence of the problem.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "description"
+        ]
+      },
+      "GUID": {
+        "pattern": "^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$",
+        "description": "Unique identifier representing a specific resource instance",
+        "type": "string"
+      },
+      "GeofenceClientGet": {
+        "description": "Representation of Geofence Client.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "geofence_client"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "name": {
+                "minLength": 1,
+                "maxLength": 32,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "GeofenceClientPost": {
+        "description": "Representation of Geofence Client.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePost"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "geofence_client"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "is_at_home": {
+                "description": "Indicator if Geofence Client is at home.",
+                "type": "boolean"
+              },
+              "name": {
+                "minLength": 1,
+                "maxLength": 32,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "GeofenceClientPut": {
+        "description": "Representation of Geofence Client.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "geofence_client"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "is_at_home": {
+                "description": "Indicator if Geofence Client is at home.",
+                "type": "boolean"
+              },
+              "name": {
+                "minLength": 1,
+                "maxLength": 32,
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "GeolocationGet": {
+        "description": "Representation of the geo location of the bridge",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "geolocation"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "is_configured": {
+                "default": false,
+                "description": "is the geolocation configured",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "is_configured"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "GeolocationPut": {
+        "description": "Representation of the geo location of the bridge",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "geolocation"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "longitude": {
+                "minimum": -180,
+                "maximum": 180,
+                "description": "longitude",
+                "type": "number"
+              },
+              "latitude": {
+                "minimum": -90,
+                "maximum": 90,
+                "description": "latitude",
+                "type": "number"
+              }
+            },
+            "required": [
+              "longitude",
+              "latitude"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "GradientFeatureBasicGet": {
+        "description": "Basic feature containing gradient properties.",
+        "type": "object",
+        "properties": {
+          "points": {
+            "maxItems": 5,
+            "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradientPointGet"
+            }
+          }
+        },
+        "required": [
+          "points"
+        ]
+      },
+      "GradientFeatureBasicPost": {
+        "description": "Basic feature containing gradient properties.",
+        "type": "object",
+        "properties": {
+          "points": {
+            "maxItems": 5,
+            "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradientPointPost"
+            }
+          }
+        },
+        "required": [
+          "points"
+        ]
+      },
+      "GradientFeatureBasicPut": {
+        "description": "Basic feature containing gradient properties.",
+        "type": "object",
+        "properties": {
+          "points": {
+            "maxItems": 5,
+            "description": "Collection of gradients points. For control of the gradient points through a PUT a minimum of 2 points need to be provided.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GradientPointPut"
+            }
+          }
+        },
+        "required": [
+          "points"
+        ]
+      },
+      "GradientFeatureGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GradientFeatureBasicGet"
+          },
+          {
+            "properties": {
+              "points_capable": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "points_capable"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "GradientFeaturePut": {
+        "$ref": "#/components/schemas/GradientFeatureBasicPut"
+      },
+      "GradientPointGet": {
+        "description": "Color point for creating gradient(s).",
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicGet"
+          }
+        },
+        "required": [
+          "color"
+        ]
+      },
+      "GradientPointPost": {
+        "description": "Color point for creating gradient(s).",
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPost"
+          }
+        },
+        "required": [
+          "color"
+        ]
+      },
+      "GradientPointPut": {
+        "description": "Color point for creating gradient(s).",
+        "type": "object",
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/ColorFeatureBasicPut"
+          }
+        },
+        "required": [
+          "color"
+        ]
+      },
+      "GroupGet": {
+        "description": "supertype of all groups grouping devices or services",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "grouped_services": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceIdentifierGet"
+                }
+              },
+              "services": {
+                "description": "References all services aggregating control and state of children in the group.\nThis includes all services grouped in the group hiearchy given by child relation This includes all services of a device grouped in the group hiearchy given by child relation Aggregation is per service type, ie every service type which can be grouped has a corresponding definition of grouped type Supported types \"light\" ",
+                "$ref": "#/components/schemas/ServiceListGet"
+              }
+            },
+            "required": [
+              "services"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "GroupPost": {
+        "description": "supertype of all groups grouping devices or services",
+        "$ref": "#/components/schemas/ResourcePost"
+      },
+      "GroupPut": {
+        "description": "supertype of all groups grouping devices or services",
+        "$ref": "#/components/schemas/ResourcePut"
+      },
+      "GroupedLightGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "grouped_light"
+                ],
+                "type": "string"
+              },
+              "on": {
+                "$ref": "#/components/schemas/OnFeatureBasicGet"
+              },
+              "alert": {
+                "$ref": "#/components/schemas/AlertFeatureGet"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "GroupedLightPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "grouped_light"
+                ],
+                "type": "string"
+              },
+              "on": {
+                "$ref": "#/components/schemas/OnFeatureBasicPut"
+              },
+              "alert": {
+                "$ref": "#/components/schemas/AlertFeaturePut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "HomekitGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "status": {
+                "enum": [
+                  "paired",
+                  "pairing",
+                  "unpaired"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "status"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "HomekitPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "action": {
+                "enum": [
+                  "homekit_reset"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "IdentifyFeaturePut": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "enum": [
+              "identify"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "InstanceMetadata": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          }
+        }
+      },
+      "LightArchetypes": {
+        "enum": [
+          "unknown_archetype",
+          "classic_bulb",
+          "sultan_bulb",
+          "flood_bulb",
+          "spot_bulb",
+          "candle_bulb",
+          "luster_bulb",
+          "pendant_round",
+          "pendant_long",
+          "ceiling_round",
+          "ceiling_square",
+          "floor_shade",
+          "floor_lantern",
+          "table_shade",
+          "recessed_ceiling",
+          "recessed_floor",
+          "single_spot",
+          "double_spot",
+          "table_wash",
+          "wall_lantern",
+          "wall_shade",
+          "flexible_lamp",
+          "ground_spot",
+          "wall_spot",
+          "plug",
+          "hue_go",
+          "hue_lightstrip",
+          "hue_iris",
+          "hue_bloom",
+          "bollard",
+          "wall_washer",
+          "hue_play",
+          "vintage_bulb",
+          "christmas_tree",
+          "hue_centris",
+          "hue_lightstrip_tv",
+          "hue_tube",
+          "hue_signe"
+        ],
+        "type": "string"
+      },
+      "LightGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "light"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/LightMetadataGet"
+              },
+              "on": {
+                "$ref": "#/components/schemas/OnFeatureGet"
+              },
+              "dimming": {
+                "$ref": "#/components/schemas/DimmingFeatureGet"
+              },
+              "color_temperature": {
+                "$ref": "#/components/schemas/ColorTemperatureFeatureGet"
+              },
+              "color": {
+                "$ref": "#/components/schemas/ColorFeatureGet"
+              },
+              "dynamics": {
+                "$ref": "#/components/schemas/DynamicsFeatureGet"
+              },
+              "alert": {
+                "$ref": "#/components/schemas/AlertFeatureGet"
+              },
+              "mode": {
+                "$ref": "#/components/schemas/LightModeValues"
+              },
+              "gradient": {
+                "$ref": "#/components/schemas/GradientFeatureGet"
+              }
+            },
+            "required": [
+              "metadata",
+              "on",
+              "mode"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "LightLevelGet": {
+        "description": "service measuring ambient light level at the sensor location",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServiceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "light_level"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "light": {
+                "$ref": "#/components/schemas/LightLevelSensorFeatureGet"
+              }
+            },
+            "required": [
+              "light"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "LightLevelPut": {
+        "description": "service measuring ambient light level at the sensor location",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServicePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "light_level"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "LightLevelSensorFeatureGet": {
+        "type": "object",
+        "properties": {
+          "light_level": {
+            "type": "integer"
+          },
+          "light_level_valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "light_level",
+          "light_level_valid"
+        ]
+      },
+      "LightMetadataGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/LightArchetypes"
+              }
+            },
+            "required": [
+              "archetype"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "LightMetadataPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/LightArchetypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "LightModeValues": {
+        "enum": [
+          "normal",
+          "streaming"
+        ],
+        "type": "string"
+      },
+      "LightPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "light"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/LightMetadataPut"
+              },
+              "on": {
+                "$ref": "#/components/schemas/OnFeaturePut"
+              },
+              "dimming": {
+                "$ref": "#/components/schemas/DimmingFeaturePut"
+              },
+              "color_temperature": {
+                "$ref": "#/components/schemas/ColorTemperatureFeaturePut"
+              },
+              "color": {
+                "$ref": "#/components/schemas/ColorFeaturePut"
+              },
+              "dynamics": {
+                "$ref": "#/components/schemas/DynamicsFeaturePut"
+              },
+              "alert": {
+                "$ref": "#/components/schemas/AlertFeaturePut"
+              },
+              "gradient": {
+                "$ref": "#/components/schemas/GradientFeaturePut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MotionGet": {
+        "description": "service detecting motion",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServiceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "motion"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "motion": {
+                "$ref": "#/components/schemas/MotionSensingFeatureGet"
+              }
+            },
+            "required": [
+              "motion"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "MotionPut": {
+        "description": "service detecting motion",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServicePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "motion"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "MotionSensingFeatureGet": {
+        "type": "object",
+        "properties": {
+          "motion": {
+            "type": "boolean"
+          },
+          "motion_valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "motion",
+          "motion_valid"
+        ]
+      },
+      "NamedResourceMetadataGet": {
+        "description": "additional metadata including a user given name",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceMetadataGet"
+          },
+          {
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/ResourceName"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "NamedResourceMetadataPost": {
+        "description": "additional metadata including a user given name",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceMetadataPost"
+          },
+          {
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/ResourceName"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "NamedResourceMetadataPut": {
+        "description": "additional metadata including a user given name",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceMetadataPut"
+          },
+          {
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/ResourceName"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "OnFeatureBasicGet": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "on"
+        ]
+      },
+      "OnFeatureBasicPost": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "on"
+        ]
+      },
+      "OnFeatureBasicPut": {
+        "type": "object",
+        "properties": {
+          "on": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OnFeatureGet": {
+        "$ref": "#/components/schemas/OnFeatureBasicGet"
+      },
+      "OnFeaturePut": {
+        "$ref": "#/components/schemas/OnFeatureBasicPut"
+      },
+      "PaletteGet": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "minItems": 0,
+            "maxItems": 9,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorPaletteGet"
+            }
+          },
+          "dimming": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DimmingFeatureBasicGet"
+            }
+          },
+          "color_temperature": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorTemperaturePaletteGet"
+            }
+          }
+        },
+        "required": [
+          "color",
+          "dimming",
+          "color_temperature"
+        ]
+      },
+      "PalettePost": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "minItems": 0,
+            "maxItems": 9,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorPalettePost"
+            }
+          },
+          "dimming": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DimmingFeatureBasicPost"
+            }
+          },
+          "color_temperature": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorTemperaturePalettePost"
+            }
+          }
+        },
+        "required": [
+          "color",
+          "dimming",
+          "color_temperature"
+        ]
+      },
+      "PalettePut": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "minItems": 0,
+            "maxItems": 9,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorPalettePut"
+            }
+          },
+          "dimming": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+            }
+          },
+          "color_temperature": {
+            "minItems": 0,
+            "maxItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ColorTemperaturePalettePut"
+            }
+          }
+        },
+        "required": [
+          "color",
+          "dimming",
+          "color_temperature"
+        ]
+      },
+      "Position": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "y": {
+            "$ref": "#/components/schemas/Coordinate"
+          },
+          "z": {
+            "$ref": "#/components/schemas/Coordinate"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      "RecallFeaturePut": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "enum": [
+              "active",
+              "dynamic_palette"
+            ],
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active"
+            ],
+            "type": "string"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "dimming": {
+            "$ref": "#/components/schemas/DimmingFeatureBasicPut"
+          }
+        }
+      },
+      "RelativeRotaryGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "relative_rotary"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "RelativeRotaryPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "relative_rotary"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ResourceDependeeGet": {
+        "description": "Represents a resource which (this) resource is dependent on.",
+        "$ref": "#/components/schemas/DependencyGet"
+      },
+      "ResourceGet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/GUID"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          },
+          "id_v1": {
+            "$ref": "#/components/schemas/ClipV1ID"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "ResourceIdentifierDelete": {
+        "type": "object",
+        "properties": {
+          "rid": {
+            "$ref": "#/components/schemas/GUID"
+          },
+          "rtype": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        },
+        "required": [
+          "rid",
+          "rtype"
+        ]
+      },
+      "ResourceIdentifierGet": {
+        "type": "object",
+        "properties": {
+          "rid": {
+            "$ref": "#/components/schemas/GUID"
+          },
+          "rtype": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        },
+        "required": [
+          "rid",
+          "rtype"
+        ]
+      },
+      "ResourceIdentifierPost": {
+        "type": "object",
+        "properties": {
+          "rid": {
+            "$ref": "#/components/schemas/GUID"
+          },
+          "rtype": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        }
+      },
+      "ResourceIdentifierPut": {
+        "type": "object",
+        "properties": {
+          "rid": {
+            "$ref": "#/components/schemas/GUID"
+          },
+          "rtype": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        }
+      },
+      "ResourceMetadataGet": {
+        "description": "additional metadata stored for a resource. This provides additional information to the user to indetify a rersource or to describe the resources context",
+        "type": "object",
+        "properties": {
+          "archetype": {
+            "description": "string representation of the archetype of the resource",
+            "type": "string"
+          }
+        },
+        "required": [
+          "archetype"
+        ]
+      },
+      "ResourceMetadataPost": {
+        "description": "additional metadata stored for a resource. This provides additional information to the user to indetify a rersource or to describe the resources context",
+        "type": "object",
+        "properties": {
+          "archetype": {
+            "description": "string representation of the archetype of the resource",
+            "type": "string"
+          }
+        },
+        "required": [
+          "archetype"
+        ]
+      },
+      "ResourceMetadataPut": {
+        "description": "additional metadata stored for a resource. This provides additional information to the user to indetify a rersource or to describe the resources context",
+        "type": "object",
+        "properties": {
+          "archetype": {
+            "description": "string representation of the archetype of the resource",
+            "type": "string"
+          }
+        }
+      },
+      "ResourceName": {
+        "minLength": 1,
+        "maxLength": 32,
+        "description": "Human readable name of a resource",
+        "type": "string"
+      },
+      "ResourcePost": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        }
+      },
+      "ResourcePut": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResourceTypes"
+          }
+        }
+      },
+      "ResourceTypes": {
+        "description": "Type of the supported resources",
+        "enum": [
+          "device",
+          "bridge_home",
+          "room",
+          "zone",
+          "light",
+          "button",
+          "relative_rotary",
+          "temperature",
+          "light_level",
+          "motion",
+          "entertainment",
+          "grouped_light",
+          "device_power",
+          "device_update",
+          "ip_connectivity",
+          "zigbee_bridge_connectivity",
+          "zigbee_connectivity",
+          "zgp_connectivity",
+          "remote_access",
+          "bridge",
+          "homekit",
+          "device_discovery",
+          "system_update",
+          "scene",
+          "entertainment_configuration",
+          "public_image",
+          "auth_v1",
+          "behavior_script",
+          "behavior_instance",
+          "geofence",
+          "geofence_client",
+          "geolocation"
+        ],
+        "type": "string"
+      },
+      "RoomArchetype": {
+        "description": "possible archetypes of a room",
+        "enum": [
+          "living_room",
+          "kitchen",
+          "dining",
+          "bedroom",
+          "kids_bedroom",
+          "bathroom",
+          "nursery",
+          "recreation",
+          "office",
+          "gym",
+          "hallway",
+          "toilet",
+          "front_door",
+          "garage",
+          "terrace",
+          "garden",
+          "driveway",
+          "carport",
+          "home",
+          "downstairs",
+          "upstairs",
+          "top_floor",
+          "attic",
+          "guest_room",
+          "staircase",
+          "lounge",
+          "man_cave",
+          "computer",
+          "studio",
+          "music",
+          "tv",
+          "reading",
+          "closet",
+          "storage",
+          "laundry_room",
+          "balcony",
+          "porch",
+          "barbecue",
+          "pool",
+          "other"
+        ],
+        "type": "string"
+      },
+      "RoomGet": {
+        "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "room"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataGet"
+              },
+              "children": {
+                "description": "Devices to group by the Room\nFollowing children are allowed: - device ",
+                "$ref": "#/components/schemas/ServiceListGet"
+              }
+            },
+            "required": [
+              "metadata",
+              "children"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RoomMetadataGet": {
+        "description": "configuration object for a room",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataGet"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/RoomArchetype"
+              }
+            },
+            "required": [
+              "archetype"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RoomMetadataPost": {
+        "description": "configuration object for a room",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataPost"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/RoomArchetype"
+              }
+            },
+            "required": [
+              "archetype"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RoomMetadataPut": {
+        "description": "configuration object for a room",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedResourceMetadataPut"
+          },
+          {
+            "properties": {
+              "archetype": {
+                "$ref": "#/components/schemas/RoomArchetype"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "RoomPost": {
+        "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPost"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "room"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataPost"
+              }
+            },
+            "required": [
+              "metadata"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "RoomPut": {
+        "description": "Room resources groups all devices within the same physical space of a room.\nA device can only be in at most one room. ",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "room"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataPut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SceneGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SceneServiceGet"
+          },
+          {
+            "properties": {
+              "metadata": {
+                "$ref": "#/components/schemas/SceneMetadataGet"
+              },
+              "type": {
+                "enum": [
+                  "scene"
+                ],
+                "type": "string"
+              },
+              "group": {
+                "$ref": "#/components/schemas/ResourceIdentifierGet"
+              },
+              "palette": {
+                "$ref": "#/components/schemas/PaletteGet"
+              },
+              "speed": {
+                "minimum": 0,
+                "maximum": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "metadata",
+              "group",
+              "speed"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "SceneMetadataGet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "SceneMetadataPost": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "SceneMetadataPut": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ScenePost": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SceneServicePost"
+          },
+          {
+            "properties": {
+              "metadata": {
+                "$ref": "#/components/schemas/SceneMetadataPost"
+              },
+              "type": {
+                "enum": [
+                  "scene"
+                ],
+                "type": "string"
+              },
+              "group": {
+                "$ref": "#/components/schemas/ResourceIdentifierPost"
+              },
+              "palette": {
+                "$ref": "#/components/schemas/PalettePost"
+              },
+              "speed": {
+                "minimum": 0,
+                "maximum": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "metadata",
+              "group"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ScenePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SceneServicePut"
+          },
+          {
+            "properties": {
+              "metadata": {
+                "$ref": "#/components/schemas/SceneMetadataPut"
+              },
+              "type": {
+                "enum": [
+                  "scene"
+                ],
+                "type": "string"
+              },
+              "palette": {
+                "$ref": "#/components/schemas/PalettePut"
+              },
+              "speed": {
+                "minimum": 0,
+                "maximum": 1,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "SceneServiceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "actions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ActionGet"
+                }
+              }
+            },
+            "required": [
+              "actions"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "SceneServicePost": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePost"
+          },
+          {
+            "properties": {
+              "actions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ActionPost"
+                }
+              }
+            },
+            "required": [
+              "actions"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "SceneServicePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "actions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ActionPut"
+                }
+              },
+              "recall": {
+                "$ref": "#/components/schemas/RecallFeaturePut"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ScriptDefinitionGet": {
+        "description": "Definition of a script.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "description": {
+                "description": "Short description of script.",
+                "type": "string"
+              },
+              "configuration_schema": {
+                "description": "JSON schema object used for validating ScriptInstance.configuration property.",
+                "type": "object"
+              },
+              "trigger_schema": {
+                "description": "JSON schema object used for validating ScriptInstance.trigger property.",
+                "type": "object"
+              },
+              "state_schema": {
+                "description": "JSON schema of ScriptInstance.state property.",
+                "type": "object"
+              },
+              "version": {
+                "description": "Version of script.",
+                "$ref": "#/components/schemas/Version"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/ScriptMetadataGet"
+              }
+            },
+            "required": [
+              "description",
+              "configuration_schema",
+              "trigger_schema",
+              "state_schema",
+              "version",
+              "metadata"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ScriptInstanceGet": {
+        "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "script_id": {
+                "description": "Identifier to ScriptDefinition.",
+                "$ref": "#/components/schemas/GUID"
+              },
+              "enabled": {
+                "description": "Indicated whether a scripts is enabled.",
+                "type": "boolean"
+              },
+              "state": {
+                "description": "Script instance state. This read-only property is according to ScriptDefinition.state_schema JSON schema.",
+                "type": "object"
+              },
+              "configuration": {
+                "description": "Script configuration. This property is validated using ScriptDefinition.configuration_schema JSON schema.",
+                "type": "object"
+              },
+              "dependees": {
+                "description": "Represents all resources which this instance depends on.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceDependeeGet"
+                }
+              },
+              "status": {
+                "description": "Script status. If the script is in the errored state then check errors for more details about the error.",
+                "$ref": "#/components/schemas/ScriptInstanceStatus"
+              },
+              "last_error": {
+                "description": "Last error happened while executing the script.",
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/InstanceMetadata"
+              },
+              "migrated_from": {
+                "$ref": "#/components/schemas/ClipV1ID"
+              }
+            },
+            "required": [
+              "script_id",
+              "enabled",
+              "configuration",
+              "dependees",
+              "status",
+              "last_error",
+              "metadata"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ScriptInstancePost": {
+        "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePost"
+          },
+          {
+            "properties": {
+              "type": {
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "script_id": {
+                "description": "Identifier to ScriptDefinition.",
+                "$ref": "#/components/schemas/GUID"
+              },
+              "enabled": {
+                "description": "Indicated whether a scripts is enabled.",
+                "type": "boolean"
+              },
+              "configuration": {
+                "description": "Script configuration. This property is validated using ScriptDefinition.configuration_schema JSON schema.",
+                "type": "object"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/InstanceMetadata"
+              },
+              "migrated_from": {
+                "$ref": "#/components/schemas/ClipV1ID"
+              }
+            },
+            "required": [
+              "script_id",
+              "enabled",
+              "configuration"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ScriptInstancePut": {
+        "description": "Representation of active script. Script are instantiated using the id and configuration of the ScriptDefinition.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "enabled": {
+                "description": "Indicated whether a scripts is enabled.",
+                "type": "boolean"
+              },
+              "configuration": {
+                "description": "Script configuration. This property is validated using ScriptDefinition.configuration_schema JSON schema.",
+                "type": "object"
+              },
+              "trigger": {
+                "description": "Action that needs to be taken by this script instance. This property is validated using ScriptDefinition.trigger_schema JSON schema.",
+                "type": "object"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/InstanceMetadata"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ScriptInstanceStatus": {
+        "description": "Script status",
+        "enum": [
+          "initializing",
+          "running",
+          "disabled",
+          "errored"
+        ],
+        "type": "string"
+      },
+      "ScriptMetadataGet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/ResourceName"
+          }
+        }
+      },
+      "Segment": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "length": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start",
+          "length"
+        ]
+      },
+      "SegmentReferenceGet": {
+        "description": "From which entertainment_service, which segment is a member of this channel",
+        "type": "object",
+        "properties": {
+          "service": {
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          },
+          "index": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "service",
+          "index"
+        ]
+      },
+      "SegmentationProperties": {
+        "description": "All properties regarding the segment capabilities of this device: the configuratibility,\nmax_segments and all segment tables ",
+        "type": "object",
+        "properties": {
+          "configurable": {
+            "description": "Defines if the segmentation of the device are configurable or not",
+            "type": "boolean"
+          },
+          "max_segments": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "segments": {
+            "minItems": 1,
+            "description": "Contains the segments configuration of the device for entertainment purposes.\nA device can be segmented in a single way ",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Segment"
+            }
+          }
+        },
+        "required": [
+          "configurable",
+          "max_segments",
+          "segments"
+        ]
+      },
+      "SensingServiceGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourceGet"
+          },
+          {
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "SensingServicePut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResourcePut"
+          },
+          {
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ServiceListGet": {
+        "description": "List the references to all resources grouped by this group",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ResourceIdentifierGet"
+        }
+      },
+      "ServiceLocationGet": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          },
+          "position": {
+            "$ref": "#/components/schemas/Position"
+          },
+          "positions": {
+            "minItems": 1,
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Position"
+            }
+          }
+        },
+        "required": [
+          "service",
+          "positions"
+        ]
+      },
+      "ServiceLocationPost": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
+          },
+          "positions": {
+            "minItems": 1,
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Position"
+            }
+          }
+        },
+        "required": [
+          "service",
+          "positions"
+        ]
+      },
+      "ServiceLocationPut": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
+          },
+          "positions": {
+            "minItems": 1,
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Position"
+            }
+          }
+        },
+        "required": [
+          "service",
+          "positions"
+        ]
+      },
+      "StreamingProxyGet": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "auto",
+              "manual"
+            ],
+            "type": "string"
+          },
+          "node": {
+            "$ref": "#/components/schemas/ResourceIdentifierGet"
+          }
+        },
+        "required": [
+          "mode",
+          "node"
+        ]
+      },
+      "StreamingProxyPost": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "auto",
+              "manual"
+            ],
+            "type": "string"
+          },
+          "node": {
+            "$ref": "#/components/schemas/ResourceIdentifierPost"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "StreamingProxyPut": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "enum": [
+              "auto",
+              "manual"
+            ],
+            "type": "string"
+          },
+          "node": {
+            "$ref": "#/components/schemas/ResourceIdentifierPut"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "SupportedDynamicStatus": {
+        "enum": [
+          "dynamic_palette",
+          "none"
+        ],
+        "type": "string"
+      },
+      "SwitchInputMetadataGet": {
+        "description": "Metadata describing this resource",
+        "type": "object",
+        "properties": {
+          "control_id": {
+            "minimum": 0,
+            "maximum": 8,
+            "description": "number of control within switch. Meaning in combination with type - dots   Number of dots - number Number printed on device - other  a logical order of controls in switch",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "control_id"
+        ]
+      },
+      "TemperatureGet": {
+        "description": "service measuring ambient temperature",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServiceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "temperature"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "temperature": {
+                "$ref": "#/components/schemas/TemperatureSensorFeatureGet"
+              }
+            },
+            "required": [
+              "temperature"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "TemperaturePut": {
+        "description": "service measuring ambient temperature",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SensingServicePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "temperature"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "TemperatureSensorFeatureGet": {
+        "type": "object",
+        "properties": {
+          "temperature": {
+            "type": "number"
+          },
+          "temperature_valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "temperature",
+          "temperature_valid"
+        ]
+      },
+      "TimeZoneFeature": {
+        "type": "object",
+        "properties": {
+          "time_zone": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "time_zone"
+        ]
+      },
+      "Version": {
+        "pattern": "^[1-9][0-9]{0,2}([.][0-9]{1,3}){1,2}",
+        "type": "string"
+      },
+      "ZgpConnectivityGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConnectivityServiceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zgp_connectivity"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              },
+              "source_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_id"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ZgpConnectivityPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConnectivityServicePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zgp_connectivity"
+                ],
+                "$ref": "#/components/schemas/ResourceTypes"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ZigbeeConnectivityGet": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConnectivityServiceGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zigbee_connectivity"
+                ],
+                "type": "string"
+              },
+              "mac_address": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "mac_address"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ZigbeeConnectivityPut": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ConnectivityServicePut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zigbee_connectivity"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "ZoneGet": {
+        "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupGet"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zone"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataGet"
+              },
+              "children": {
+                "description": "Child services to group by the Zone\nFollowing children are allowed: - light ",
+                "$ref": "#/components/schemas/ServiceListGet"
+              }
+            },
+            "required": [
+              "metadata",
+              "children"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ZonePost": {
+        "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPost"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zone"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataPost"
+              }
+            },
+            "required": [
+              "metadata"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ZonePut": {
+        "description": "A group grouping only services. A service can be in an arbitrary amount of groups.\n",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GroupPut"
+          },
+          {
+            "properties": {
+              "type": {
+                "enum": [
+                  "zone"
+                ],
+                "type": "string"
+              },
+              "metadata": {
+                "$ref": "#/components/schemas/RoomMetadataPut"
+              }
+            },
+            "required": [
+              "metadata"
+            ],
+            "type": "object"
+          }
+        ]
+      }
+    }
+  }
+}
