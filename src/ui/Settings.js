@@ -10,7 +10,7 @@ import {
     ipcMain as IPC,
     shell as Shell
 } from 'electron';
-import Logger from '../../utils/Logger.js';
+import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';

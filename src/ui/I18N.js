@@ -1,6 +1,6 @@
 import FileSystem from 'node:fs/promises';
 import Path from 'node:path';
-import Logger from '../../utils/Logger.js';
+import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
 
 export default (new class I18N {

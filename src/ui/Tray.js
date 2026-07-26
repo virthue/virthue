@@ -14,7 +14,7 @@ import {
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
-import Logger from '../../utils/Logger.js';
+import Logger from '../utils/Logger.js';
 import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
