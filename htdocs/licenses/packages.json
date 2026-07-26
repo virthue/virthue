@@ -1,7 +1,7 @@
 [
     {
         "id": "@fastify/cors",
-        "version": "11.2.0",
+        "version": "11.3.0",
         "license": "MIT",
         "website": "https://github.com/fastify/fastify-cors#readme"
     },
@@ -13,27 +13,51 @@
     },
     {
         "id": "@fastify/static",
-        "version": "9.0.0",
+        "version": "10.1.2",
         "license": "MIT",
         "website": "https://github.com/fastify/fastify-static"
     },
     {
+        "id": "@peculiar/x509",
+        "version": "2.0.0",
+        "license": "MIT",
+        "website": "https://github.com/PeculiarVentures/x509#readme"
+    },
+    {
+        "id": "chalk",
+        "version": "6.0.0",
+        "license": "MIT",
+        "website": "https://github.com/chalk/chalk#readme"
+    },
+    {
+        "id": "chalk-template",
+        "version": "1.1.2",
+        "license": "MIT",
+        "website": "https://github.com/chalk/chalk-template#readme"
+    },
+    {
         "id": "fastify",
-        "version": "5.6.2",
+        "version": "5.10.0",
         "license": "MIT",
         "website": "https://fastify.dev/"
     },
     {
         "id": "fastify-sse-v2",
-        "version": "4.2.1",
+        "version": "4.2.2",
         "license": "MIT",
         "website": "https://github.com/nodefactoryio/fastify-sse-v2#readme"
     },
     {
-        "id": "multicast-dns",
-        "version": "7.2.5",
-        "license": "MIT",
-        "website": "https://github.com/mafintosh/multicast-dns"
+        "id": "mdns-js",
+        "version": "1.0.3",
+        "license": "Apache-2.0",
+        "website": "https://github.com/mdns-js/node-mdns-js"
+    },
+    {
+        "id": "node-forge",
+        "version": "1.4.0",
+        "license": "(BSD-3-Clause OR GPL-2.0)",
+        "website": "https://github.com/digitalbazaar/forge"
     },
     {
         "id": "pino-pretty",
@@ -48,14 +72,38 @@
         "website": "http://github.com/soldair/node-qrcode"
     },
     {
+        "id": "reflect-metadata",
+        "version": "0.2.2",
+        "license": "Apache-2.0",
+        "website": "http://rbuckton.github.io/reflect-metadata"
+    },
+    {
+        "id": "selfsigned",
+        "version": "5.5.0",
+        "license": "MIT",
+        "website": "https://github.com/jfromaniello/selfsigned#readme"
+    },
+    {
+        "id": "stacktrace-js",
+        "version": "2.0.2",
+        "license": "MIT",
+        "website": "https://www.stacktracejs.com"
+    },
+    {
+        "id": "svg2img",
+        "version": "1.0.0-beta.2",
+        "license": "MIT",
+        "website": "https://github.com/fuzhenn/node-svg2img#readme"
+    },
+    {
         "id": "electron",
-        "version": "40.0.0",
+        "version": "40.10.6",
         "license": "MIT",
         "website": "https://github.com/electron/electron#readme"
     },
     {
         "id": "svg-to-ico",
-        "version": "1.0.17",
+        "version": "2.0.0",
         "license": "MIT",
         "website": "https://github.com/jtrauntvein/svg-to-ico.git/svg-to-ico#readme"
     }
