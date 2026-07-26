@@ -16,7 +16,35 @@ import Process from 'node:process';
 import Support from '../types/Support.js';
 import Traffic from './Traffic.js';
 import ElectronUtils from '../ElectronUtils.js';
-import I18N from "./I18N.js";
+import I18N from './I18N.js';
+
+// official Banned Bridge-ID's (think, these are internal dev devices)
+const BANNED_RANGES = [{
+    low:    0x001788FFFE1E0000n,
+    high:   0x001788FFFE1E00FFn
+}, {
+    low:    0x001788FFFE200000n,
+    high:   0x001788FFFE2001C5n
+}];
+
+const isBlacklistedMAC = (mac) => {
+    const cleanMac = mac.replace(/[:\-]/g, '').toLowerCase();
+
+    if(cleanMac.length !== 12) {
+        return false;
+    }
+
+    const eui64     = `${cleanMac.slice(0, 6)}fffe${cleanMac.slice(6)}`;
+    const macValue  = BigInt('0x' + eui64);
+
+    for(const range of BANNED_RANGES) {
+        if(macValue >= range.low && macValue <= range.high) {
+            return true;
+        }
+    }
+
+    return false;
+};
 
 export default new class Settings {
     Window = null;
@@ -111,26 +139,34 @@ export default new class Settings {
                 case 'SETTINGS_SAVE':
                     let restart = false;
 
-                    switch (packet.data?.target) {
+                    switch(packet.data?.target) {
                         case 'bridge':
-                            if (packet.data?.model) {
+                            if(packet.data?.model) {
                                 this.Bridge.getConfiguration().setModel(packet.data?.model);
                             }
 
-                            if (packet.data?.name) {
+                            if(packet.data?.name) {
                                 this.Bridge.getConfiguration().setName(packet.data?.name);
                             }
 
-                            if (packet.data?.mac) {
-                                this.Bridge.getConfiguration().setMACAddress(packet.data?.mac);
+                            if(packet.data?.mac) {
+                                if(isBlacklistedMAC(packet.data?.mac)) {
+                                    console.warn('Attempted to set blacklisted MAC address:', packet.data?.mac);
+
+                                    this.send('ERROR', {
+                                        message: 'Blacklisted MAC address. This MAC range is prohibited for cloud access.'
+                                    });
+                                } else {
+                                    this.Bridge.getConfiguration().setMACAddress(packet.data?.mac);
+                                }
                             }
 
-                            if (packet.data?.port && this.Bridge.getConfiguration().getPort() !== Number(packet.data.port)) {
+                            if(packet.data?.port && this.Bridge.getConfiguration().getPort() !== Number(packet.data.port)) {
                                 this.Bridge.getConfiguration().setPort(packet.data.port);
                                 restart = true;
                             }
 
-                            if (packet.data?.tls && this.Bridge.getConfiguration().getSecuredPort() !== Number(packet.data.tls)) {
+                            if(packet.data?.tls && this.Bridge.getConfiguration().getSecuredPort() !== Number(packet.data.tls)) {
                                 this.Bridge.getConfiguration().setSecuredPort(packet.data.tls);
                                 restart = true;
                             }
