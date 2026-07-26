@@ -25,6 +25,15 @@ export default class Configuration extends Events.EventEmitter {
         Number: null
     }
 
+    Portal = {
+        Key: null,
+        CTN: 'HueBridge2K15'
+    };
+
+    TLS = {
+        RejectUnauthorized: true
+    };
+
     SupportFlags = [];
 
     constructor() {
@@ -45,6 +54,11 @@ export default class Configuration extends Events.EventEmitter {
 
             this.Version.API                = Config.bridge.version.api;
             this.Version.Number             = Config.bridge.version.number;
+
+            this.Portal.Key                 = Config.portal?.key ?? null;
+            this.Portal.CTN                 = Config.portal?.ctn ?? 'HueBridge2K15';
+
+            this.TLS.RejectUnauthorized     = Config.tls?.rejectUnauthorized ?? true;
 
             this.SupportFlags               = Config.bridge.supports ?? [];
         } catch(error) {
@@ -69,6 +83,13 @@ export default class Configuration extends Events.EventEmitter {
                     address:    this.Network.Address,
                     port:       Number(this.Network.Port),
                     tls:        Number(this.Network.TLS)
+                },
+                portal: {
+                    key: this.Portal.Key,
+                    ctn: this.Portal.CTN
+                },
+                tls: {
+                    rejectUnauthorized: this.TLS.RejectUnauthorized
                 }
             }, null, 4));
         } catch (error) {
