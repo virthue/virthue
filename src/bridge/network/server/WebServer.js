@@ -15,6 +15,7 @@ import CORS from '@fastify/cors';
 import Static from '@fastify/static';
 import Utils from '../../../Utils.js';
 import Logger from "../../../utils/Logger.js";
+import { HueError } from '../../objects/index.js';
 
 export default class WebServer {
     Hostname    = null;
@@ -204,11 +205,7 @@ export default class WebServer {
                     Logger.debug('WebServer', `Unknown Route: ${request.method} ${request.url}`);
 
                     return [{
-                        error: {
-                            type:           4,
-                            address:        request.url,
-                            description:    `method, GET, not available for resource, ${request.url}`
-                        }
+                        error: [new HueError(4, request.url, `method, GET, not available for resource, ${request.url}`)]
                     }];
                 }
             });

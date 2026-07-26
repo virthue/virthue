@@ -31,6 +31,7 @@
     "run": "node .",
     "build:licenses": "node ./bin/build/licenses.js",
     "build:icons": "node ./bin/build/icons.js",
+    "build:swagger": "node ./bin/build/swagger.js",
     "test:csr": "node ./tests/cert/csr.js",
     "test:provisioning": "node ./tests/cert/provisioning.js"
   },
