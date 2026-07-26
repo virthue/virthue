@@ -155,7 +155,7 @@ export default class WebServer {
             reply.header('x-xss-protection', '1; mode=block');
             reply.header('x-frame-options', 'SAMEORIGIN');
             reply.header('x-content-type-options', 'nosniff');
-            reply.header('content-security-policy', "default-src 'self'");
+            reply.header('content-security-policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'");
             reply.header('referrer-policy', 'no-referrer');
             reply.header('cache-control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
             reply.header('pragma', 'no-cache');
