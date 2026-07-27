@@ -14,10 +14,24 @@ const swaggerSpec = {
         description: "Virtual Hue Bridge REST API Documentation",
         version: "1.0.0"
     },
-    servers: [
-        { url: "http://localhost:80", description: "HTTP" },
-        { url: "https://localhost:443", description: "HTTPS" }
-    ],
+    servers: [{
+        url: "http://{BRIDGE_ADDRESS}:80",
+        variables: {
+            BRIDGE_ADDRESS: {
+                default: "127.0.0.1",
+                description: "IP address or hostname of your bridge, port is optional"
+            }
+        }
+    }, {
+        url: "https://{BRIDGE_ADDRESS}:443",
+        description: "(Secured TLS connection)",
+        variables: {
+            BRIDGE_ADDRESS: {
+                default: "127.0.0.1",
+                description: "IP address or hostname of your bridge, port is optional"
+            }
+        }
+    }],
     paths: {},
     components: { schemas: {} }
 };

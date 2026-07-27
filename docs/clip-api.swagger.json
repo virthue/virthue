@@ -7,12 +7,23 @@
   },
   "servers": [
     {
-      "url": "http://localhost:80",
-      "description": "HTTP"
+      "url": "http://{BRIDGE_ADDRESS}:80",
+      "variables": {
+        "BRIDGE_ADDRESS": {
+          "default": "127.0.0.1",
+          "description": "IP address or hostname of your bridge, port is optional"
+        }
+      }
     },
     {
-      "url": "https://localhost:443",
-      "description": "HTTPS"
+      "url": "https://{BRIDGE_ADDRESS}:443",
+      "description": "(Secured TLS connection)",
+      "variables": {
+        "BRIDGE_ADDRESS": {
+          "default": "127.0.0.1",
+          "description": "IP address or hostname of your bridge, port is optional"
+        }
+      }
     }
   ],
   "paths": {},
