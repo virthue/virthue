@@ -12,7 +12,7 @@ import Resources from './resource/Resources.js';
 import LinkButton from './LinkButton.js';
 import Authentication from './Authentication.js';
 import Configuration from './Configuration.js';
-import Support from '../types/Support.js';
+import Support from './Support.js';
 import Plugins from './Plugins.js';
 import Utils from '../Utils.js';
 import Logger from '../utils/Logger.js';

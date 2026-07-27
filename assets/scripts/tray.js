@@ -11,7 +11,7 @@ export default class Tray {
         };
 
         window.IPC.on('bridge', (packet) => {
-            switch(packet.action) {
+            switch(packet?.action) {
                 case 'SHOW':
                     this.send('INIT');
                 break;

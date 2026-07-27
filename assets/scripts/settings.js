@@ -1,4 +1,4 @@
-import Support from '../../src/types/Support.js';
+import Support from '../../src/bridge/Support.js';
 
 const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
 

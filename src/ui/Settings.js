@@ -14,7 +14,7 @@ import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
-import Support from '../types/Support.js';
+import Support from '../bridge/Support.js';
 import Traffic from './Traffic.js';
 import ElectronUtils from '../ElectronUtils.js';
 import I18N from './I18N.js';
@@ -175,12 +175,11 @@ export default new class Settings {
                             this.Bridge.getConfiguration().store();
                         break;
                         case 'flags':
-                            let old_secured = this.Bridge.getConfiguration().supports(Support.SECURED);
+                            let old_secured     = this.Bridge.getConfiguration().supports(Support.SECURED);
                             let old_description = this.Bridge.getConfiguration().supports(Support.DESCRIPTION);
 
-                            for(const support in Support) {
-                                let value = Support[support];
-                                let active = (typeof (packet.data[value]) !== 'undefined');
+                            for(const [support, value] of Object.entries(Support)) {
+                                let active  = (typeof(packet.data[value]) !== 'undefined');
 
                                 if(active) {
                                     this.Bridge.getConfiguration().addSupportFlag(value);

@@ -26,6 +26,7 @@ export default class Authentication extends EventEmitter {
 
     constructor(bridge) {
         super();
+
         this.Bridge         = bridge;
         this.usersFilePath  = Path.join(process.cwd(), '.data', 'Users.json');
     }
@@ -35,8 +36,11 @@ export default class Authentication extends EventEmitter {
             const data = await FileSystem.readFile(this.usersFilePath, 'utf8');
 
             if(!data || data.trim() === '') {
-                Logger.info('Auth', 'Users.json is empty, creating default root user');
-                this.#createUser('root').setToken('root');
+                if(this.Bridge.getConfiguration().supports('developer')) {
+                    Logger.info('Auth', 'Users.json is empty, creating default root user');
+                    this.#createUser('root').setToken('root');
+                }
+
                 await this.#saveUsersInternal();
                 this.#startFileWatcher();
                 this.emit('loaded');
@@ -46,9 +50,13 @@ export default class Authentication extends EventEmitter {
             const usersData = JSON.parse(data);
 
             if(!usersData || typeof usersData !== 'object' || Object.keys(usersData).length === 0) {
-                Logger.info('Auth', 'Users.json is invalid or empty, creating default root user');
                 this.Users = [];
-                this.#createUser('root').setToken('root');
+
+                if(this.Bridge.getConfiguration().supports('developer')) {
+                    Logger.info('Auth', 'Users.json is invalid or empty, creating default root user');
+                    this.#createUser('root').setToken('root');
+                }
+
                 await this.#saveUsersInternal();
             } else {
                 Object.entries(usersData).forEach(([token, userData]) => {
@@ -65,8 +73,11 @@ export default class Authentication extends EventEmitter {
             }
         } catch (error) {
             if(error.code === 'ENOENT') {
-                Logger.info('Auth', 'No Users.json found, creating default root user');
-                this.#createUser('root').setToken('root');
+                if(this.Bridge.getConfiguration().supports('developer')) {
+                    Logger.info('Auth', 'No Users.json found, creating default root user');
+                    this.#createUser('root').setToken('root');
+                }
+
                 await this.#saveUsersInternal();
                 this.#startFileWatcher();
                 this.emit('loaded');
@@ -74,10 +85,23 @@ export default class Authentication extends EventEmitter {
             }
 
             Logger.error('Auth', 'Failed to load users:', error.message);
-            Logger.info('Auth', 'Creating default root user as fallback');
             this.Users = [];
-            this.#createUser('root').setToken('root');
+
+            if(this.Bridge.getConfiguration().supports('developer')) {
+                Logger.info('Auth', 'Creating default root user as fallback');
+                this.#createUser('root').setToken('root');
+            }
+
             await this.#saveUsersInternal();
+        }
+
+        if(!this.Bridge.getConfiguration().supports('developer')) {
+            const rootUser = this.Users.find(user => user.getName() === 'root');
+            if(rootUser) {
+                Logger.info('Auth', 'Developer mode disabled, removing root user');
+                this.#removeUser('root');
+                await this.#saveUsersInternal();
+            }
         }
 
         this.#startFileWatcher();
@@ -85,7 +109,10 @@ export default class Authentication extends EventEmitter {
     }
 
     async saveUsers() {
-        clearTimeout(this.saveDebounceTimer);
+        if(this.saveDebounceTimer) {
+            clearTimeout(this.saveDebounceTimer);
+        }
+
         this.saveDebounceTimer = setTimeout(() => {
             this.#saveUsersInternal();
         }, 300);
@@ -169,7 +196,10 @@ export default class Authentication extends EventEmitter {
         if(this.fileWatcher) {
             this.fileWatcher.close();
         }
-        clearTimeout(this.saveDebounceTimer);
+
+        if(this.saveDebounceTimer) {
+            clearTimeout(this.saveDebounceTimer);
+        }
     }
 
     /**
@@ -178,11 +208,11 @@ export default class Authentication extends EventEmitter {
      **/
     async onRequest(request, response) {
         if(!request.body?.devicetype) {
-            return response.error(ErrorCode.MISSING_MANDATORY_PARAMETER, '/', 'invalid/missing parameters in body');
+            return response.error(ErrorCode.MISSING_MANDATORY_PARAMETER, request.getPath(), 'invalid/missing parameters in body');
         }
 
         if(!this.Bridge.getLinkButton().getState()) {
-            return response.error(ErrorCode.LINK_BUTTON_NOT_PRESSED, '/', 'link button not pressed');
+            return response.error(ErrorCode.LINK_BUTTON_NOT_PRESSED, request.getPath(), 'link button not pressed');
         }
 
         this.Bridge.getLinkButton().deactivate();
@@ -257,6 +287,16 @@ export default class Authentication extends EventEmitter {
         }
 
         return user;
+    }
+
+    #removeUser(name, autosave = true) {
+        this.Users = this.Users.filter(user => user.getName() !== name);
+
+        if(autoSave) {
+            this.saveUsers().catch(error => {
+                Logger.error('Auth', 'Failed to auto-save user:', error.message);
+            });
+        }
     }
 
     toJSON() {
