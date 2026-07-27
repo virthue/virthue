@@ -29,6 +29,7 @@
   "scripts": {
     "start": "electron .",
     "run": "node .",
+    "build:all": "npm run build:licenses && npm run build:icons && npm run build:swagger",
     "build:licenses": "node ./bin/build/licenses.js",
     "build:icons": "node ./bin/build/icons.js",
     "build:swagger": "node ./bin/build/swagger.js",
