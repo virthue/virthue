@@ -4,7 +4,9 @@
  *
  * @author      Adrian Preuß
  * @version     1.0.0
- *
+ */
+
+/**
  * Error Code Constants - Maps error identifiers to numeric codes
  *
  * @swagger
