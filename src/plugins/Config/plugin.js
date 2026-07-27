@@ -5,6 +5,7 @@
  * @version     1.0.0
  */
 import Plugin from '../../bridge/Plugin.js';
+import { HueError, ErrorCode } from '../../bridge/objects/index.js';
 
 export default class Config extends Plugin {
     Name        = 'Config';
@@ -32,13 +33,7 @@ export default class Config extends Plugin {
 
     /* POST /api/config (requires authentication) */
     updatePublic(reply) {
-        return reply.code(401).send([{
-            error: {
-                type: 1,
-                address: '/',
-                description: 'unauthorized user'
-            }
-        }]);
+        return reply.code(401).error(ErrorCode.UNAUTHORIZED_USER, '/', 'unauthorized user');
     }
 
     /* GET /api/:token/config (authenticated) */

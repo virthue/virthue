@@ -11,6 +11,7 @@ import Crypto from 'node:crypto';
 import { EventEmitter } from 'node:events';
 import Logger from '../utils/Logger.js';
 import User from './User.js';
+import { ErrorCode } from './objects/index.js';
 
 /*
 * @Docs https://developers.meethue.com/develop/hue-api/7-configuration-api/
@@ -106,6 +107,7 @@ export default class Authentication extends EventEmitter {
             this.emit('saved');
         } catch (error) {
             Logger.error('Auth', 'Failed to save users:', error.message);
+
             try {
                 await FileSystem.unlink(tempFilePath);
             } catch (e) {
@@ -176,23 +178,11 @@ export default class Authentication extends EventEmitter {
      **/
     async onRequest(request, response) {
         if(!request.body?.devicetype) {
-            return response.send([{
-                error: {
-                    type:           5,
-                    address:        '/',
-                    description:    'invalid/missing parameters in body'
-                }
-            }]);
+            return response.error(ErrorCode.MISSING_MANDATORY_PARAMETER, '/', 'invalid/missing parameters in body');
         }
 
         if(!this.Bridge.getLinkButton().getState()) {
-            return response.send([{
-                error: {
-                    type:           101,
-                    address:        '',
-                    description:    'link button not pressed'
-                }
-            }]);
+            return response.error(ErrorCode.LINK_BUTTON_NOT_PRESSED, '/', 'link button not pressed');
         }
 
         this.Bridge.getLinkButton().deactivate();
@@ -223,13 +213,7 @@ export default class Authentication extends EventEmitter {
         request.authenticated = false;
 
         if(!this.Users.some(user => user.getToken() === token)) {
-            return reply.send([{
-                error: {
-                    type:           1,
-                    address:        request.url.replace(`/api/${token}`, ''),
-                    description:    'unauthorized user'
-                }
-            }]);
+            return reply.error(ErrorCode.UNAUTHORIZED_USER, request.url.replace(`/api/${token}`, ''), 'unauthorized user');
         }
 
         request.authenticated = true;

@@ -25,10 +25,33 @@ const swaggerSpec = {
 async function extractSwaggerFromFiles() {
     const srcDir = Path.join(projectRoot, "src");
     const files = await findFiles(srcDir, ".js");
+    const allDocs = [];
+    const enumValues = {}; // Speichert Enum-Werte für @ref
 
     for (const file of files) {
         const content = await FileSystem.readFile(file, "utf-8");
-        processFile(content);
+        processFile(content, allDocs);
+    }
+
+    // Zweiter Durchlauf: @enum Schemas zuerst verarbeiten und Names speichern
+    const enumDocs = allDocs.filter(doc => doc.enumType);
+    for (const doc of enumDocs) {
+        if (doc.values.length > 0) {
+            enumValues[doc.schema] = doc.values.map(v => v.name);
+        }
+        processSchema(doc);
+    }
+
+    // Dann alle anderen Schemas verarbeiten
+    const otherDocs = allDocs.filter(doc => !doc.enumType && doc.schema);
+    for (const doc of otherDocs) {
+        processSchema(doc, enumValues);
+    }
+
+    // Schließlich Endpoints verarbeiten
+    const endpoints = allDocs.filter(doc => doc.swagger);
+    for (const doc of endpoints) {
+        processSwaggerDefinition(doc);
     }
 }
 
@@ -47,29 +70,39 @@ async function findFiles(dir, extension) {
     return files;
 }
 
-function processFile(content) {
+function processFile(content, allDocs) {
     const docRegex = /\/\*\*[\s\S]*?\*\//g;
     const blocks = [];
     let match;
 
     while ((match = docRegex.exec(content)) !== null) {
-        blocks.push(match[0]);
+        blocks.push({ start: match.index, end: match.index + match[0].length, content: match[0] });
     }
 
     for (let i = 0; i < blocks.length; i++) {
-        const doc = parseDocBlock(blocks[i]);
+        const doc = parseDocBlock(blocks[i].content);
 
         if (doc.hasSwagger && doc.schema) {
-            // Nächsten Block mit @param zusammenmergen
-            if (i + 1 < blocks.length) {
-                const nextDoc = parseDocBlock(blocks[i + 1]);
+            // Nach @value Tags in nachfolgenden Blöcken suchen
+            if (doc.enumType) {
+                for (let j = i + 1; j < blocks.length; j++) {
+                    const nextDoc = parseDocBlock(blocks[j].content);
+                    if (nextDoc.values.length > 0) {
+                        doc.values.push(...nextDoc.values);
+                    } else if (!nextDoc.hasSwagger) {
+                        // Wenn wir auf einen neuen @swagger Block treffen, stoppen
+                        break;
+                    }
+                }
+            } else if (i + 1 < blocks.length) {
+                const nextDoc = parseDocBlock(blocks[i + 1].content);
                 if (nextDoc.params.length > 0) {
                     doc.params = nextDoc.params;
                 }
             }
-            processSchema(doc);
+            allDocs.push(doc);
         } else if (doc.hasSwagger && doc.swagger) {
-            processSwaggerDefinition(doc);
+            allDocs.push(doc);
         }
     }
 }
@@ -78,12 +111,15 @@ function parseDocBlock(docBlock) {
     const doc = {
         summary: "",
         params: [],
+        values: [],
         returns: null,
         deprecated: false,
         swagger: null,
         schema: null,
         tags: [],
-        hasSwagger: false
+        hasSwagger: false,
+        enumType: false,
+        references: {}
     };
 
     const lines = docBlock.split("\n");
@@ -125,6 +161,18 @@ function parseDocBlock(docBlock) {
             continue;
         }
 
+        if (text.startsWith("@value")) {
+            const valueMatch = text.match(/@value\s+(-?\d+)\s+(\w+)\s+(.*)/);
+            if (valueMatch) {
+                doc.values.push({
+                    value: parseInt(valueMatch[1]),
+                    name: valueMatch[2].trim(),
+                    description: valueMatch[3].trim()
+                });
+            }
+            continue;
+        }
+
         if (text.startsWith("@returns") || text.startsWith("@return")) {
             const retMatch = text.match(/@returns?\s+\{([^}]+)\}\s*(.*)/);
             if (retMatch) {
@@ -143,6 +191,20 @@ function parseDocBlock(docBlock) {
             continue;
         }
 
+        if (text.startsWith("@enum")) {
+            doc.enumType = true;
+            continue;
+        }
+
+        if (text.startsWith("@ref")) {
+            const refMatch = text.match(/@ref\s+(\w+)\s+(\w+)/);
+            if (refMatch) {
+                doc.references[refMatch[1]] = refMatch[2];
+            }
+            continue;
+        }
+
+
         // Nur vor Tags als Summary erfassen
         if (captureText && !doc.summary) {
             doc.summary = text;
@@ -152,22 +214,54 @@ function parseDocBlock(docBlock) {
     return doc;
 }
 
-function processSchema(doc) {
+function processSchema(doc, enumValues = {}) {
     const schema = {
         type: "object",
         description: doc.summary || "Schema definition"
     };
 
-    if (doc.params.length > 0) {
+    if (doc.enumType && doc.values.length > 0) {
+        schema.type = "object";
         schema.properties = {};
-        schema.required = [];
-        
-        for (const param of doc.params) {
-            schema.properties[param.name] = {
-                type: mapType(param.type),
-                description: param.description
+
+        for (const val of doc.values) {
+            schema.properties[val.name] = {
+                type: "integer",
+                example: val.value,
+                description: val.description
             };
-            schema.required.push(param.name);
+        }
+    } else if (doc.params.length > 0) {
+        schema.properties = {};
+        if (!doc.enumType) {
+            schema.required = [];
+        }
+
+        for (const param of doc.params) {
+            const propDef = {};
+
+            if (doc.references[param.name]) {
+                const refSchema = doc.references[param.name];
+                const refEnum = enumValues[refSchema];
+
+                if (refEnum && refEnum.length > 0) {
+                    propDef.type = refSchema;
+                    propDef.enum = refEnum;
+                    propDef.description = param.description;
+                } else {
+                    propDef.type = mapType(param.type);
+                    propDef.description = param.description;
+                }
+            } else {
+                propDef.type = mapType(param.type);
+                propDef.description = param.description;
+            }
+
+            schema.properties[param.name] = propDef;
+
+            if (!doc.enumType) {
+                schema.required.push(param.name);
+            }
         }
     }
 

@@ -6,4 +6,4 @@
  * @version     1.0.0
  */
 
-export { default as HueError } from './Error.js';
+export { default as HueError, ErrorCode } from './Error.js';

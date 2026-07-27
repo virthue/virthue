@@ -10,9 +10,9 @@ import FileSystem from 'node:fs';
 import OperatingSystem from 'node:os';
 
 export const System = Object.freeze({
-    MAC: 'mac',
-    WINDOWS: 'windows',
-    LINUX: 'linux'
+    MAC:        'mac',
+    WINDOWS:    'windows',
+    LINUX:      'linux'
 });
 
 export default (new class Utils {

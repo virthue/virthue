@@ -9,6 +9,7 @@ import Path from 'node:path';
 import URL from 'node:url';
 import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
+import { ErrorCode } from './objects/index.js';
 
 export default class Plugins {
     Bridge           = null;
@@ -138,12 +139,6 @@ export default class Plugins {
     }
 
     notFound(request, reply) {
-        return reply.send([{
-            error: {
-                type:           4,
-                address:        request.url,
-                description:    `method, ${request.method}, not available for resource, ${request.url}`
-            }
-        }]);
+        return reply.error(ErrorCode.METHOD_NOT_SUPPORTED, request.url, `method, ${request.method}, not available for resource, ${request.url}`);
     }
 }

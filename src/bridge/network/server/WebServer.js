@@ -15,7 +15,7 @@ import CORS from '@fastify/cors';
 import Static from '@fastify/static';
 import Utils from '../../../Utils.js';
 import Logger from "../../../utils/Logger.js";
-import { HueError } from '../../objects/index.js';
+import { HueError, ErrorCode } from '../../objects/index.js';
 
 export default class WebServer {
     Hostname    = null;
@@ -48,6 +48,14 @@ export default class WebServer {
             Logger.error('Fehler beim Laden der Zertifikate:', error);
             return null;
         }
+    }
+
+    #decorateReply() {
+        this.Fastify.decorateReply('error', function(errorCode, address, description) {
+            return this.send([{
+                error: [new HueError(errorCode, address, description)]
+            }]);
+        });
     }
 
     async init() {
@@ -123,6 +131,8 @@ export default class WebServer {
         if(this.IsSecured && !certificates) {
             Logger.warn('WebServer', 'HTTPS configured but certificates not found');
         }
+
+        this.#decorateReply();
 
         return this;
     }
@@ -204,9 +214,7 @@ export default class WebServer {
                 handler: async (request, reply) => {
                     Logger.debug('WebServer', `Unknown Route: ${request.method} ${request.url}`);
 
-                    return [{
-                        error: [new HueError(4, request.url, `method, GET, not available for resource, ${request.url}`)]
-                    }];
+                    return reply.error(ErrorCode.METHOD_NOT_SUPPORTED, request.url, `method, ${request.method}, not available for resource, ${request.url}`);
                 }
             });
         }
