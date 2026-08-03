@@ -4,152 +4,44 @@
  * @author      Adrian Preuß
  * @version     1.0.0
  */
-import Interfaces, { Family }  from '../Interfaces.js';
-import OperatingSystem from 'node:os';
-import MulticastDNS from 'multicast-dns';
+import MDNS from 'mdns-js';
+import Logger from '../../../utils/Logger.js';
 
 export default class Discovery {
-    Bridge                           = null;
-    Multicast   = MulticastDNS();
-    Services                = new Map();
-    Service                          = null;
+    Bridge       = null;
+    Advertisement = null;
 
     constructor(bridge) {
-        this.Bridge     = bridge;
+        this.Bridge = bridge;
 
-        this.Multicast.on('query', (query) => {
-            query.questions.forEach((question) => {
-                this.Services.forEach((service) => {
-                    if(this.#shouldRespond(question, service)) {
-                        this.Multicast.respond(this.#createResponse(service));
-                    }
-                });
+        Logger.info('Discovery', 'Initialized');
+
+        try {
+            const serviceName                = this.getServiceName();
+            const servicePort                       = this.getServicePort();
+            const serviceTxt   = this.getServiceData();
+
+            Logger.info('Discovery', `Service Name: ${serviceName}`);
+            Logger.info('Discovery', `Service Port: ${servicePort}`);
+            Logger.info('Discovery', `Service TXT: ${JSON.stringify(serviceTxt)}`);
+
+            this.Advertisement = MDNS.createAdvertisement(MDNS.tcp('_hue'), servicePort, {
+                name:   serviceName,
+                txt:    serviceTxt
             });
-        });
 
-        this.Service = this.publish({
-            name:   this.getServiceName(),
-            type:   '_hue',
-            port:   this.getServicePort(),
-            txt:    this.getServiceData()
-        });
-    }
-
-    #shouldRespond(question, service) {
-        const serviceFQDN = `${service.name}.${service.type}._tcp.local`;
-
-        return (question.name === serviceFQDN || question.name === `${service.type}._tcp.local` || question.type === 'PTR');
-    }
-
-    publish(options) {
-        const { name, type, port, txt = {} } = options;
-        const service                       = {
-            name,
-            type,
-            port,
-            txt,
-            fqdn: `${name}.${type}._tcp.local`,
-            host: this.#getHostname()
-        };
-
-        this.Services.set(service.fqdn, service);
-
-        for(let i = 0; i < 3; i++) {
-            setTimeout(() => {
-                this.Multicast.respond(this.#createResponse(service));
-            }, i * 1000);
+            Logger.info('Discovery', 'Advertisement created, calling start()');
+            this.Advertisement.start();
+            Logger.info('Discovery', `Publishing service: ${serviceName} on port ${servicePort}`);
+        } catch (error) {
+            Logger.error('Discovery', 'Failed to create advertisement:', error.message);
         }
-
-        return service;
-    }
-
-    unpublish(service) {
-        if(typeof(service) === 'string') {
-            const found = Array.from(this.Services.values()) .find(s => s.name === service);
-
-            if(found) {
-                service = found;
-            }
-        }
-
-        if(service && service.fqdn) {
-            this.Multicast.respond(this.#createResponse(service, 0));
-            this.Services.delete(service.fqdn);
-        }
-    }
-
-    #createResponse(service, ttl = 120) {
-        const { name, type, port, txt, fqdn, host }    = service;
-        const typeFQDN                          = `${type}._tcp.local`;
-
-        return {
-            answers: [{
-                type: 'PTR',
-                name: typeFQDN,
-                data: fqdn,
-                ttl
-            }, {
-                type: 'SRV',
-                name: fqdn,
-                data: {
-                    port,
-                    target: host,
-                    priority: 0,
-                    weight: 0
-                },
-                ttl
-            }, {
-                type: 'TXT',
-                name: fqdn,
-                data: this.#encodeTXT(txt),
-                ttl
-            }],
-            additionals: this.#createAddressRecords(host, ttl)
-        };
-    }
-
-    #createAddressRecords(host, ttl) {
-        const records   = [];
-        const ipv4  = Interfaces.getAddress(Family.IPv4);
-        const ipv6  = Interfaces.getAddress(Family.IPv6);
-
-        if(ipv4) {
-            records.push({
-                type: 'A',
-                name: host,
-                data: ipv4,
-                ttl
-            });
-        }
-
-        if(ipv6) {
-            records.push({
-                type: 'AAAA',
-                name: host,
-                data: ipv6,
-                ttl
-            });
-        }
-
-        return records;
-    }
-
-    #encodeTXT(txt) {
-        return Object.entries(txt).map(([key, value]) => {
-            return Buffer.from(`${key}=${value}`);
-        });
-    }
-
-    #getHostname() {
-        return `${OperatingSystem.hostname()}.local`;
     }
 
     destroy() {
-        this.Services.forEach((service) => {
-            this.unpublish(service);
-        });
-
-        this.Multicast.destroy();
+        if(this.Advertisement) {
+            this.Advertisement.stop();
+        }
     }
 
     getServiceName() {
@@ -162,7 +54,7 @@ export default class Discovery {
         *   if (nsdServiceInfo.getServiceType().equals("_hue._tcp.") && (C1688a.m6022a(nsdServiceInfo.getServiceName(), "Philips Hue - ", false) || C1688a.m6022a(nsdServiceInfo.getServiceName(), "Hue Bridge - ", false))) {
         */
 
-        return `Hue Bridge - ${this.Bridge.getConfiguration().getId(true)}`;
+        return `Hue Bridge - ${this.Bridge.getId(true)}`;
     }
 
     getServicePort() {
@@ -172,7 +64,7 @@ export default class Discovery {
     getServiceData() {
         return {
             modelid:    this.Bridge.getConfiguration().getModel(),
-            bridgeid:   this.Bridge.getConfiguration().getId()
+            bridgeid:   this.Bridge.getId()
         };
     }
 }

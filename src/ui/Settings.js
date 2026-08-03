@@ -10,11 +10,42 @@ import {
     ipcMain as IPC,
     shell as Shell
 } from 'electron';
+import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
 import FileSystem from 'node:fs';
 import Process from 'node:process';
-import Support from '../types/Support.js';
+import Support from '../bridge/Support.js';
 import Traffic from './Traffic.js';
+import ElectronUtils from '../ElectronUtils.js';
+import I18N from './I18N.js';
+
+// official Banned Bridge-ID's (think, these are internal dev devices)
+const BANNED_RANGES = [{
+    low:    0x001788FFFE1E0000n,
+    high:   0x001788FFFE1E00FFn
+}, {
+    low:    0x001788FFFE200000n,
+    high:   0x001788FFFE2001C5n
+}];
+
+const isBlacklistedMAC = (mac) => {
+    const cleanMac = mac.replace(/[:\-]/g, '').toLowerCase();
+
+    if(cleanMac.length !== 12) {
+        return false;
+    }
+
+    const eui64     = `${cleanMac.slice(0, 6)}fffe${cleanMac.slice(6)}`;
+    const macValue  = BigInt('0x' + eui64);
+
+    for(const range of BANNED_RANGES) {
+        if(macValue >= range.low && macValue <= range.high) {
+            return true;
+        }
+    }
+
+    return false;
+};
 
 export default new class Settings {
     Window = null;
@@ -45,16 +76,37 @@ export default new class Settings {
             /* Do Nothing */
         }
 
+        IPC.handle('I18N:__', (event, string) => {
+            return I18N.__(string);
+        });
+
+        IPC.handle('I18N:__sp', (event, singular, plural, count) => {
+            return I18N.__sp(singular, plural, count);
+        });
+
+        IPC.handle('I18N:setLanguage', (event, lang) => {
+            I18N.Language = lang;
+            return true;
+        });
+
+        IPC.handle('I18N:getLanguage', () => {
+            return I18N.Language;
+        });
+
         IPC.on('settings', (event, packet) => {
             switch (packet.action) {
                 case 'INIT':
                     this.send('VIRTHUE', {
-                        version: packages?.version || 'N/A',
-                        electron: Process?.versions?.electron || 'N/A',
-                        node: Process?.versions?.node || 'N/A'
+                        version:    packages?.version || 'N/A',
+                        electron:   Process?.versions?.electron || 'N/A',
+                        node:       Process?.versions?.node || 'N/A'
                     });
 
-                    this.send('SETTINGS', this.Bridge.getConfiguration().toJSON());
+                    this.send('SETTINGS', {
+                        id: this.Bridge.getId(),
+                        ...(this.Bridge.getConfiguration().toJSON())
+                    });
+
                     this.send('ACCOUNTS', this.Bridge.getAuthentication().toJSON());
                 break;
                 case 'TRAFFIC_OPEN':
@@ -81,37 +133,41 @@ export default new class Settings {
                             Shell.openPath('https://github.com/virthue/virthue');
                         break;
                         default:
-                            console.warn('Unknown URL instruction:', packet.data);
+                            Logger.warn('Settings', 'Unknown URL instruction:', packet.data);
                         break;
                     }
                 break;
                 case 'SETTINGS_SAVE':
                     let restart = false;
 
-                    switch (packet.data?.target) {
+                    switch(packet.data?.target) {
                         case 'bridge':
-                            if (packet.data?.model) {
+                            if(packet.data?.model) {
                                 this.Bridge.getConfiguration().setModel(packet.data?.model);
                             }
 
-                            if (packet.data?.name) {
+                            if(packet.data?.name) {
                                 this.Bridge.getConfiguration().setName(packet.data?.name);
                             }
 
-                            if (packet.data?.id) {
-                                this.Bridge.getConfiguration().setId(packet.data?.id);
+                            if(packet.data?.mac) {
+                                if(isBlacklistedMAC(packet.data?.mac)) {
+                                    Logger.warn('Settings', 'Attempted to set blacklisted MAC address:', packet.data?.mac);
+
+                                    this.send('ERROR', {
+                                        message: 'Blacklisted MAC address. This MAC range is prohibited for cloud access.'
+                                    });
+                                } else {
+                                    this.Bridge.getConfiguration().setMACAddress(packet.data?.mac);
+                                }
                             }
 
-                            if (packet.data?.mac) {
-                                this.Bridge.getConfiguration().setMACAddress(packet.data?.mac);
-                            }
-
-                            if (packet.data?.port && this.Bridge.getConfiguration().getPort() !== Number(packet.data.port)) {
+                            if(packet.data?.port && this.Bridge.getConfiguration().getPort() !== Number(packet.data.port)) {
                                 this.Bridge.getConfiguration().setPort(packet.data.port);
                                 restart = true;
                             }
 
-                            if (packet.data?.tls && this.Bridge.getConfiguration().getSecuredPort() !== Number(packet.data.tls)) {
+                            if(packet.data?.tls && this.Bridge.getConfiguration().getSecuredPort() !== Number(packet.data.tls)) {
                                 this.Bridge.getConfiguration().setSecuredPort(packet.data.tls);
                                 restart = true;
                             }
@@ -119,12 +175,11 @@ export default new class Settings {
                             this.Bridge.getConfiguration().store();
                         break;
                         case 'flags':
-                            let old_secured = this.Bridge.getConfiguration().supports(Support.SECURED);
+                            let old_secured     = this.Bridge.getConfiguration().supports(Support.SECURED);
                             let old_description = this.Bridge.getConfiguration().supports(Support.DESCRIPTION);
 
-                            for(const support in Support) {
-                                let value = Support[support];
-                                let active = (typeof (packet.data[value]) !== 'undefined');
+                            for(const [support, value] of Object.entries(Support)) {
+                                let active  = (typeof(packet.data[value]) !== 'undefined');
 
                                 if(active) {
                                     this.Bridge.getConfiguration().addSupportFlag(value);
@@ -146,8 +201,7 @@ export default new class Settings {
                     }
 
                     if(restart) {
-                        // @ToDo: Restart Bridge
-                        console.log('Restarting Bridge...');
+                        Logger.info('Settings', 'Restarting Bridge...');
                     }
                 break;
             }
@@ -179,9 +233,9 @@ export default new class Settings {
         });
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Settings.html')}`);
-        this.Window.setMenu(null);
+        //this.Window.setMenu(null);
 
-        //this.Window.setIcon(Utils.getPath('assets', 'icons', 'logo.ico'));
+        this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 
         this.Window.on('closed', () => {
             this.Window = null;

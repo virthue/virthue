@@ -7,7 +7,9 @@
 import FileSystem from 'node:fs/promises';
 import Path from 'node:path';
 import URL from 'node:url';
+import Logger from '../utils/Logger.js';
 import Utils from '../Utils.js';
+import { ErrorCode } from './objects/index.js';
 
 export default class Plugins {
     Bridge           = null;
@@ -33,7 +35,7 @@ export default class Plugins {
 
                     this.Plugins.set(entry.name.toLowerCase(), instance);
                 } catch (err) {
-                    console.error(`Failed to load plugin ${entry.name}:`, err);
+                    Logger.error('Plugins', `Failed to load plugin ${entry.name}:`, err.message);
                 }
             }
         }
@@ -137,12 +139,6 @@ export default class Plugins {
     }
 
     notFound(request, reply) {
-        return reply.send([{
-            error: {
-                type:           4,
-                address:        request.url,
-                description:    `method, ${request.method}, not available for resource, ${request.url}`
-            }
-        }]);
+        return reply.error(ErrorCode.METHOD_NOT_SUPPORTED, request.url, `method, ${request.method}, not available for resource, ${request.url}`);
     }
 }

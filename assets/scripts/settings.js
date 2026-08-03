@@ -1,30 +1,48 @@
-import Events from '../../src/types/Events.js';
-import Support from "../../src/types/Support.js";
+import Support from '../../src/bridge/Support.js';
+
+const REGEX_MAC = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/;
+
+const BANNED_RANGES = [
+    {
+        low:    0x001788FFFE1E0000n,
+        high:   0x001788FFFE1E00FFn,
+        name:   'Range 1 (0x001788FFFE1E0000-0x001788FFFE1E00FF)'
+    },
+    {
+        low:    0x001788FFFE200000n,
+        high:   0x001788FFFE2001C5n,
+        name:   'Range 2 (0x001788FFFE200000-0x001788FFFE2001C5)'
+    }
+];
 
 export default class Settings {
     constructor() {
-        window.IPC.on('settings', (packet) => {
-            switch(packet.action) {
+        window.IPC.on('settings', async (packet) => {
+            switch(packet?.action) {
                 case 'SETTINGS':
-                    this.update('id', packet.data?.id);
                     this.update('name', packet.data?.name);
                     this.update('model', packet.data?.model);
 
-                    if(packet.data?.network) {
-                        let network = packet.data?.network;
+                    if(packet?.data?.network) {
+                        let network = packet.data.network;
 
                         this.update('address', network?.address);
-                        this.update('mac', network?.mac);
-                        this.update('port', network?.port);
-                        this.update('tls', network?.tls);
 
-                        this.enable('address', !network?.autoresolve);
+                        this.update('mac', network?.mac, (element) => {
+                            element.dispatchEvent(new Event('input', {
+                                bubbles:    false
+                            }));
+                        });
+
+                        this.update('port',     network?.port);
+                        this.update('tls',      network?.tls);
+                        this.enable('address',  !network?.autoresolve);
                     }
 
                     for(const support in Support) {
                         let value = Support[support];
 
-                        this.check(value, packet.data?.supports?.includes(value));
+                        this.check(value, packet?.data?.supports?.includes(value));
                     }
                 break;
                 case 'ACCOUNTS':
@@ -47,7 +65,7 @@ export default class Settings {
                         this.addEntry(entry, account['create date']);
                         this.addEntry(entry, account['last use date']);
                         data.append(entry);
-                        counter.innerHTML = `${++count} Entries`;
+                        counter.innerHTML = await window.I18N.__sp('%d Entrie', '%d Entries', ++count);
                     }
                 break;
                 case 'VIRTHUE':
@@ -55,9 +73,9 @@ export default class Settings {
                         return;
                     }
 
-                    this.content('version', packet.data.version);
-                    this.content('electron', packet.data.electron);
-                    this.content('node', packet.data.node);
+                    this.content('version',     packet.data.version);
+                    this.content('electron',    packet.data.electron);
+                    this.content('node',        packet.data.node);
                 break;
             }
         });
@@ -66,52 +84,115 @@ export default class Settings {
             document.querySelector('input[name="tls"]').disabled = !event.currentTarget.checked;
         });
 
+        const inputMAC = document.querySelector('input[name="mac"]');
+
+        inputMAC.addEventListener('keyup', (event) => {
+            const element    = event.currentTarget;
+            const mac                   = element.value;
+            const test           = mac.replace(/[:\-]/g, '').toLowerCase();
+            const isValid       = REGEX_MAC.test(mac);
+            const blacklisted   = this.isBlacklisted(mac);
+            let id;
+
+            element.classList.remove('invalid');
+
+            if(mac.length === 0 || !isValid || blacklisted) {
+                element.classList.add('invalid');
+                if (blacklisted) {
+                    id = I18N.__('- Blacklisted MAC Address -') + ` (${blacklisted})`;
+                } else {
+                    id = I18N.__('- Invalid MAC Address -');
+                }
+            } else {
+                id =`${test.slice(0, 6)}fffe${test.slice(6)}`;
+            }
+
+            this.content('id', id);
+        });
+
+        inputMAC.addEventListener('input', () => {
+            const mac               = inputMAC.value;
+            const isValid   = REGEX_MAC.test(mac);
+            const blacklisted = this.isBlacklisted(mac);
+
+            inputMAC.classList.remove('invalid');
+
+            if(mac.length === 0 || !isValid || blacklisted) {
+                inputMAC.classList.add('invalid');
+            }
+
+            inputMAC.dispatchEvent(new Event('keyup', {
+                bubbles:    false
+            }));
+        });
+
         this.send('INIT');
     }
 
-    generateID(length = 16) {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let id      = '';
+    isBlacklisted(mac) {
+        const cleanMac = mac.replace(/[:\-]/g, '').toLowerCase();
+        if (cleanMac.length !== 12) return false;
 
-        for(let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * chars.length);
+        const eui64 = `${cleanMac.slice(0, 6)}fffe${cleanMac.slice(6)}`;
+        const macValue = BigInt('0x' + eui64);
 
-            id += chars[randomIndex];
+        for (const range of BANNED_RANGES) {
+            if (macValue >= range.low && macValue <= range.high) {
+                return range.name;
+            }
         }
 
-        return id;
+        return false;
     }
 
     generateMacAddress(separator = ':') {
         const hexChars  = '0123456789ABCDEF';
-        const octets    = [];
+        let mac;
+        let isValid;
 
-        for(let i = 0; i < 6; i++) {
-            let octet = '';
+        do {
+            const octets = [];
 
-            for(let j = 0; j < 2; j++) {
-                const randomIndex = Math.floor(Math.random() * hexChars.length);
-                octet += hexChars[randomIndex];
+            for(let i = 0; i < 6; i++) {
+                let octet = '';
+
+                for(let j = 0; j < 2; j++) {
+                    const randomIndex = Math.floor(Math.random() * hexChars.length);
+                    octet += hexChars[randomIndex];
+                }
+
+                octets.push(octet);
             }
 
-            octets.push(octet);
-        }
+            mac = octets.join(separator);
+            isValid = !this.isBlacklisted(mac);
+        } while (!isValid);
 
-        return octets.join(separator);
+        return mac;
     }
 
     onAction(action, value, event) {
         switch(action) {
+            case 'copy':
+                let text = document.querySelector('[data-name="' + value + '"]').textContent;
+
+                navigator.clipboard.writeText(text).then(() => {});
+            break;
             case 'traffic':
                 this.send('TRAFFIC_OPEN');
             break;
             case 'random':
                 switch(value) {
-                    case 'id':
-                        this.update(value, this.generateID(16));
-                    break;
                     case 'mac':
-                        this.update(value, this.generateMacAddress());
+                        const mac       = this.generateMacAddress();
+                        let converted   = mac.replace(/:/g, '').toLowerCase();
+
+                        this.update('id', `${converted.slice(0, 6)}fffe${converted.slice(6)}`);
+                        this.update(value, mac, (element) => {
+                            element.dispatchEvent(new Event('input', {
+                                bubbles:    false
+                            }));
+                        });
                     break;
                 }
             break;
@@ -157,7 +238,7 @@ export default class Settings {
         });
     }
 
-    update(name, value) {
+    update(name, value, callback = null) {
         let element = document.querySelector(`[name="${name}"]`);
 
         if(!element) {
@@ -166,6 +247,10 @@ export default class Settings {
         }
 
         element.value = value;
+
+        if(callback) {
+            callback(element);
+        }
     }
 
     content(name, value) {

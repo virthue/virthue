@@ -10,6 +10,7 @@ import {
     ipcMain as IPC
 } from 'electron';
 import Utils from '../Utils.js';
+import ElectronUtils from '../ElectronUtils.js';
 
 export default new class Traffic {
     Window = null;
@@ -74,7 +75,7 @@ export default new class Traffic {
 
         this.Window.loadURL(`file://${Utils.getPath('assets', 'window', 'Traffic.html')}`);
         //this.Window.setMenu(null);
-        this.Window.setIcon(Utils.getPath('assets', 'icons', 'logo.ico'));
+        this.Window.setIcon(ElectronUtils.getIcon('logo', true));
 
         this.Window.on('closed', () => {
             this.Window = null;

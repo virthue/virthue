@@ -13,7 +13,7 @@
     scrollbar-color: #4A4A4B #1A1A1B;
 }
 
-:not(input, textarea) {
+:not(input, textarea, ui-text) {
     user-select: none;
 }
 

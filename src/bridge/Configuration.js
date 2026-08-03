@@ -10,7 +10,6 @@ import Interfaces, { Family }  from './network/Interfaces.js';
 import Utils from '../Utils.js';
 
 export default class Configuration extends Events.EventEmitter {
-    ID      = null;
     Name    = null;
     Model   = null;
     Network = {
@@ -26,6 +25,15 @@ export default class Configuration extends Events.EventEmitter {
         Number: null
     }
 
+    Portal = {
+        Key: null,
+        CTN: 'HueBridge2K15'
+    };
+
+    TLS = {
+        RejectUnauthorized: true
+    };
+
     SupportFlags = [];
 
     constructor() {
@@ -36,7 +44,6 @@ export default class Configuration extends Events.EventEmitter {
         try {
             Config =  JSON.parse(FileSystem.readFileSync(Utils.getPath('bridge.config.json')));
 
-            this.ID                         = Config.bridge.id;
             this.Name                       = Config.bridge.name;
             this.Model                      = Config.bridge.model;
             this.Network.MAC                = Config.network.mac;
@@ -47,6 +54,11 @@ export default class Configuration extends Events.EventEmitter {
 
             this.Version.API                = Config.bridge.version.api;
             this.Version.Number             = Config.bridge.version.number;
+
+            this.Portal.Key                 = Config.portal?.key ?? null;
+            this.Portal.CTN                 = Config.portal?.ctn ?? 'HueBridge2K15';
+
+            this.TLS.RejectUnauthorized     = Config.tls?.rejectUnauthorized ?? true;
 
             this.SupportFlags               = Config.bridge.supports ?? [];
         } catch(error) {
@@ -59,7 +71,6 @@ export default class Configuration extends Events.EventEmitter {
             FileSystem.writeFileSync(Utils.getPath('bridge.config.json'), JSON.stringify({
                 bridge: {
                     name:   this.Name,
-                    id:     this.ID,
                     model:  this.Model,
                     version: {
                         number: Number(this.Version.Number),
@@ -72,6 +83,13 @@ export default class Configuration extends Events.EventEmitter {
                     address:    this.Network.Address,
                     port:       Number(this.Network.Port),
                     tls:        Number(this.Network.TLS)
+                },
+                portal: {
+                    key: this.Portal.Key,
+                    ctn: this.Portal.CTN
+                },
+                tls: {
+                    rejectUnauthorized: this.TLS.RejectUnauthorized
                 }
             }, null, 4));
         } catch (error) {
@@ -102,18 +120,6 @@ export default class Configuration extends Events.EventEmitter {
         this.emit('FEATURE_CHANGE', flag, false);
     }
 
-    getId(short = false) {
-        if(short) {
-            return this.ID.slice(-6);
-        }
-
-        return this.ID;
-    }
-
-    setId(id) {
-        this.ID = id;
-    }
-
     getName() {
         return this.Name;
     }
@@ -135,7 +141,11 @@ export default class Configuration extends Events.EventEmitter {
     }
 
     setMACAddress(mac) {
-        this.Network.MAC = mac;
+		if(this.Network.MAC !== mac) {
+            this.emit('MAC_ADDRESS_CHANGE', this.Network.MAC, mac);
+        }
+		
+        this.Network.MAC = mac;        
     }
 
     automaticResolveIPAddress() {
@@ -192,7 +202,6 @@ export default class Configuration extends Events.EventEmitter {
 
     toJSON() {
         return {
-            id:     this.ID,
             name:   this.Name,
             model:  this.Model,
             network: {

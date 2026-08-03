@@ -9,16 +9,18 @@ import {
     Tray,
     Menu,
     BrowserWindow,
-    nativeImage as NativeImage,
     ipcMain as IPC,
     screen as Screen
 } from 'electron';
 import Process from 'node:process';
 import QRCode from 'qrcode';
+import Logger from '../utils/Logger.js';
 import Utils, { System } from '../Utils.js';
 import Events from '../types/Events.js';
 import Settings from './Settings.js';
 import Traffic from './Traffic.js';
+import ElectronUtils from '../ElectronUtils.js';
+import I18N from './I18N.js';
 
 export default new class TrayManager {
     Bridge                  = null;
@@ -55,40 +57,38 @@ export default new class TrayManager {
             Application.dock.hide();
         }
 
-        const icon = NativeImage.createFromDataURL('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACTSURBVHgBpZKBCYAgEEV/TeAIjuIIbdQIuUGt0CS1gW1iZ2jIVaTnhw+Cvs8/OYDJA4Y8kR3ZR2/kmazxJbpUEfQ/Dm/UG7wVwHkjlQdMFfDdJMFaACebnjJGyDWgcnZu1/lrCrl6NCoEHJBrDwEr5NrT6ko/UV8xdLAC2N49mlc5CylpYh8wCwqrvbBGLoKGvz8Bfq0QPWEUo/EAAAAASUVORK5CYII=')
-
-        this.Tray   = new Tray(icon); //Utils.getPath('assets', 'icons', 'logo.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico')));
+        this.Tray   = new Tray(ElectronUtils.getIcon('logo', true));
         this.Menu   = Menu.buildFromTemplate([{
-                label: 'Show Bridge',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'bridge.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
-                click: () => {
+                label:      I18N.__('Show Bridge'),
+                icon:       ElectronUtils.getIcon('bridge'),
+                click:      () => {
                     this.showWindow();
                 }
             }, {
-                id: 'button',
-                label: 'Press Link-Button',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'button.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
-                enabled: true,
-                click: () => {
+                id:         'button',
+                label:      I18N.__('Press Link-Button'),
+                icon:       ElectronUtils.getIcon('button'),
+                enabled:    true,
+                click:      () => {
                     this.Bridge.getLinkButton().activate();
                 }
             }, {
-                type: 'separator'
+                type:       'separator'
             }, {
-                label: 'Settings',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'settings.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
-                click: () => {
+                label:      I18N.__('Settings'),
+                icon:       ElectronUtils.getIcon('settings'),
+                click:      () => {
                     Settings.show(this.Bridge);
                 }
             }, {
-                label: 'Traffic',
-                icon: '', //NativeImage.createFromPath(Utils.getPath('assets', 'icons', 'traffic.' + (Utils.getOS() === System.MAC ? 'svg' : 'ico'))).resize({ width: 16, height: 16 }),
-                click: () => {
+                label:      I18N.__('Traffic'),
+                icon:       ElectronUtils.getIcon('traffic'),
+                click:      () => {
                     Traffic.show(this.Bridge);
                 }
             }, {
-                label: 'Quit',
-                role: 'quit'
+                label:      I18N.__('Quit'),
+                role:       'quit'
             }
         ]);
 
@@ -112,11 +112,11 @@ export default new class TrayManager {
                     this.send(Events.BRIDGE_MODEL, this.Bridge.getConfiguration().getModel());
                 break;
                 case Events.QR_REQUEST:
-                    QRCode.toString(`HUE:I:${this.Bridge.getConfiguration().getId()} W:${new Date().getFullYear()}`, {
+                    QRCode.toString(`HUE:I:${this.Bridge.getId()} W:${new Date().getFullYear()}`, {
                         type: 'svg'
                     }, (error, url) => {
                         if(error) {
-                            console.error(error);
+                            Logger.error('Tray', 'Failed to generate QR code:', error.message);
                             return;
                         }
 
@@ -208,11 +208,11 @@ export default new class TrayManager {
             });
 
             this.Bridge.on('INITIAL_CONFIG_REQUESTED', () => {
-                this.send(Events.LINK_BUTTON_REQUESTED);
+                // Hide QR-Code: this.send(Events.LINK_BUTTON_REQUESTED);
             });
 
             this.Bridge.on('LINK_BUTTON_CHANGED', (state) => {
-                console.log('LINK_BUTTON_CHANGED', state);
+                Logger.debug('Tray', `LINK_BUTTON_CHANGED: ${state}`);
             });
         }
     }

@@ -12,9 +12,11 @@ import Resources from './resource/Resources.js';
 import LinkButton from './LinkButton.js';
 import Authentication from './Authentication.js';
 import Configuration from './Configuration.js';
-import Support from '../types/Support.js';
+import Support from './Support.js';
 import Plugins from './Plugins.js';
 import Utils from '../Utils.js';
+import Logger from '../utils/Logger.js';
+import CertificateManager from './network/security/CertificateManager.js';
 
 export default class Bridge extends Events.EventEmitter {
     HTTP                    = null;
@@ -35,7 +37,7 @@ export default class Bridge extends Events.EventEmitter {
 
         // Loading Resources
         let bridge = this.Resources.add(ResourceType.BRIDGE, {
-            bridge_id: this.Configuration.getId(),
+            bridge_id: this.getId(),
             time_zone: {
                 time_zone: 'Europe/Berlin'
             }
@@ -72,24 +74,40 @@ export default class Bridge extends Events.EventEmitter {
             software_version_string:    '1.3.0'
         });
 
-        // Init
-        this.#init().then(() => {
-            console.log('BRIDGE_READY');
-            this.emit('BRIDGE_READY');
+        /* Initialize TLS Certificate */
+        const certManager = new CertificateManager(this, this.Configuration);
+        certManager.initialize().then(() => {
+            this.#init().then(() => {
+                this.emit('BRIDGE_READY');
+            });
+        }).catch(error => {
+            Logger.error('Bridge', 'TLS_CERTIFICATE_ERROR:', error.message);
+            process.exit(1);
+        });
+
+        /* Listen for Bridge ID changes */
+        this.Configuration.on('MAC_ADDRESS_CHANGE', async (oldMac, newMac) => {
+            Logger.info('Bridge', `Bridge ID changed from ${oldMac} to ${newMac}`);
+            await this.#restartWithNewCertificate(certManager);
         });
     }
 
     async #init() {
         const docRoot = Utils.getPath('htdocs');
 
-        await this.Plugins.loadPlugins();
-        console.log(`Loaded ${this.Plugins.getCount()} plugins`);
+        await this.Authentication.loadUsers();
+        Logger.info('Bridge', `Loaded ${this.Authentication.getCount()} users`);
 
-        this.HTTP   = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot);
+        await this.Plugins.loadPlugins();
+        Logger.info('Bridge', `Loaded ${this.Plugins.getCount()} plugins`);
+
+        // HTTP Server
+        this.HTTP   = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot).init();
         await this.bindREST(this.HTTP);
 
+        // HTTPS Server (wenn konfiguriert)
         if(this.Configuration.supports(Support.SECURED)) {
-            this.HTTPS = new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot);
+            this.HTTPS = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot).init();
             await this.bindREST(this.HTTPS);
 
             // @docs https://developers.meethue.com/develop/hue-api-v2/migration-guide-to-the-new-hue-api/
@@ -115,9 +133,9 @@ export default class Bridge extends Events.EventEmitter {
 
                     /** TODO: the original brigde dont send heatbeasts/pings!
                      *
-                    const heartbeat = setInterval(() => {
-                        reply.raw.write(':heartbeat\n\n');
-                    }, 30000);*/
+                     const heartbeat = setInterval(() => {
+                     reply.raw.write(':heartbeat\n\n');
+                     }, 30000);*/
 
                     const sendEvent = (events) => {
                         const id            = Crypto.randomUUID();
@@ -130,15 +148,29 @@ export default class Bridge extends Events.EventEmitter {
                     //this.eventEmitter.on('state-change', sendEvent);
 
                     request.raw.on('close', () => {
-                        if(heartbeat) {
+                        /*if(heartbeat) {
                             clearInterval(heartbeat);
-                        }
+                        }*/
 
                         //this.eventEmitter.off('state-change', sendEvent);
                         reply.raw.end();
                     });
                 });
+
+                this.on('LINK_BUTTON_CHANGED', (state) => {
+                    //console.log("SSE BUTTON!!");
+                });
             }
+        }
+
+        try {
+            await this.HTTP.start();
+
+            if(this.HTTPS) {
+                await this.HTTPS.start();
+            }
+        } catch(error) {
+            throw error;
         }
 
         this.Discovery = new Discovery(this);
@@ -146,6 +178,75 @@ export default class Bridge extends Events.EventEmitter {
         setTimeout(() => {
             this.emit('MODEL_CHANGE');
         }, 1000);
+    }
+
+    async #restartWithNewCertificate(certManager) {
+        try {
+            Logger.info('Bridge', 'Stopping servers...');
+
+            if(this.HTTP) {
+                await this.HTTP.Fastify.close();
+            }
+
+            if(this.HTTPS) {
+                await this.HTTPS.Fastify.close();
+            }
+
+            Logger.info('Bridge', 'Regenerating certificate...');
+            await certManager.initialize();
+
+            Logger.info('Bridge', 'Restarting servers...');
+            const docRoot = Utils.getPath('htdocs');
+
+            if(this.HTTP) {
+                this.HTTP = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getPort(), false, docRoot).init();
+                await this.bindREST(this.HTTP);
+                await this.HTTP.start();
+            }
+
+            if(this.HTTPS) {
+                this.HTTPS = await new WebServer(this.Configuration.getIPAddress(), this.Configuration.getSecuredPort(), true, docRoot).init();
+                await this.bindREST(this.HTTPS);
+                await this.HTTPS.start();
+            }
+
+            Logger.info('Bridge', 'Servers restarted successfully');
+            this.emit('MODEL_CHANGE');
+        } catch(error) {
+            Logger.error('Bridge', 'Failed to restart servers:', error.message);
+        }
+    }
+
+    #buildAuthenticatedAPIResponse(request, response) {
+        const apiResponse = {};
+
+        // Hardcoded top-level categories
+        const categories = ['lights', 'groups', 'schedules', 'scenes', 'rules', 'resourcelinks'];
+        categories.forEach(cat => apiResponse[cat] = {});
+
+        // Add config from Config plugin
+        const configPlugin = this.getPlugin('Config');
+
+        if(configPlugin) {
+            apiResponse.config = configPlugin.getAll(request, response);
+        }
+
+        return apiResponse;
+    }
+
+    getId(short = false) {
+		let mac = this.Configuration.getMACAddress()
+		.replace(/[:\-\u200e]/g, '')
+		.toLowerCase()
+		.padStart(12, '0');
+		
+		// Wenn short aktiv ist (z.B. für interne ID-Zwecke), die letzten 6 Zeichen
+		if(short) {
+			return mac.slice(-6);
+		}
+
+		// Standardmäßig: lange BridgeID mit FFFE (EUI-64 Format)
+		return (mac.substring(0, 6) + 'FFFE' + mac.substring(6)).toUpperCase();
     }
 
     getConfiguration() {
@@ -177,16 +278,7 @@ export default class Bridge extends Events.EventEmitter {
 
         /* Special Routes with Authentication */
         server.add().get('/api/:token', { preHandler }, async (request, response) =>  {
-            // @ToDo iterate over all Plugins & check if <Plugin>.exposing = true is & build these dynamically!
-            return {
-                lights: {},
-                groups: {},
-                config: this.getPlugin('Config').getAll(request, response),
-                schedules: {},
-                scenes: {},
-                rules: {},
-                resourcelinks: {},
-            }
+            return this.#buildAuthenticatedAPIResponse(request, response);
         });
 
         server.add().get('/info/timezone', { preHandler }, async (request, response) =>  this.getPlugin('Timezone').getCustom(request, response));

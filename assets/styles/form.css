@@ -112,6 +112,13 @@ form ui-entry input {
     transition: border-color 0.2s ease;
 }
 
+form ui-entry select.invalid,
+form ui-entry input.invalid {
+    border: 1px solid #800000 !important;
+    background: #232324;
+    color: #F3F4F6;
+}
+
 form ui-entry ui-text {
     padding: 0.3rem 0.5rem;
     font-size: 0.875rem;
