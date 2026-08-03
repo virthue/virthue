@@ -36,6 +36,8 @@ import Utils from '../../src/Utils.js';
             }).catch((error) => {
                 console.log(`[ERROR] Converted: ${name}`, error);
             });
+
+            // ToDo PNG Files for macOS!
         });
     }
 }());
